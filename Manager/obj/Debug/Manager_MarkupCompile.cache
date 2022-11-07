@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\Projekty\CSharp\Hinren_Manager\Manager\App.xaml
-12145433039
+3195773134
 
-5-1040698207
+10-1116264132
 17-1963780814
-Windows\MainWindow.xaml;
+Components\MainMenu\MainMenuControl.xaml;Pages\HomePage.xaml;Windows\MainWindow.xaml;
 
 False
 

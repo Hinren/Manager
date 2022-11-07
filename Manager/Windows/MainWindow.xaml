@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:im="clr-namespace:chkam05.Tools.ControlsEx.InternalMessages;assembly=chkam05.Tools.ControlsEx"
-    xmlns:local="clr-namespace:Manager.Windows"
+    xmlns:local="clr-namespace:Manager.Windows" xmlns:mainmenu="clr-namespace:Manager.Components.MainMenu"
     mc:Ignorable="d"
+    
     Height="450"
     Width="800"
     Title="Manager"
@@ -14,11 +15,22 @@
     
     <Grid>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
         <Frame
+            x:Name="contentFrame"
+            Grid.Column="1"
             NavigationUIVisibility="Hidden"/>
 
+        <mainmenu:MainMenuControl
+            Grid.Column="0"/>
+
         <im:InternalMessagesExContainer
-            x:Name="internalMessagesContainer"/>
+            x:Name="internalMessagesContainer"
+            Grid.ColumnSpan="2"/>
 
     </Grid>
     

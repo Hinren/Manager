@@ -20,3 +20,8 @@ E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Manager.csproj.CoreCompileIn
 E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Manager.csproj.CopyComplete
 E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Manager.exe
 E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Manager.pdb
+E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Components\MainMenu\MainMenuControl.g.cs
+E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Components\MainMenu\MainMenuControl.baml
+E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Pages\HomePage.g.cs
+E:\Projekty\CSharp\Hinren_Manager\Manager\obj\Debug\Pages\HomePage.baml
