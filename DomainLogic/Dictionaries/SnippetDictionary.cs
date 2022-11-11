@@ -1,18 +1,23 @@
 ﻿using DomainModel.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLogic.Dictionaries
 {
     public class SnippetDictionary
     {
-        readonly Dictionary<SnippetAction, string> snippets = new Dictionary<SnippetAction, string>()
+        public readonly Dictionary<SnippetAction, string> snippets = new Dictionary<SnippetAction, string>()
         {
+            /*  example TODO CHECK LOGIC
+             *  <Literal>
+                <ID>href</ID>
+                <ToolTip>href</ToolTip>
+                <Default>#</Default>
+              </Literal>
+            <![CDATA[<a href="$href$">$selected$</a>$end$]]>
+            */
             {SnippetAction.MyProperty, "$MyProperty$" },
-            {SnippetAction.End, "$end$" }
+            {SnippetAction.Selected, "$selected$"},
+            {SnippetAction.End, "$end$" },
+            {SnippetAction.Shortcut, "$shortcut$" },
         };
     }
 }

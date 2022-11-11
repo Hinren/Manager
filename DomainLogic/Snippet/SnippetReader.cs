@@ -1,13 +1,18 @@
-﻿using DomainLogic.Interfaces.Snippet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Models.Snippet;
+using DomainLogic.Interfaces.Snippet;
 
 namespace DomainLogic.Snippet
 {
     internal class SnippetReader : ISnippetReader
     {
+        public CodeSnippets ReadSnippet(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CodeSnippets> ReadSnippets(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

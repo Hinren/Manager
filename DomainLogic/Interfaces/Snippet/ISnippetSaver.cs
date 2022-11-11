@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Models.Snippet;
 
 namespace DomainLogic.Interfaces.Snippet
 {
-    internal interface ISnippetSaver
+    public interface ISnippetSaver
     {
+        public CodeSnippets SaveSnippet(CodeSnippets snippet, string path);
+        public CodeSnippets SaveSnippets(List<CodeSnippets> snippets, string path);
     }
 }
