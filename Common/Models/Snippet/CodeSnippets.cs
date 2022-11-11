@@ -2,11 +2,11 @@
 
 namespace Common.Models.Snippet
 {
-	[XmlRoot(ElementName = "CodeSnippets")]
-	public class CodeSnippets
-	{
+    [XmlRoot(ElementName = "CodeSnippets")]
+    public class CodeSnippets
+    {
 
-		[XmlElement(ElementName = "CodeSnippet")]
-		public CodeSnippet CodeSnippet { get; set; }
-	}
+        [XmlElement(ElementName = "CodeSnippet")]
+        public CodeSnippet CodeSnippet { get; set; }
+    }
 }

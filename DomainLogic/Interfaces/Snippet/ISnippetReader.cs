@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Models.Snippet;
 
 namespace DomainLogic.Interfaces.Snippet
 {
-    internal interface ISnippetReader
+    public interface ISnippetReader
     {
+        public CodeSnippets ReadSnippet(string path);
+        public List<CodeSnippets> ReadSnippets(string path);
     }
 }
