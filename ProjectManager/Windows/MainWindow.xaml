@@ -5,13 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Hinren.ProjectManager"
+    xmlns:pgctrl="clr-namespace:Hinren.ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
     Title="Project Manager"
     Height="450"
-    Width="800">
+    Width="800"
+    Loaded="Window_Loaded">
     
     <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <pgctrl:PagesControl
+            x:Name="pagesControl"
+            Grid.Column="1"/>
 
     </Grid>
     

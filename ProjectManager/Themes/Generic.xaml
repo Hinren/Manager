@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pgctrl="clr-namespace:Hinren.ProjectManager.Pages.Base">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Hinren.ProjectManager;component/Themes/Pages/BasePageStyle.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource BasePageStyle}" TargetType="{x:Type pgctrl:BasePage}"/>
+
+</ResourceDictionary>

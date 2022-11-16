@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0025: Użyj treści wyrażenia dla właściwości
+dotnet_diagnostic.IDE0025.severity = none

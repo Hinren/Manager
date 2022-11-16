@@ -1,0 +1,100 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExtendedControls">
+
+    <RelativeSource x:Key="RelativeSelfScrollViewer" AncestorType="{x:Type local:ExtScrollViewer}"/>
+
+    <ControlTemplate x:Key="ExtScrollViewer.ControlTemplate" TargetType="{x:Type local:ExtScrollViewer}">
+        <Grid
+            x:Name="Grid"
+            Background="{TemplateBinding Background}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle
+                x:Name="Corner"
+                Fill="{TemplateBinding ScrollBarsCornerBackgroundBrush}"
+                Grid.Column="1"
+                Grid.Row="1"/>
+
+            <ScrollContentPresenter
+                x:Name="PART_ScrollContentPresenter"
+                CanContentScroll="{TemplateBinding CanContentScroll}"
+                CanHorizontallyScroll="False"
+                CanVerticallyScroll="False"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
+                Content="{TemplateBinding Content}"
+                Grid.Column="0"
+                Grid.Row="0"
+                Margin="{TemplateBinding Padding}"/>
+
+            <local:ExtScrollBar
+                x:Name="PART_VerticalScrollBar"
+                AutomationProperties.AutomationId="VerticalScrollBar"
+                Background="{TemplateBinding ScrollBarsBackgroundBrush}"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Cursor="Arrow"
+                Grid.Column="1"
+                Grid.Row="0"
+                Maximum="{TemplateBinding ScrollableHeight}"
+                Minimum="0"
+                MinWidth="{TemplateBinding ScrollBarVerticalWidth}"
+                Padding="{TemplateBinding ThumbMargin}"
+                ThumbBackground="{TemplateBinding ThumbBackgroundBrush}"
+                ThumbBorderBrush="{TemplateBinding ThumbBorderBrush}"
+                ThumbBorderThickness="{TemplateBinding ThumbBorderThickness}"
+                ThumbBackgroundMouseOverBrush="{TemplateBinding ThumbBackgroundMouseOverBrush}"
+                ThumbBorderMouseOverBrush="{TemplateBinding ThumbBorderMouseOverBrush}"
+                ThumbBackgroundDraggingBrush="{TemplateBinding ThumbBackgroundDraggingBrush}"
+                ThumbBorderDraggingBrush="{TemplateBinding ThumbBorderDraggingBrush}"
+                ThumbCornerRadius="{TemplateBinding ThumbCornerRadius}"
+                Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                ViewportSize="{TemplateBinding ViewportHeight}"
+                Width="{TemplateBinding ScrollBarVerticalWidth}"/>
+
+            <local:ExtScrollBar
+                x:Name="PART_HorizontalScrollBar"
+                AutomationProperties.AutomationId="HorizontalScrollBar"
+                Background="{TemplateBinding ScrollBarsBackgroundBrush}"
+                BorderBrush="Transparent"
+                BorderThickness="0"
+                Cursor="Arrow"
+                Grid.Column="0"
+                Grid.Row="1"
+                Height="{TemplateBinding ScrollBarHorizontalHeight}"
+                MinHeight="{TemplateBinding ScrollBarHorizontalHeight}"
+                Maximum="{TemplateBinding ScrollableWidth}"
+                Minimum="0"
+                Orientation="Horizontal"
+                Padding="{TemplateBinding ThumbMargin}"
+                ThumbBackground="{TemplateBinding ThumbBackgroundBrush}"
+                ThumbBorderBrush="{TemplateBinding ThumbBorderBrush}"
+                ThumbBorderThickness="{TemplateBinding ThumbBorderThickness}"
+                ThumbBackgroundMouseOverBrush="{TemplateBinding ThumbBackgroundMouseOverBrush}"
+                ThumbBorderMouseOverBrush="{TemplateBinding ThumbBorderMouseOverBrush}"
+                ThumbBackgroundDraggingBrush="{TemplateBinding ThumbBackgroundDraggingBrush}"
+                ThumbBorderDraggingBrush="{TemplateBinding ThumbBorderDraggingBrush}"
+                ThumbCornerRadius="{TemplateBinding ThumbCornerRadius}"
+                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                ViewportSize="{TemplateBinding ViewportWidth}"/>
+
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="ExtScrollViewerStyle" TargetType="{x:Type local:ExtScrollViewer}">
+        <Setter Property="Template" Value="{StaticResource ExtScrollViewer.ControlTemplate}"/>
+    </Style>
+
+</ResourceDictionary>
