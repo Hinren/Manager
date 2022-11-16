@@ -62,8 +62,8 @@ namespace Hinren.ProjectManager.Pages.Base
         #region TEMPLATE METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> When overridden in a derived class, is invoked whenever application code 
-        /// or internal processes call System.Windows.FrameworkElement.ApplyTemplate. </summary>
+        /// <summary> When overridden in a derived class,cis invoked whenever 
+        /// application code or internal processes call ApplyTemplate. </summary>
         public override void OnApplyTemplate()
         {
             //  Apply Template

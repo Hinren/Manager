@@ -1,10 +1,22 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Hinren.ProjectManager.Pages.Base">
+    xmlns:pages="clr-namespace:Hinren.ProjectManager.Pages.Base">
 
-    <Style x:Key="BasePageStyle" TargetType="{x:Type local:BasePage}">
-        
+    <ControlTemplate x:Key="BasePageStyle.ControlTemplate" TargetType="{x:Type pages:BasePage}">
+        <Border
+            Background="{TemplateBinding Background}">
+
+            <ContentPresenter
+                Content="{TemplateBinding Content}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"/>
+            
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="BasePageStyle" TargetType="{x:Type pages:BasePage}">
+        <Setter Property="Template" Value="{StaticResource BasePageStyle.ControlTemplate}"/>
     </Style>
     
 </ResourceDictionary>

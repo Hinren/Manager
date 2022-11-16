@@ -6,17 +6,73 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Hinren.ProjectManager.Components"
     xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     
     d:DesignHeight="450"
-    d:DesignWidth="800">
+    d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <!-- STORYBOARDS -->
+
+            <Storyboard x:Key="ExpandCollapseMainMenuStoryboard" Completed="ExpandCollapseMainMenuStoryboard_Completed">
+                <DoubleAnimation 
+                    BeginTime="00:00:0"
+                    Duration="00:00:0.25"
+                    Storyboard.TargetName="mainMenuBorder"
+                    Storyboard.TargetProperty="Width"
+                    To="{Binding Path=ExpandMenuStoryboardTargetWidth, Mode=TwoWay}"/>
+            </Storyboard>
+
+            <!-- STYLES -->
+
+            <Style x:Key="MainMenuItemStyle" TargetType="{x:Type extctrl:ExtListViewItem}">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding" Value="2"/>
+            </Style>
+            
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="MainMenuItemDataTemplate">
+                <StackPanel
+                    Orientation="Horizontal"
+                    ToolTip="{Binding Title}">
+
+                    <materialDesign:PackIcon
+                        Height="28"
+                        Kind="{Binding IconKind}"
+                        Width="28"/>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Margin="8,0,0,0"
+                        Text="{Binding Title}"
+                        VerticalAlignment="Center"/>
+
+                </StackPanel>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <Grid>
         <Border
+            x:Name="mainMenuBorder"
             Background="#40000000"
-            CornerRadius="4">
+            CornerRadius="4"
+            Margin="4"
+            MouseEnter="MainMenu_MouseEnter"
+            MouseLeave="MainMenu_MouseLeave">
 
-            <extctrl:ExtListView/>
+            <extctrl:ExtListView
+                ItemContainerStyle="{StaticResource MainMenuItemStyle}"
+                ItemsSource="{Binding MenuItems}"
+                ItemTemplate="{StaticResource MainMenuItemDataTemplate}"
+                SelectionChanged="MainMenu_SelectionChanged"/>
 
         </Border>
     </Grid>
