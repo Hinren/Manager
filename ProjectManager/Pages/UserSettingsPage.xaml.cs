@@ -1,5 +1,4 @@
 ﻿using Hinren.ProjectManager.Pages.Base;
-using System.Windows.Controls;
 
 namespace Hinren.ProjectManager.Pages
 {
