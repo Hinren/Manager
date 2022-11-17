@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="2.0.9" />
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Common\DomainModel.csproj" />
     <ProjectReference Include="..\ExtendedControls\ExtendedControls.csproj" />
   </ItemGroup>
 

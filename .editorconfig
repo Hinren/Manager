@@ -14,3 +14,9 @@ dotnet_diagnostic.CS8622.severity = none
 
 # CS8600: Konwertowanie literału null lub możliwej wartości null na nienullowalny typ.
 dotnet_diagnostic.CS8600.severity = none
+
+# CS8602: Wyłuskanie odwołania, które może mieć wartość null.
+dotnet_diagnostic.CS8602.severity = none
+
+# CS8603: Możliwe zwrócenie odwołania o wartości null.
+dotnet_diagnostic.CS8603.severity = none
