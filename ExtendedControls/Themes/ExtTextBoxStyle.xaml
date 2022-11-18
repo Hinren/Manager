@@ -1,0 +1,96 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExtendedControls">
+
+    <SolidColorBrush x:Key="ExtTextBox.Background">White</SolidColorBrush>
+    <SolidColorBrush x:Key="ExtTextBox.BorderBrush">#FF0078D7</SolidColorBrush>
+    <SolidColorBrush x:Key="ExtTextBox.Foreground">Black</SolidColorBrush>
+    
+    <RelativeSource x:Key="RelativeSelfTextBox" AncestorType="{x:Type local:ExtTextBox}"/>
+
+    <ControlTemplate x:Key="ExtTextBox.ControlTemplate" TargetType="{x:Type local:ExtTextBox}">
+        <Border
+            x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            Padding="{TemplateBinding Padding}"
+            SnapsToDevicePixels="True">
+
+            <Border
+                x:Name="innerBorder"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                BorderThickness="0,0,0,1"
+                Margin="0"
+                Padding="0">
+
+                <local:ExtScrollViewer
+                    x:Name="PART_ContentHost"
+                    Focusable="false"
+                    Foreground="{TemplateBinding Foreground}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                    VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+
+            <!-- Is Disabled. -->
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+            </Trigger>
+
+            <!-- Is Mouse Over. -->
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" TargetName="border" Value="{Binding BackgroundMouseOverBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding BorderMouseOverBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+                <Setter Property="Foreground" TargetName="PART_ContentHost" Value="{Binding ForegroundMouseOverBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+            </Trigger>
+
+            <!-- Is Keyboard Focused. -->
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter Property="Background" TargetName="border" Value="{Binding BackgroundSelectedBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{Binding BorderSelectedBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+                <Setter Property="BorderBrush" TargetName="innerBorder" Value="{Binding BorderSelectedBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+                <Setter Property="Foreground" TargetName="PART_ContentHost" Value="{Binding ForegroundSelectedBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+            </Trigger>
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ExtTextBoxStyle" TargetType="{x:Type local:ExtTextBox}">
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Background" Value="{StaticResource ExtTextBox.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ExtTextBox.BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{StaticResource ExtTextBox.Foreground}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template" Value="{StaticResource TextBoxEx.ControlTemplate}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Width" Value="Auto"/>
+
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style.Triggers>
+            <MultiTrigger>
+
+                <!-- Is Text Selected?. -->
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{Binding BackgroundSelectedTextBrush, RelativeSource={StaticResource RelativeSelfTextBox}}"/>
+            </MultiTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

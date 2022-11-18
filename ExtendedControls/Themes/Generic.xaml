@@ -6,21 +6,33 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtButtonStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtCheckBoxStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtComboBoxItemStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtComboBoxStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtExpanderStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtListViewItemStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtListViewStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtSliderStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtScrollBarStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtScrollViewerStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtTabControlStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtTabItemStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtTextBoxStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/GridViewColumnHeaderStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource ExtButtonStyle}" TargetType="{x:Type local:ExtButton}"/>
     <Style BasedOn="{StaticResource ExtCheckBoxStyle}" TargetType="{x:Type local:ExtCheckBox}"/>
+    <Style BasedOn="{StaticResource ExtComboBoxItemStyle}" TargetType="{x:Type local:ExtComboBoxItem}"/>
+    <Style BasedOn="{StaticResource ExtComboBoxStyle}" TargetType="{x:Type local:ExtComboBox}"/>
     <Style BasedOn="{StaticResource ExtExpanderStyle}" TargetType="{x:Type local:ExtExpander}"/>
     <Style BasedOn="{StaticResource ExtListViewItemStyle}" TargetType="{x:Type local:ExtListViewItem}"/>
     <Style BasedOn="{StaticResource ExtListViewStyle}" TargetType="{x:Type local:ExtListView}"/>
+    <Style BasedOn="{StaticResource ExtSliderStyle}" TargetType="{x:Type local:ExtSlider}"/>
     <Style BasedOn="{StaticResource ExtScrollBarStyle}" TargetType="{x:Type local:ExtScrollBar}"/>
     <Style BasedOn="{StaticResource ExtScrollViewerStyle}" TargetType="{x:Type local:ExtScrollViewer}"/>
+    <Style BasedOn="{StaticResource ExtTabControlStyle}" TargetType="{x:Type local:ExtTabControl}"/>
+    <Style BasedOn="{StaticResource ExtTabItemStyle}" TargetType="{x:Type local:ExtTabItem}"/>
+    <Style BasedOn="{StaticResource ExtTextBoxStyle}" TargetType="{x:Type local:ExtTextBox}"/>
     <Style BasedOn="{StaticResource GridViewColumnHeaderStyle}" TargetType="{x:Type GridViewColumnHeader}"/>
 
 </ResourceDictionary>

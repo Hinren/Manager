@@ -1,0 +1,164 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExtendedControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <SolidColorBrush x:Key="ExtTabItem.Background">#0078D7</SolidColorBrush>
+    <SolidColorBrush x:Key="ExtTabItem.BorderBrush">#0078D7</SolidColorBrush>
+    <SolidColorBrush x:Key="ExtTabItem.Foreground">White</SolidColorBrush>
+
+    <RelativeSource x:Key="RelativeSelfTabItem" AncestorType="{x:Type local:ExtTabItem}"/>
+
+    <Style x:Key="ExtTabItem.FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="2"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="ExtTabItem.ControlTemplate" TargetType="{x:Type local:ExtTabItem}">
+        <Border
+            x:Name="templateRoot"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            Height="auto"
+            Margin="2"
+            SnapsToDevicePixels="true"
+            Width="auto">
+
+            <Border.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="0"/>
+                </TransformGroup>
+            </Border.LayoutTransform>
+
+            <Grid
+                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={StaticResource RelativeSelfTabItem}}"
+                Margin="{TemplateBinding Padding}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:PackIcon
+                    x:Name="packIcon"
+                    Foreground="{TemplateBinding Foreground}"
+                    Grid.Column="0"
+                    Kind="{TemplateBinding IconKind}"
+                    HorizontalAlignment="Center"
+                    Height="{TemplateBinding IconHeight}"
+                    Margin="{TemplateBinding IconMargin}"
+                    MaxHeight="{TemplateBinding IconMaxHeight}"
+                    MaxWidth="{TemplateBinding IconMaxWidth}"
+                    MinHeight="{TemplateBinding IconMinHeight}"
+                    MinWidth="{TemplateBinding IconMinWidth}"
+                    VerticalAlignment="Center"
+                    Width="{TemplateBinding IconWidth}"/>
+
+                <ContentPresenter
+                    x:Name="contentPresenter"
+                    ContentSource="Header"
+                    Focusable="False"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    Margin="0"
+                    RecognizesAccessKey="True"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    TextBlock.Foreground="{TemplateBinding Foreground}"
+                    VerticalAlignment="Center"/>
+
+            </Grid>
+
+        </Border>
+        <ControlTemplate.Triggers>
+
+            <!-- Is Left. -->
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                        </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <!-- Is Top. -->
+            <Trigger Property="TabStripPlacement" Value="Top">
+            </Trigger>
+
+            <!-- Is Right. -->
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <!-- Is Bottom. -->
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+            </Trigger>
+
+            <!-- No Icon. -->
+            <Trigger Property="IconKind" Value="{x:Static materialDesign:PackIconKind.None}">
+                <Setter Property="Visibility" TargetName="packIcon" Value="Collapsed"/>
+            </Trigger>
+
+            <!-- Is Mouse Over. -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="templateRoot" Value="{Binding BackgroundMouseOverBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding BorderMouseOverBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="Foreground" TargetName="packIcon" Value="{Binding ForegroundMouseOverBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{Binding ForegroundMouseOverBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+            </Trigger>
+
+            <!-- Is Selected. -->
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" TargetName="templateRoot" Value="{Binding BackgroundSelectedBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="BorderBrush" TargetName="templateRoot" Value="{Binding BorderSelectedBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="Foreground" TargetName="packIcon" Value="{Binding ForegroundSelectedBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="TextBlock.Foreground" TargetName="contentPresenter" Value="{Binding ForegroundSelectedBrushProperty, RelativeSource={StaticResource RelativeSelfTabItem}}"/>
+                <Setter Property="Panel.ZIndex" Value="1"/>
+            </Trigger>
+
+            <!-- Is Disabled. -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" TargetName="templateRoot" Value="0.56"/>
+            </Trigger>
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ExtTabItemStyle" TargetType="{x:Type local:ExtTabItem}">
+        <Setter Property="Background" Value="{StaticResource ExtTabItem.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ExtTabItem.BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ExtTabItem.FocusVisual}"/>
+        <Setter Property="Foreground" Value="{StaticResource ExtTabItem.Foreground}"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="MinWidth" Value="64"/>
+        <Setter Property="Padding" Value="6,2"/>
+        <Setter Property="Template" Value="{StaticResource ExtTabItem.ControlTemplate}"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Width" Value="auto"/>
+    </Style>
+
+</ResourceDictionary>

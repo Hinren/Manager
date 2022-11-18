@@ -20,3 +20,6 @@ dotnet_diagnostic.CS8602.severity = none
 
 # CS8603: Możliwe zwrócenie odwołania o wartości null.
 dotnet_diagnostic.CS8603.severity = none
+
+# CS8625: Nie można przekonwertować literału o wartości null na nienullowalny typ referencyjny.
+dotnet_diagnostic.CS8625.severity = none
