@@ -82,13 +82,13 @@ namespace ExtendedControls
             nameof(IconMaxHeight),
             typeof(double),
             typeof(ExtButton),
-            new PropertyMetadata(double.MaxValue));
+            new PropertyMetadata(double.NaN));
 
         public static readonly DependencyProperty IconMaxWidthProperty = DependencyProperty.Register(
             nameof(IconMaxWidth),
             typeof(double),
             typeof(ExtButton),
-            new PropertyMetadata(double.MaxValue));
+            new PropertyMetadata(double.NaN));
 
         public static readonly DependencyProperty IconMinHeightProperty = DependencyProperty.Register(
             nameof(IconMinHeight),

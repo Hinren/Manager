@@ -116,7 +116,7 @@
             </Trigger>
 
             <!-- ContentSide Left. -->
-            <Trigger Property="ContentSide" Value="Left">
+            <Trigger Property="ContentSide" Value="LEFT">
                 <Setter TargetName="contentPresenter" Property="Grid.Column" Value="0"/>
                 <Setter TargetName="contentPresenter" Property="Grid.Row" Value="1"/>
             </Trigger>
@@ -131,7 +131,7 @@
             </MultiTrigger>
 
             <!-- ContentSide Top. -->
-            <Trigger Property="ContentSide" Value="Top">
+            <Trigger Property="ContentSide" Value="TOP">
                 <Setter TargetName="contentPresenter" Property="Grid.Column" Value="1"/>
                 <Setter TargetName="contentPresenter" Property="Grid.Row" Value="0"/>
             </Trigger>
@@ -146,7 +146,7 @@
             </MultiTrigger>
 
             <!-- ContentSide Right. -->
-            <Trigger Property="ContentSide" Value="Right">
+            <Trigger Property="ContentSide" Value="RIGHT">
                 <Setter TargetName="contentPresenter" Property="Grid.Column" Value="2"/>
                 <Setter TargetName="contentPresenter" Property="Grid.Row" Value="1"/>
             </Trigger>
@@ -161,7 +161,7 @@
             </MultiTrigger>
 
             <!-- ContentSide Bottom. -->
-            <Trigger Property="ContentSide" Value="Bottom">
+            <Trigger Property="ContentSide" Value="BOTTOM">
                 <Setter TargetName="contentPresenter" Property="Grid.Column" Value="1"/>
                 <Setter TargetName="contentPresenter" Property="Grid.Row" Value="2"/>
             </Trigger>

@@ -1,4 +1,5 @@
-﻿using Hinren.ProjectManager.Pages.Base;
+﻿using Hinren.ProjectManager.Data.Settings;
+using Hinren.ProjectManager.Pages.Base;
 
 namespace Hinren.ProjectManager.Pages
 {
@@ -19,5 +20,9 @@ namespace Hinren.ProjectManager.Pages
 
         #endregion CLASS METHODS
 
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var config = ConfigurationManager.Instance;
+        }
     }
 }
