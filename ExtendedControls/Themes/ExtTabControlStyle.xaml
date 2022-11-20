@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:ExtendedControls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/TabItemExStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtTabItemStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <RelativeSource x:Key="RelativeSelfTabControl" AncestorType="{x:Type local:ExtTabControl}"/>
