@@ -5,7 +5,6 @@ namespace Common.Models.Snippet
     [XmlRoot(ElementName = "Code")]
     public class Code
     {
-
         [XmlAttribute(AttributeName = "Language")]
         public string Language { get; set; }
 
