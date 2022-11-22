@@ -31,12 +31,16 @@ namespace Hinren.ProjectManager.Pages
             var filePath = @"D:\Snipety porządek i nowe\DebuggerDisplayAttribute.snippet";
 
             // Declare this outside the 'using' block so we can access it later
-
-            using (var reader = new StreamReader(filePath))
+            XmlSerializer serializer = new XmlSerializer(typeof(CodeSnippet));
+            using (StringReader reader = new StringReader(filePath))
             {
-                var test1212 = (CodeSnippets)new XmlSerializer(typeof(CodeSnippets)).Deserialize(reader);
-                snippetSaver.SaveSnippetOnLocalPath(test1212);
+                var test12 = (CodeSnippet)serializer.Deserialize(reader);
             }
+            //using (var reader = new StreamReader(filePath))
+            //{
+            //    var test = (CodeSnippet)serializer.Deserialize(reader);
+            //    snippetSaver.SaveSnippetOnLocalPath(test1212);
+            //}
 
             var path = test.CsharpLocalAppPath();
         }

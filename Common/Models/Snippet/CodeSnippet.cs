@@ -2,9 +2,10 @@
 
 namespace Common.Models.Snippet
 {
-    [XmlRoot(ElementName = "CodeSnippet")]
-    public class CodeSnippet
-    {
+	[XmlRoot(ElementName = "CodeSnippet")]
+	public class CodeSnippet
+	{
+
 		[XmlElement(ElementName = "Header")]
 		public Header Header { get; set; }
 
