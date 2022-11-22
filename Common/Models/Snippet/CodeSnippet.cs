@@ -2,19 +2,23 @@
 
 namespace Common.Models.Snippet
 {
-    [XmlRoot(ElementName = "CodeSnippet")]
-    public class CodeSnippet
-    {
-        [XmlElement(ElementName = "Header")]
-        public Header Header { get; set; }
+	[XmlRoot(ElementName = "CodeSnippet")]
+	public class CodeSnippet
+	{
 
-        [XmlElement(ElementName = "Snippet")]
-        public Snippet Snippet { get; set; }
+		[XmlElement(ElementName = "Header")]
+		public Header Header { get; set; }
 
-        [XmlAttribute(AttributeName = "Format")]
-        public string Format { get; set; }
+		[XmlElement(ElementName = "Snippet")]
+		public Snippet Snippet { get; set; }
 
-        [XmlText]
-        public string Text { get; set; }
-    }
+		[XmlAttribute(AttributeName = "Format")]
+		public DateTime Format { get; set; }
+
+		[XmlAttribute(AttributeName = "xmlns")]
+		public string Xmlns { get; set; }
+
+		[XmlText]
+		public string Text { get; set; }
+	}
 }

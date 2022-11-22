@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\DomainModel.csproj" />
+    <ProjectReference Include="..\DomainLogic\DomainLogic.csproj" />
     <ProjectReference Include="..\ExtendedControls\ExtendedControls.csproj" />
   </ItemGroup>
 

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Common\DomainModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,4 @@
-﻿using DomainModel.Models.SettingsUserApp;
-using Hinren.ProjectManager.Data.MainMenu;
+﻿using Hinren.ProjectManager.Data.MainMenu;
 using Hinren.ProjectManager.Pages;
 using Hinren.ProjectManager.Pages.Base;
 using MaterialDesignThemes.Wpf;
