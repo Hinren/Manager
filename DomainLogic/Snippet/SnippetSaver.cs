@@ -1,9 +1,11 @@
 ﻿using Common.Models.Snippet;
 using DomainLogic.Interfaces.Snippet;
+using DomainModel.Models;
 using System;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace DomainLogic.Snippet
@@ -47,46 +49,56 @@ namespace DomainLogic.Snippet
                         string destinationPath = string.Empty;
                         var condeSnippet = (CodeSnippets)reader.Deserialize(readSnippet);
                         var fileName = _getFileName.Match(filePath).Value;
-                        switch (condeSnippet.CodeSnippet.Snippet.Code.Language)
+                        foreach (var codeSnippet in condeSnippet.CodeSnippet)
                         {
-                            case "CSharp":
-                                destinationPath = Path.Combine(_snippetPath.CsharpDestinationPath(), fileName);
-                                break;
-                            case "XAML":
-                                destinationPath = Path.Combine(_snippetPath.XAMLDestinationPath(), fileName);
-                                break;
-                            case "css":
-                                destinationPath = Path.Combine(_snippetPath.CSSDestinationPath(), fileName);
-                                break;
-                            case "html":
-                                destinationPath = Path.Combine(_snippetPath.HTMLDestinationPath(), fileName);
-                                break;
-                            case "JavaScript":
-                                destinationPath = Path.Combine(_snippetPath.JavaScriptDestinationPath(), fileName);
-                                break;
-                            case "TypeScript":
-                                destinationPath = Path.Combine(_snippetPath.TypeScriptDestinationPath(), fileName);
-                                break;
-                            default:
-                                throw new NotImplementedException();
+                            switch (codeSnippet.Snippet.Code.Language)
+                            {
+                                case "CSharp":
+                                    destinationPath = Path.Combine(_snippetPath.CsharpDestinationPath(), fileName);
+                                    break;
+                                case "XAML":
+                                    destinationPath = Path.Combine(_snippetPath.XAMLDestinationPath(), fileName);
+                                    break;
+                                case "css":
+                                    destinationPath = Path.Combine(_snippetPath.CSSDestinationPath(), fileName);
+                                    break;
+                                case "html":
+                                    destinationPath = Path.Combine(_snippetPath.HTMLDestinationPath(), fileName);
+                                    break;
+                                case "JavaScript":
+                                    destinationPath = Path.Combine(_snippetPath.JavaScriptDestinationPath(), fileName);
+                                    break;
+                                case "TypeScript":
+                                    destinationPath = Path.Combine(_snippetPath.TypeScriptDestinationPath(), fileName);
+                                    break;
+                                default:
+                                    throw new NotImplementedException();
+                            }
+                            if (!File.Exists(destinationPath))
+                                File.Copy(filePath, destinationPath);
+                            else
+                                File.Replace(filePath, destinationPath, null);
                         }
-
-                        if (!File.Exists(destinationPath))
-                            File.Copy(filePath, destinationPath);
-                        else
-                            File.Replace(filePath, destinationPath, null);
                     }
                 }
             }
         }
-
         #region Helper methods
 
-        private void SaveSnippet(CodeSnippets snippet, string path)
+        private void SaveSnippet(CodeSnippet snippet, string path)
         {
-            string json = JsonSerializer.Serialize(snippet);
-            var destinationPath = path + "/" + snippet.CodeSnippet.Header.Shortcut;
-            File.WriteAllText(destinationPath, json);
+            var newSnippets = new CodeSnippets() { CodeSnippet = new List<CodeSnippet>() { snippet} };
+            var xmlserializer = new XmlSerializer(typeof(CodeSnippets));
+            var stringWriter = new Utf8StringWriter();
+            var xml = "";
+
+            using (var writer = XmlWriter.Create(stringWriter))
+            {
+                xmlserializer.Serialize(writer, newSnippets);
+                xml = stringWriter.ToString();
+            }
+            var destinationPath = path + "\\" + newSnippets.CodeSnippet[0].Header.Shortcut + ".snippet";
+            File.WriteAllText(destinationPath, xml);
         }
 
         private void CreateFoldersIdDontExist(string path)
@@ -97,41 +109,34 @@ namespace DomainLogic.Snippet
 
         private void SaveSnippet(CodeSnippets snippet)
         {
-            string path = string.Empty;
-            switch (snippet.CodeSnippet.Snippet.Code.Language)
+            foreach (var codeSnippet in snippet.CodeSnippet)
             {
-                case "CSharp":
-                    path = _snippetPath.CsharpLocalAppPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                case "XAML":
-                    path = _snippetPath.XAMLLocalAppPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                case "css":
-                    path = _snippetPath.CSSLocalAppPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                case "html":
-                    path = _snippetPath.HTMLLocalAppPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                case "JavaScript":
-                    path = _snippetPath.JavaScriptLocalAppPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                case "TypeScript":
-                    path = _snippetPath.TypeScriptDestinationPath();
-                    CreateFoldersIdDontExist(path);
-                    SaveSnippet(snippet, path);
-                    break;
-                default:
-                    throw new NotImplementedException();
+                string path = string.Empty;
+                switch (codeSnippet.Snippet.Code.Language)
+                {
+                    case "CSharp":
+                        path = _snippetPath.CsharpLocalAppPath();
+                        break;
+                    case "XAML":
+                        path = _snippetPath.XAMLLocalAppPath();
+                        break;
+                    case "css":
+                        path = _snippetPath.CSSLocalAppPath();
+                        break;
+                    case "html":
+                        path = _snippetPath.HTMLLocalAppPath();
+                        break;
+                    case "JavaScript":
+                        path = _snippetPath.JavaScriptLocalAppPath();
+                        break;
+                    case "TypeScript":
+                        path = _snippetPath.TypeScriptDestinationPath();
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+                CreateFoldersIdDontExist(path);
+                SaveSnippet(codeSnippet, path);
             }
         }
 

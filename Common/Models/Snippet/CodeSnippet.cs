@@ -3,9 +3,9 @@
 namespace Common.Models.Snippet
 {
 	[XmlRoot(ElementName = "CodeSnippet")]
+	//[XmlType("CodeSnippet")]
 	public class CodeSnippet
 	{
-
 		[XmlElement(ElementName = "Header")]
 		public Header Header { get; set; }
 
@@ -13,10 +13,7 @@ namespace Common.Models.Snippet
 		public Snippet Snippet { get; set; }
 
 		[XmlAttribute(AttributeName = "Format")]
-		public DateTime Format { get; set; }
-
-		[XmlAttribute(AttributeName = "xmlns")]
-		public string Xmlns { get; set; }
+		public string Format { get; set; }
 
 		[XmlText]
 		public string Text { get; set; }
