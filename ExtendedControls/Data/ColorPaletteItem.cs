@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -54,6 +55,14 @@ namespace ExtendedControls.Data
         //  METHODS
 
         #region CLASS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> ColorPaletteItem class constructor. </summary>
+        [JsonConstructor]
+        public ColorPaletteItem()
+        {
+            //
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> ColorPaletteItem class constructor. </summary>
