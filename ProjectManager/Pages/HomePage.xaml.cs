@@ -1,17 +1,15 @@
-﻿using Common.Models.Snippet;
+﻿using DomainLogic.Interfaces.Snippet;
 using DomainLogic.Snippet;
 using Hinren.ProjectManager.Data.Settings;
 using Hinren.ProjectManager.Pages.Base;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
 
 namespace Hinren.ProjectManager.Pages
 {
     public partial class HomePage : BasePage
     {
         //  METHODS
-        private SnippetSaver snippetSaver = new SnippetSaver();
+        private ISnippetSaver snippetSaver = new SnippetSaver();
+        private ISnippetReader snippetReader = new SnippetReader();
         #region CLASS METHODS
 
         //  --------------------------------------------------------------------------------
@@ -27,20 +25,8 @@ namespace Hinren.ProjectManager.Pages
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var config = ConfigurationManager.Instance;
-            //temporary testing logic here
-            //var filePath = @"D:\Snipety porządek i nowe\property_long.snippet";
-
-            //var snippet = new CodeSnippets();
-            //using (var sr = new StreamReader(filePath))
-            //{
-            //    XmlSerializer serializer = new XmlSerializer(typeof(CodeSnippets));
-
-            //    StreamReader reader = new StreamReader(filePath);
-            //    snippet = (CodeSnippets)serializer.Deserialize(reader);
-            //}
-
-            //snippetSaver.SaveSnippetOnLocalPath(snippet);
-
+            snippetSaver.SaveSnippetsOnLocalPath(@"D:\REPOSITORY\Snippets");
+            snippetSaver.SaveSnippetsOnVisualStudioPath();
         }
     }
 }

@@ -4,8 +4,9 @@ namespace DomainLogic.Interfaces.Snippet
 {
     public interface ISnippetSaver
     {
-        public void SaveSnippetOnLocalPath(CodeSnippets snippet);
-        public void SaveSnippetsOnLocalPath(List<CodeSnippets> snippets);
+        public void SaveSnippetOnLocalPath(string path);
+        public void SaveSnippetsOnLocalPath();
+        public void SaveSnippetsOnLocalPath(string path);
         public void SaveSnippetsOnVisualStudioPath();
     }
 }
