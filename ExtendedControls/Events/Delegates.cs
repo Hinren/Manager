@@ -9,6 +9,14 @@ namespace ExtendedControls.Events
     public class Delegates
     {
 
+        //  COLORS
+
+        /// <summary> Method invoked after changing color selection in ColorsPaletteEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Colors Palette Selection Changed Event Arguments. </param>
+        public delegate void ColorsPalleteSelectionChanged(object sender, ColorsPaletteSelectionChangedEventArgs e);
+
+
         //  TEXT BOXES
 
         /// <summary> Method invoked after modifying text. </summary>

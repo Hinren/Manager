@@ -56,6 +56,8 @@ namespace Hinren.ProjectManager.Components
         //  EVENTS
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<EventArgs> OnBackItemSelect;
+        public event EventHandler<EventArgs> OnHeaderItemSelect;
 
 
         //  VARIABLES
@@ -64,6 +66,10 @@ namespace Hinren.ProjectManager.Components
         private bool expanded = false;
         private double expandMenuStoryboardTargetWidth = DEFAULT_COLLAPSED_WIDTH;
         private ObservableCollection<MainMenuItem> menuItems;
+        private MainMenuItem menuBackItem;
+        private MainMenuItem menuHeaderItem;
+        private bool menuBackItemVisible = false;
+        private bool menuHeaderItemVisible = true;
 
 
         //  GETTERS & SETTERS
@@ -121,11 +127,37 @@ namespace Hinren.ProjectManager.Components
         public ObservableCollection<MainMenuItem> MenuItems
         {
             get => menuItems;
-            set
+            private set
             {
                 menuItems = value;
                 menuItems.CollectionChanged += OnMenuItemsCollectionChanged;
                 OnPropertyChanged(nameof(MenuItems));
+            }
+        }
+
+        public bool MenuBackItemVisible
+        {
+            get => menuBackItem != null ? menuBackItem.Visible : menuBackItemVisible;
+            set
+            {
+                if (menuBackItem != null)
+                    menuBackItem.Visible = value;
+
+                menuBackItemVisible = value;
+                OnPropertyChanged(nameof(MenuBackItemVisible));
+            }
+        }
+
+        public bool MenuHeaderItemVisible
+        {
+            get => menuHeaderItem != null ? menuHeaderItem.Visible : menuHeaderItemVisible;
+            set
+            {
+                if (menuHeaderItem != null)
+                    menuHeaderItem.Visible = value;
+
+                menuHeaderItemVisible = value;
+                OnPropertyChanged(nameof(MenuHeaderItemVisible));
             }
         }
 
@@ -230,6 +262,15 @@ namespace Hinren.ProjectManager.Components
         /// <summary> Method invoked after selecting header menu item. </summary>
         /// <param name="sender"> Object from which method has been invoked. </param>
         /// <param name="e"> Event Arguments. </param>
+        private void OnBackItemSelected(object sender, EventArgs e)
+        {
+            OnBackItemSelect?.Invoke(sender, e);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after selecting header menu item. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Event Arguments. </param>
         private void OnHeaderItemSelected(object sender, EventArgs e)
         {
             if (!expandCollapseAnimationStarted)
@@ -239,6 +280,8 @@ namespace Hinren.ProjectManager.Components
                 else
                     ExpandMainMenu();
             }
+
+            OnHeaderItemSelect?.Invoke(sender, e);
         }
 
         #endregion MENU ITEMS INTERACTION METHODS
@@ -250,7 +293,43 @@ namespace Hinren.ProjectManager.Components
         /// <param name="menuItem"> Main menu item. </param>
         public void AddMenuItem(MainMenuItem menuItem)
         {
-            MenuItems.Add(menuItem);
+            if (menuItem != null && !MenuItems.Contains(menuItem))
+                MenuItems.Add(menuItem);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Add items to main menu. </summary>
+        /// <param name="menuItems"> List of main menu items to add. </param>
+        public void AddMenuItems(List<MainMenuItem> menuItems)
+        {
+            if (menuItems != null)
+                menuItems.ForEach(i => AddMenuItem(i));
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Remove item from main menu. </summary>
+        /// <param name="menuItem"> Menu item to remove. </param>
+        public void RemoveItem(MainMenuItem menuItem)
+        {
+            if (MenuItems.Contains(menuItem) && menuItem != menuHeaderItem && menuItem != menuBackItem)
+                MenuItems.Remove(menuItem);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Remove items from main menu. </summary>
+        /// <param name="menuItems"> List of menu items to remove. </param>
+        public void RemoveItems(List<MainMenuItem> menuItems)
+        {
+            if (menuItems != null)
+                menuItems.ForEach(i => RemoveItem(i));
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Clear main menu. </summary>
+        public void ClearItems()
+        {
+            while (MenuItems.Count > 2)
+                MenuItems.RemoveAt(2);
         }
 
         #endregion MENU ITEMS MANAGEMENT METHODS
@@ -321,9 +400,20 @@ namespace Hinren.ProjectManager.Components
         /// <summary> Setup main menu default items and items container. </summary>
         private void SetupMainMenu()
         {
+            menuHeaderItem = new MainMenuItem("Main Menu", PackIconKind.HamburgerMenu, OnHeaderItemSelected)
+            {
+                Visible = menuHeaderItemVisible
+            };
+
+            menuBackItem = new MainMenuItem("Back", PackIconKind.ArrowLeft, OnBackItemSelected)
+            {
+                Visible = menuBackItemVisible
+            };
+
             var menuItems = new List<MainMenuItem>()
             {
-                new MainMenuItem("Main Menu", PackIconKind.HamburgerMenu, OnHeaderItemSelected),
+                menuHeaderItem,
+                menuBackItem
             };
 
             MenuItems = new ObservableCollection<MainMenuItem>(menuItems);

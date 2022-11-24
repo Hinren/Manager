@@ -1,6 +1,8 @@
-﻿using Hinren.ProjectManager.Data.MainMenu;
+﻿using Hinren.ProjectManager.Components;
+using Hinren.ProjectManager.Data.MainMenu;
 using Hinren.ProjectManager.Pages;
 using Hinren.ProjectManager.Pages.Base;
+using Hinren.ProjectManager.Pages.Events;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Windows;
@@ -19,6 +21,11 @@ namespace Hinren.ProjectManager.Windows
             get => pagesControl;
         }
 
+        public MainMenuControl MainMenuController
+        {
+            get => mainMenuControl;
+        }
+
 
         //  METHODS
 
@@ -29,12 +36,20 @@ namespace Hinren.ProjectManager.Windows
         public MainWindow()
         {
             InitializeComponent();
-            SetupMainMenu();
         }
 
         #endregion CLASS METHODS
 
         #region MAIN MENU ITEMS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after selecting back main menu item. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Event Arguments. </param>
+        private void OnBackMenuItemSelect(object sender, EventArgs e)
+        {
+            PagesController.GoBack();
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after selecting home main menu item. </summary>
@@ -46,27 +61,77 @@ namespace Hinren.ProjectManager.Windows
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after selecting settings main menu item. </summary>
+        /// <summary> Method invoked after selecting appearance settings main menu item. </summary>
         /// <param name="sender"> Object from which method has been invoked. </param>
         /// <param name="e"> Event Arguments. </param>
-        private void OnSettingsMenuItemSelect(object sender, EventArgs e)
+        private void OnSettingsAppearanceMenuItemSelect(object sender, EventArgs e)
         {
-            PagesController.LoadPage<UserSettingsPage>();
+            PagesController.LoadPage<SettingsAppearancePage>();
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after selecting general settings main menu item. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Event Arguments. </param>
+        private void OnSettingsGeneralMenuItemSelect(object sender, EventArgs e)
+        {
+            PagesController.LoadPage<SettingsGeneralPage>();
+        }
+        
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after selecting info settings main menu item. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Event Arguments. </param>
+        private void OnSettingsInfoMenuItemSelect(object sender, EventArgs e)
+        {
+            PagesController.LoadPage<SettingsInfoPage>();
         }
 
         #endregion MAIN MENU ITEMS METHODS
 
-        #region SETUP METHODS
+        #region MAIN MENU SETUP METHODS
 
         //  --------------------------------------------------------------------------------
         /// <summary> Setup main menu items. </summary>
         private void SetupMainMenu()
         {
-            mainMenuControl.AddMenuItem(new MainMenuItem("Home", PackIconKind.Home, OnHomeMenuItemSelect));
-            mainMenuControl.AddMenuItem(new MainMenuItem("Settings", PackIconKind.GearOutline, OnSettingsMenuItemSelect));
+            MainMenuController.ClearItems();
+            MainMenuController.MenuBackItemVisible = false;
+            MainMenuController.AddMenuItem(new MainMenuItem("Home", PackIconKind.Home, OnHomeMenuItemSelect));
+            MainMenuController.AddMenuItem(new MainMenuItem("Settings", PackIconKind.GearOutline, OnSettingsGeneralMenuItemSelect));
         }
 
-        #endregion SETUP METHODS
+        //  --------------------------------------------------------------------------------
+        /// <summary> Setup settings menu items. </summary>
+        private void SetupSettingsMenu()
+        {
+            MainMenuController.ClearItems();
+            MainMenuController.MenuBackItemVisible = true;
+            MainMenuController.AddMenuItem(new MainMenuItem("General", PackIconKind.Gear, OnSettingsGeneralMenuItemSelect));
+            MainMenuController.AddMenuItem(new MainMenuItem("Appearance", PackIconKind.ColorLens, OnSettingsAppearanceMenuItemSelect));
+            MainMenuController.AddMenuItem(new MainMenuItem("Informations", PackIconKind.InfoCircle, OnSettingsInfoMenuItemSelect));
+        }
+
+        #endregion MAIN MENU SETUP METHODS
+
+        #region PAGES MANAGEMENT METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after loading any page by pages controller. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Page Loaded Event Arguments. </param>
+        private void OnPageLoaded(object sender, PageLoadedEventArgs e)
+        {
+            var pageType = e.Page.GetType();
+
+            if (pageType == typeof(HomePage))
+                SetupMainMenu();
+
+            else if (pageType == typeof(SettingsGeneralPage))
+                SetupSettingsMenu();
+        }
+
+        #endregion PAGES MANAGEMENT METHODS
 
         #region WINDOW METHODS
 
