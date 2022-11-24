@@ -1,0 +1,21 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
+    xmlns:settings="clr-namespace:Hinren.ProjectManager.Data.Settings">
+
+    <x:Static x:Key="ConfigManager" Member="settings:ConfigurationManager.Instance" />
+
+    <Style x:Key="BaseExtComboBoxItemStyle" TargetType="{x:Type extctrl:ExtComboBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BackgroundMouseOverBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderMouseOverBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ForegroundMouseOverBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BackgroundSelectedBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderSelectedBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ForegroundSelectedBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+    </Style>
+
+</ResourceDictionary>

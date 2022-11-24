@@ -98,7 +98,7 @@ namespace Hinren.ProjectManager.Windows
             MainMenuController.ClearItems();
             MainMenuController.MenuBackItemVisible = false;
             MainMenuController.AddMenuItem(new MainMenuItem("Home", PackIconKind.Home, OnHomeMenuItemSelect));
-            MainMenuController.AddMenuItem(new MainMenuItem("Settings", PackIconKind.GearOutline, OnSettingsGeneralMenuItemSelect));
+            MainMenuController.AddMenuItem(new MainMenuItem("Settings", PackIconKind.Gear, OnSettingsGeneralMenuItemSelect));
         }
 
         //  --------------------------------------------------------------------------------

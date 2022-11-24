@@ -1,7 +1,9 @@
 ﻿using ExtendedControls.Data;
 using ExtendedControls.Events;
 using Hinren.ProjectManager.Data.Settings;
+using Hinren.ProjectManager.Data.Settings.Static;
 using Hinren.ProjectManager.Pages.Base;
+using Hinren.ProjectManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,6 +28,7 @@ namespace Hinren.ProjectManager.Pages
         //  VARIABLES
 
         private ObservableCollection<ColorPaletteItem> accentUsedColors;
+        private ObservableCollection<AppearanceTheme> appearanceThemes;
 
         public ConfigurationManager ConfigurationManager { get; private set; }
 
@@ -39,6 +42,16 @@ namespace Hinren.ProjectManager.Pages
             {
                 accentUsedColors = value;
                 OnPropertyChanged(nameof(AccentUsedColors));
+            }
+        }
+
+        public ObservableCollection<AppearanceTheme> AppearanceThemes
+        {
+            get => appearanceThemes;
+            set
+            {
+                appearanceThemes = value;
+                OnPropertyChanged(nameof(AppearanceThemes));
             }
         }
 
@@ -57,6 +70,8 @@ namespace Hinren.ProjectManager.Pages
             AccentUsedColors = new ObservableCollection<ColorPaletteItem>(
                 ConfigurationManager.Configuration.UIConfiguration.UsedAccentColors ?? 
                     UIConfiguration.Default.UsedAccentColors);
+
+            AppearanceThemes = new ObservableCollection<AppearanceTheme>(EnumHelper.ListOf<AppearanceTheme>());
 
             InitializeComponent();
         }
