@@ -29,7 +29,11 @@
                     <StackPanel
                         Orientation="Vertical">
 
-                        <TextBox
+                        <TextBlock
+                            Style="{DynamicResource ResourceKey=SettingsContentTextBlockStyle}"
+                            Text="UserName:"/>
+
+                        <extctrl:ExtTextBox
                             Margin="4"
                             Text="{Binding ConfigurationManager.UserName}"/>
 

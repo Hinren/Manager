@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="clr-namespace:Hinren.ProjectManager.Converters.Settings"
     xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
     xmlns:local="clr-namespace:Hinren.ProjectManager.Pages"
     mc:Ignorable="d"
@@ -15,23 +16,60 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
 
+    <base:BasePage.Resources>
+        <ResourceDictionary>
+            
+            <!-- CONVERTERS -->
+
+            <converters:AppearanceThemeNameConverter x:Key="AppearanceThemeNameConverter"/>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="AppearanceThemeDataTemplate">
+                <TextBlock
+                    Text="{Binding Converter={StaticResource AppearanceThemeNameConverter}}"/>
+            </DataTemplate>
+            
+        </ResourceDictionary>
+    </base:BasePage.Resources>
+
     <Grid
         Margin="4">
 
-        <extctrl:ExtScrollViewer>
+        <extctrl:ExtScrollViewer
+            VerticalScrollBarVisibility="Visible">
 
             <StackPanel
                 Orientation="Vertical">
 
-                <TextBlock
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    Text="Accent Color:"/>
+                <extctrl:ExtExpander
+                    Header="Theme"
+                    IsExpanded="True">
 
-                <extctrl:ColorsPalette
-                    Margin="0,4,0,0"
-                    UsedColors="{Binding AccentUsedColors}"
-                    ColorSelectionChanged="ColorsPalette_ColorSelectionChanged"/>
+                    <StackPanel
+                        Orientation="Vertical">
+
+                        <TextBlock
+                            Style="{DynamicResource ResourceKey=SettingsHeaderTextBlockStyle}"
+                            Text="Theme:"/>
+
+                        <extctrl:ExtComboBox
+                            ItemsSource="{Binding AppearanceThemes}"
+                            ItemTemplate="{StaticResource AppearanceThemeDataTemplate}"
+                            SelectedItem="{Binding ConfigurationManager.AppearanceTheme}"
+                            Margin="0,0,0,16"/>
+
+                        <TextBlock
+                            Style="{DynamicResource ResourceKey=SettingsHeaderTextBlockStyle}"
+                            Text="Accent Color:"/>
+
+                        <extctrl:ColorsPalette
+                            UsedColors="{Binding AccentUsedColors}"
+                            ColorSelectionChanged="ColorsPalette_ColorSelectionChanged"/>
+
+                    </StackPanel>
+
+                </extctrl:ExtExpander>
 
             </StackPanel>
 

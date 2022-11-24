@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <RootNamespace>Hinren.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Authors>Patryk Wiśniewski, Kamil Karpiński</Authors>
+    <Copyright>Copyright (c) Hinren 2022</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

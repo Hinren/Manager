@@ -82,11 +82,17 @@ namespace ExtendedControls
             typeof(ExtScrollViewer),
             new PropertyMetadata(StaticResources.DEFAULT_CORNER_RADIUS));
 
-        public static readonly DependencyProperty ThumbMarginProperty = DependencyProperty.Register(
-            nameof(ThumbMargin),
+        public static readonly DependencyProperty ThumbHorizontalMarginProperty = DependencyProperty.Register(
+            nameof(ThumbHorizontalMargin),
             typeof(Thickness),
             typeof(ExtScrollViewer),
-            new PropertyMetadata(new Thickness(4)));
+            new PropertyMetadata(new Thickness(0,4,0,4)));
+
+        public static readonly DependencyProperty ThumbVerticalMarginProperty = DependencyProperty.Register(
+            nameof(ThumbVerticalMargin),
+            typeof(Thickness),
+            typeof(ExtScrollViewer),
+            new PropertyMetadata(new Thickness(4,0,4,0)));
 
         public static readonly DependencyProperty ScrollBarVerticalWidthProperty = DependencyProperty.Register(
             nameof(ScrollBarVerticalWidth),
@@ -216,13 +222,23 @@ namespace ExtendedControls
             }
         }
 
-        public Thickness ThumbMargin
+        public Thickness ThumbHorizontalMargin
         {
-            get => (Thickness)GetValue(ThumbMarginProperty);
+            get => (Thickness)GetValue(ThumbHorizontalMarginProperty);
             set
             {
-                SetValue(ThumbMarginProperty, value);
-                OnPropertyChanged(nameof(ThumbMargin));
+                SetValue(ThumbHorizontalMarginProperty, value);
+                OnPropertyChanged(nameof(ThumbHorizontalMargin));
+            }
+        }
+
+        public Thickness ThumbVerticalMargin
+        {
+            get => (Thickness)GetValue(ThumbVerticalMarginProperty);
+            set
+            {
+                SetValue(ThumbVerticalMarginProperty, value);
+                OnPropertyChanged(nameof(ThumbVerticalMargin));
             }
         }
 

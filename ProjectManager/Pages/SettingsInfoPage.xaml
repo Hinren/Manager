@@ -23,30 +23,41 @@
             <StackPanel
                 Orientation="Vertical">
 
-                <TextBlock>
-                    <Run Text="TITLE: "/>
-                    <Run Text="{Binding ApplicationTitle}"/>
-                </TextBlock>
+                <TextBlock
+                    Style="{DynamicResource SettingsHeaderTextBlockStyle}"
+                    Text="Application:"/>
 
-                <TextBlock>
-                    <Run Text="NAME: "/>
-                    <Run Text="{Binding ApplicationName}"/>
-                </TextBlock>
+                <TextBlock
+                    Margin="0,0,0,16"
+                    Style="{DynamicResource SettingsContentTextBlockStyle}"
+                    Text="{Binding ApplicationTitle}"/>
 
-                <TextBlock>
-                    <Run Text="COMPANY: "/>
-                    <Run Text="{Binding ApplicationCompany}"/>
-                </TextBlock>
+                <TextBlock
+                    Style="{DynamicResource SettingsHeaderTextBlockStyle}"
+                    Text="Company:"/>
 
-                <TextBlock>
-                    <Run Text="COPYRIGHT: "/>
-                    <Run Text="{Binding ApplicationCopyright}"/>
-                </TextBlock>
+                <TextBlock
+                    Margin="0,0,0,16"
+                    Style="{DynamicResource SettingsContentTextBlockStyle}"
+                    Text="{Binding ApplicationCompany}"/>
 
-                <TextBlock>
-                    <Run Text="VERSION: "/>
-                    <Run Text="{Binding ApplicationVersion}"/>
-                </TextBlock>
+                <TextBlock
+                    Style="{DynamicResource SettingsHeaderTextBlockStyle}"
+                    Text="Copyrights:"/>
+
+                <TextBlock
+                    Margin="0,0,0,16"
+                    Style="{DynamicResource SettingsContentTextBlockStyle}"
+                    Text="{Binding ApplicationCopyright}"/>
+
+                <TextBlock
+                    Style="{DynamicResource SettingsHeaderTextBlockStyle}"
+                    Text="Version:"/>
+
+                <TextBlock
+                    Margin="0,0,0,16"
+                    Style="{DynamicResource SettingsContentTextBlockStyle}"
+                    Text="{Binding ApplicationVersion}"/>
 
             </StackPanel>
             

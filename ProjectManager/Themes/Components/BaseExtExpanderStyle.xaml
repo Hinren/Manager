@@ -7,14 +7,15 @@
     <x:Static x:Key="ConfigManager" Member="settings:ConfigurationManager.Instance" />
 
     <Style x:Key="BaseExtExpanderStyle" TargetType="{x:Type extctrl:ExtExpander}">
+        <Setter Property="ArrowBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ArrowMouseOverBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ArrowPressedBrush" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="Background" Value="{Binding AppearanceBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="Foreground" Value="{Binding AppearanceForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="HeaderBackgroundBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="HeaderBorderBrush" Value="Transparent"/>
         <Setter Property="HeaderForegroundBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
-        <Setter Property="ArrowBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
-        <Setter Property="ArrowMouseOverBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
-        <Setter Property="ArrowPressedBrush" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="Padding" Value="8"/>
     </Style>
     
 </ResourceDictionary>

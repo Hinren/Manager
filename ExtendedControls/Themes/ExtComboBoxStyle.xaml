@@ -199,7 +199,7 @@
                     Foreground="{TemplateBinding DropDownIconBrush}"
                     Grid.ColumnSpan="2"
                     IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                    Style="{StaticResource ComboBoxEx.ToggleButton}"/>
+                    Style="{StaticResource ExtComboBox.ToggleButton}"/>
 
                 <ContentPresenter
                     x:Name="contentPresenter"
@@ -374,7 +374,7 @@
                     Foreground="{TemplateBinding DropDownIconBrush}"
                     Grid.ColumnSpan="2"
                     IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                    Style="{StaticResource ComboBoxEx.ToggleButton}"/>
+                    Style="{StaticResource ExtComboBox.ToggleButton}"/>
 
                 <Border
                     x:Name="border">
@@ -384,7 +384,7 @@
                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                         Margin="{TemplateBinding Padding}"
-                        Style="{StaticResource EditableComboBoxEx.TextBox}"
+                        Style="{StaticResource EditableExtComboBox.TextBox}"
                         VerticalContentAlignment="Center"/>
                 </Border>
             </Grid>
