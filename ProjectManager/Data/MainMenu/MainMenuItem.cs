@@ -17,6 +17,7 @@ namespace Hinren.ProjectManager.Data.MainMenu
 
         private PackIconKind iconKind = PackIconKind.None;
         private string title = string.Empty;
+        private bool visible = true;
 
 
         //  GETTERS & SETTERS
@@ -38,6 +39,16 @@ namespace Hinren.ProjectManager.Data.MainMenu
             {
                 title = value;
                 OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        public bool Visible
+        {
+            get => visible;
+            set
+            {
+                visible = value;
+                OnPropertyChanged(nameof(Visible));
             }
         }
 

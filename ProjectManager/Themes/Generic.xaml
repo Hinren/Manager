@@ -1,12 +1,25 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
     xmlns:pages="clr-namespace:Hinren.ProjectManager.Pages.Base">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/Components/BaseColorsPaletteStyle.xaml"/>
+        <ResourceDictionary Source="/Themes/Components/BaseExtButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Themes/Components/BaseExtExpanderStyle.xaml"/>
+        <ResourceDictionary Source="/Themes/Components/BaseExtListViewItemStyle.xaml"/>
+        <ResourceDictionary Source="/Themes/Components/BaseTextBlockStyle.xaml"/>
         <ResourceDictionary Source="/Themes/Pages/BasePageStyle.xaml"/>
+        <ResourceDictionary Source="/Themes/Windows/BaseWindowStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <Style BasedOn="{StaticResource BaseColorsPaletteStyle}" TargetType="{x:Type extctrl:ColorsPalette}"/>
+    <Style BasedOn="{StaticResource BaseExtButtonStyle}" TargetType="{x:Type extctrl:ExtButton}"/>
+    <Style BasedOn="{StaticResource BaseExtExpanderStyle}" TargetType="{x:Type extctrl:ExtExpander}"/>
+    <Style BasedOn="{StaticResource BaseExtListViewItemStyle}" TargetType="{x:Type extctrl:ExtListViewItem}"/>
+    <Style BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="{x:Type TextBlock}"/>
     <Style BasedOn="{StaticResource BasePageStyle}" TargetType="{x:Type pages:BasePage}"/>
+    <Style x:Key="WindowDefaultStyle" BasedOn="{StaticResource BaseWindowStyle}" TargetType="{x:Type Window}"/>
 
 </ResourceDictionary>

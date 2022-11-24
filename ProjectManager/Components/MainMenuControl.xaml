@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Hinren.ProjectManager.Components"
+    xmlns:extconv="clr-namespace:ExtendedControls.Converters;assembly=ExtendedControls"
     xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
@@ -15,7 +16,14 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             
+            <!-- CONVERTERS -->
+
+            <extconv:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+
             <!-- STORYBOARDS -->
 
             <Storyboard x:Key="ExpandCollapseMainMenuStoryboard" Completed="ExpandCollapseMainMenuStoryboard_Completed">
@@ -29,9 +37,10 @@
 
             <!-- STYLES -->
 
-            <Style x:Key="MainMenuItemStyle" TargetType="{x:Type extctrl:ExtListViewItem}">
+            <Style x:Key="MainMenuItemStyle" BasedOn="{StaticResource BaseExtListViewItemStyle}" TargetType="{x:Type extctrl:ExtListViewItem}">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="Padding" Value="2"/>
+                <Setter Property="Visibility" Value="{Binding Visible, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
             </Style>
             
             <!-- DATA TEMPLATES -->
@@ -62,7 +71,7 @@
     <Grid>
         <Border
             x:Name="mainMenuBorder"
-            Background="#40000000"
+            Background="{Binding AppearanceMenuBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
             CornerRadius="4"
             Margin="4"
             MouseEnter="MainMenu_MouseEnter"

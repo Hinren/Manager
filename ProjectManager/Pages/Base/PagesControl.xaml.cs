@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hinren.ProjectManager.Pages.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
@@ -8,6 +9,11 @@ namespace Hinren.ProjectManager.Pages.Base
 {
     public partial class PagesControl : UserControl
     {
+
+        //  EVENTS
+
+        public event EventHandler<PageLoadedEventArgs> OnPageLoaded;
+
 
         //  VARIABLES
 
@@ -111,6 +117,7 @@ namespace Hinren.ProjectManager.Pages.Base
 
                 //  Load previous page to ContentFrame.
                 Container.Navigate(previousPage);
+                OnPageLoaded(this, new PageLoadedEventArgs(previousPage, true));
             }
         }
 
@@ -126,6 +133,7 @@ namespace Hinren.ProjectManager.Pages.Base
             {
                 pages.Add(page);
                 contentFrame.Navigate(page);
+                OnPageLoaded(this, new PageLoadedEventArgs(page));
             }
         }
 
@@ -143,6 +151,7 @@ namespace Hinren.ProjectManager.Pages.Base
 
                 pages.Add(page);
                 contentFrame.Navigate(page);
+                OnPageLoaded(this, new PageLoadedEventArgs(page));
             }
         }
 

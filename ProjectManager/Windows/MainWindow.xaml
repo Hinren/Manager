@@ -11,6 +11,7 @@
     
     Title="Project Manager"
     Height="450"
+    Style="{DynamicResource ResourceKey=WindowDefaultStyle}"
     Width="800"
     Loaded="Window_Loaded">
     
@@ -23,11 +24,14 @@
 
         <pgctrl:PagesControl
             x:Name="pagesControl"
-            Grid.Column="1"/>
+            Grid.Column="1"
+            OnPageLoaded="OnPageLoaded"/>
 
         <components:MainMenuControl
             x:Name="mainMenuControl"
-            Grid.Column="0"/>
+            Grid.Column="0"
+            MenuHeaderItemVisible="True"
+            OnBackItemSelect="OnBackMenuItemSelect"/>
 
     </Grid>
     

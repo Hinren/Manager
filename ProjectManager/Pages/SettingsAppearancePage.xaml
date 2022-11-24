@@ -1,13 +1,13 @@
 ﻿<base:BasePage
     xmlns:base="clr-namespace:Hinren.ProjectManager.Pages.Base"
-    x:Class="Hinren.ProjectManager.Pages.UserSettingsPage"
+    x:Class="Hinren.ProjectManager.Pages.SettingsAppearancePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:Hinren.ProjectManager.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
-    mc:Ignorable="d" 
+    xmlns:local="clr-namespace:Hinren.ProjectManager.Pages"
+    mc:Ignorable="d"
     
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -23,23 +23,20 @@
             <StackPanel
                 Orientation="Vertical">
 
-                <extctrl:ExtExpander>
+                <TextBlock
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Text="Accent Color:"/>
 
-                    <StackPanel
-                        Orientation="Vertical">
+                <extctrl:ColorsPalette
+                    Margin="0,4,0,0"
+                    UsedColors="{Binding AccentUsedColors}"
+                    ColorSelectionChanged="ColorsPalette_ColorSelectionChanged"/>
 
-                        <TextBox
-                            Margin="4"
-                            Text="{Binding ConfigurationManager.UserName}"/>
-
-                    </StackPanel>
-
-                </extctrl:ExtExpander>
-                
             </StackPanel>
 
         </extctrl:ExtScrollViewer>
-        
+
     </Grid>
     
 </base:BasePage>

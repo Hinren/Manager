@@ -4,6 +4,7 @@
     xmlns:local="clr-namespace:ExtendedControls">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ColorsPaletteStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtButtonStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtCheckBoxStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/ExtComboBoxItemStyle.xaml"/>
@@ -20,6 +21,7 @@
         <ResourceDictionary Source="pack://application:,,,/ExtendedControls;component/Themes/GridViewColumnHeaderStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <Style BasedOn="{StaticResource ColorsPaletteStyle}" TargetType="{x:Type local:ColorsPalette}"/>
     <Style BasedOn="{StaticResource ExtButtonStyle}" TargetType="{x:Type local:ExtButton}"/>
     <Style BasedOn="{StaticResource ExtCheckBoxStyle}" TargetType="{x:Type local:ExtCheckBox}"/>
     <Style BasedOn="{StaticResource ExtComboBoxItemStyle}" TargetType="{x:Type local:ExtComboBoxItem}"/>
