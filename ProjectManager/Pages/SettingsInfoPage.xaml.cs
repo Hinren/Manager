@@ -98,7 +98,7 @@ namespace Hinren.ProjectManager.Pages
         //  --------------------------------------------------------------------------------
         /// <summary> SettingsInfoPage class constructor. </summary>
         /// <param name="pagesController"> Parent pages controller. </param>
-        public SettingsInfoPage(PagesControl pagesController) : base(pagesController)
+        public SettingsInfoPage(PagesControl pagesController, object[] args = null) : base(pagesController, args)
         {
             ConfigurationManager = ConfigurationManager.Instance;
 

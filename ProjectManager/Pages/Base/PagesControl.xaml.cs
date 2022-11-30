@@ -125,9 +125,9 @@ namespace Hinren.ProjectManager.Pages.Base
         /// <summary> Create and load page to content frame. </summary>
         /// <typeparam name="T"> Page type based on BasePage and IPage interface. </typeparam>
         /// <param name="args"> Arguments that will be passed to Page constructor. </param>
-        public void LoadPage<T>() where T : BasePage, IPage
+        public void LoadPage<T>(object[] args = null) where T : BasePage, IPage
         {
-            var page = Activator.CreateInstance(typeof(T), new object[] { this }) as IPage;
+            var page = Activator.CreateInstance(typeof(T), new object[] { this, args }) as IPage;
 
             if (page != null)
             {
@@ -144,9 +144,9 @@ namespace Hinren.ProjectManager.Pages.Base
         /// <summary> Create and load page to content frame as single page removing previously loaded. </summary>
         /// <typeparam name="T"> Page type based on BasePage and IPage interface. </typeparam>
         /// <param name="args"> Arguments that will be passed to Page constructor. </param>
-        public void LoadSinglePage<T>() where T : BasePage, IPage
+        public void LoadSinglePage<T>(object[] args = null) where T : BasePage, IPage
         {
-            var page = Activator.CreateInstance(typeof(T), new object[] { this }) as IPage;
+            var page = Activator.CreateInstance(typeof(T), new object[] { this, args }) as IPage;
 
             if (page != null)
             {

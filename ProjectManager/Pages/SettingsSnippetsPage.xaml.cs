@@ -1,12 +1,7 @@
-﻿using ExtendedControls.Data;
-using ExtendedControls.Events;
-using Hinren.ProjectManager.Data.Settings;
-using Hinren.ProjectManager.Data.Settings.Static;
+﻿using Hinren.ProjectManager.Data.Settings;
 using Hinren.ProjectManager.Pages.Base;
-using Hinren.ProjectManager.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,38 +17,12 @@ using System.Windows.Shapes;
 
 namespace Hinren.ProjectManager.Pages
 {
-    public partial class SettingsAppearancePage : BasePage
+    public partial class SettingsSnippetsPage : BasePage
     {
 
         //  VARIABLES
 
-        private ObservableCollection<ColorPaletteItem> accentUsedColors;
-        private ObservableCollection<AppearanceTheme> appearanceThemes;
-
         public ConfigurationManager ConfigurationManager { get; private set; }
-
-
-        //  GETTERS & SETTERS
-
-        public ObservableCollection<ColorPaletteItem> AccentUsedColors
-        {
-            get => accentUsedColors;
-            set
-            {
-                accentUsedColors = value;
-                OnPropertyChanged(nameof(AccentUsedColors));
-            }
-        }
-
-        public ObservableCollection<AppearanceTheme> AppearanceThemes
-        {
-            get => appearanceThemes;
-            set
-            {
-                appearanceThemes = value;
-                OnPropertyChanged(nameof(AppearanceThemes));
-            }
-        }
 
 
         //  METHODS
@@ -61,17 +30,11 @@ namespace Hinren.ProjectManager.Pages
         #region CLASS METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> SettingsAppearancePage class constructor. </summary>
+        /// <summary> SettingsSnippetsPage class constructor. </summary>
         /// <param name="pagesController"> Parent pages controller. </param>
-        public SettingsAppearancePage(PagesControl pagesController, object[] args = null) : base(pagesController, args)
+        public SettingsSnippetsPage(PagesControl pagesController, object[] args = null) : base(pagesController, args)
         {
             ConfigurationManager = ConfigurationManager.Instance;
-
-            AccentUsedColors = new ObservableCollection<ColorPaletteItem>(
-                ConfigurationManager.Configuration.UIConfiguration.UsedAccentColors ?? 
-                    UIConfiguration.Default.UsedAccentColors);
-
-            AppearanceThemes = new ObservableCollection<AppearanceTheme>(EnumHelper.ListOf<AppearanceTheme>());
 
             InitializeComponent();
         }
@@ -81,13 +44,12 @@ namespace Hinren.ProjectManager.Pages
         #region INTERACTION METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after changing color selection in accent colors palette. </summary>
+        /// <summary> Method invoked after clicking select snippets localization button. </summary>
         /// <param name="sender"> Object from which method has been invoked. </param>
-        /// <param name="e"> Colors Palette Selection Changed Event Arguments. </param>
-        private void ColorsPalette_ColorSelectionChanged(object sender, ColorsPaletteSelectionChangedEventArgs e)
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void SelectSnippetLocalizationPathButton_Click(object sender, RoutedEventArgs e)
         {
-            if (e.SelectedColorItem != null)
-                ConfigurationManager.AppearanceAccentColor = e.SelectedColorItem.Color;
+
         }
 
         #endregion INTERACTION METHODS
@@ -109,7 +71,6 @@ namespace Hinren.ProjectManager.Pages
         /// <param name="e"> Routed Event Arguments. </param>
         private void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            ConfigurationManager.Configuration.UIConfiguration.UsedAccentColors = AccentUsedColors.Select(i => i).ToList();
             ConfigurationManager.SaveSettings();
         }
 

@@ -4,9 +4,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:Hinren.ProjectManager.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extctrl="clr-namespace:ExtendedControls;assembly=ExtendedControls"
+    xmlns:local="clr-namespace:Hinren.ProjectManager.Pages"
+    xmlns:loccomp="clr-namespace:Hinren.ProjectManager.Components"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d" 
     
     d:DesignHeight="450"
@@ -15,33 +17,86 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded">
 
+    <base:BasePage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <RelativeSource x:Key="RelativeSelf" Mode="FindAncestor" AncestorType="{x:Type base:BasePage}"/>
+
+            <!-- STYLES -->
+
+            <Style x:Key="MainMenuItemStyle" BasedOn="{StaticResource BaseExtListViewItemStyle}" TargetType="{x:Type extctrl:ExtListViewItem}">
+                <Setter Property="BorderBrush" Value="{Binding ConfigurationManager.AppearanceAccentColorBrush, RelativeSource={StaticResource RelativeSelf}}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="MinWidth" Value="112"/>
+                <Setter Property="Padding" Value="8,4"/>
+
+                <Style.Triggers>
+                    <DataTrigger Value="{x:Static loccomp:MainMenuControl.ITEM_HEADER_NAME}">
+                        <DataTrigger.Binding>
+                            <Binding Path="Title" Mode="OneWay"/>
+                        </DataTrigger.Binding>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+
+                    <DataTrigger Value="{x:Static loccomp:MainMenuControl.ITEM_BACK_NAME}">
+                        <DataTrigger.Binding>
+                            <Binding Path="Title" Mode="OneWay"/>
+                        </DataTrigger.Binding>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="MainMenuItemDataTemplate">
+                <StackPanel
+                    Orientation="Vertical"
+                    ToolTip="{Binding Title}">
+
+                    <materialDesign:PackIcon
+                        Height="28"
+                        HorizontalAlignment="Center"
+                        Kind="{Binding IconKind}"
+                        Width="28"/>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"
+                        Text="{Binding Title}"/>
+
+                </StackPanel>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </base:BasePage.Resources>
+
     <Grid
         Margin="4">
 
         <extctrl:ExtScrollViewer>
 
-            <StackPanel
-                Orientation="Vertical">
+            <extctrl:ExtListView
+                HorizontalAlignment="Center"
+                ItemContainerStyle="{StaticResource MainMenuItemStyle}"
+                ItemsSource="{Binding MainMenuController.MenuItems}"
+                ItemTemplate="{StaticResource MainMenuItemDataTemplate}"
+                SelectionChanged="Menu_SelectionChanged"
+                VerticalAlignment="Center">
 
-                <extctrl:ExtExpander
-                    Header="Group A">
+                <extctrl:ExtListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </extctrl:ExtListView.ItemsPanel>
 
-                    <StackPanel
-                        Orientation="Vertical">
-
-                        <TextBlock
-                            Style="{DynamicResource ResourceKey=SettingsContentTextBlockStyle}"
-                            Text="UserName:"/>
-
-                        <extctrl:ExtTextBox
-                            Margin="4"
-                            Text="{Binding ConfigurationManager.UserName}"/>
-
-                    </StackPanel>
-
-                </extctrl:ExtExpander>
-                
-            </StackPanel>
+            </extctrl:ExtListView>
 
         </extctrl:ExtScrollViewer>
         

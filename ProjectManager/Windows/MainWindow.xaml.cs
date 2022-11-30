@@ -75,7 +75,7 @@ namespace Hinren.ProjectManager.Windows
         /// <param name="e"> Event Arguments. </param>
         private void OnSettingsGeneralMenuItemSelect(object sender, EventArgs e)
         {
-            PagesController.LoadPage<SettingsGeneralPage>();
+            PagesController.LoadPage<SettingsGeneralPage>(new object[] { MainMenuController });
         }
         
         //  --------------------------------------------------------------------------------
@@ -85,6 +85,15 @@ namespace Hinren.ProjectManager.Windows
         private void OnSettingsInfoMenuItemSelect(object sender, EventArgs e)
         {
             PagesController.LoadPage<SettingsInfoPage>();
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after selecting appearance settings main menu item. </summary>
+        /// <param name="sender"> Object from which method has been invoked. </param>
+        /// <param name="e"> Event Arguments. </param>
+        private void OnSettingsSnippetsMenuItemSelect(object sender, EventArgs e)
+        {
+            PagesController.LoadPage<SettingsSnippetsPage>();
         }
 
         #endregion MAIN MENU ITEMS METHODS
@@ -107,8 +116,8 @@ namespace Hinren.ProjectManager.Windows
         {
             MainMenuController.ClearItems();
             MainMenuController.MenuBackItemVisible = true;
-            MainMenuController.AddMenuItem(new MainMenuItem("General", PackIconKind.Gear, OnSettingsGeneralMenuItemSelect));
             MainMenuController.AddMenuItem(new MainMenuItem("Appearance", PackIconKind.ColorLens, OnSettingsAppearanceMenuItemSelect));
+            MainMenuController.AddMenuItem(new MainMenuItem("Snippets", PackIconKind.FileSettingsOutline, OnSettingsSnippetsMenuItemSelect));
             MainMenuController.AddMenuItem(new MainMenuItem("Informations", PackIconKind.InfoCircle, OnSettingsInfoMenuItemSelect));
         }
 
