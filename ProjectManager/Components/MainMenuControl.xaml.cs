@@ -20,6 +20,8 @@ namespace Hinren.ProjectManager.Components
 
         private const double DEFAULT_EXPANDED_WIDTH = 192d;
         private const double DEFAULT_COLLAPSED_WIDTH = 40d;
+        public const string ITEM_HEADER_NAME = "Main Menu";
+        public const string ITEM_BACK_NAME = "Back";
 
 
         //  DEPENDENCY PROPERTIES
@@ -400,12 +402,12 @@ namespace Hinren.ProjectManager.Components
         /// <summary> Setup main menu default items and items container. </summary>
         private void SetupMainMenu()
         {
-            menuHeaderItem = new MainMenuItem("Main Menu", PackIconKind.HamburgerMenu, OnHeaderItemSelected)
+            menuHeaderItem = new MainMenuItem(ITEM_HEADER_NAME, PackIconKind.HamburgerMenu, OnHeaderItemSelected)
             {
                 Visible = menuHeaderItemVisible
             };
 
-            menuBackItem = new MainMenuItem("Back", PackIconKind.ArrowLeft, OnBackItemSelected)
+            menuBackItem = new MainMenuItem(ITEM_BACK_NAME, PackIconKind.ArrowLeft, OnBackItemSelected)
             {
                 Visible = menuBackItemVisible
             };

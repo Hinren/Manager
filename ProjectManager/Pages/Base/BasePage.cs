@@ -24,7 +24,7 @@ namespace Hinren.ProjectManager.Pages.Base
         //  --------------------------------------------------------------------------------
         /// <summary> BasePage class constructor. </summary>
         /// <param name="pagesController"> Parent pages controller. </param>
-        public BasePage(PagesControl pagesController) : base()
+        public BasePage(PagesControl pagesController, object[] args = null) : base()
         {
             PagesController = pagesController;
         }

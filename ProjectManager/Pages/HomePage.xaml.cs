@@ -7,15 +7,18 @@ namespace Hinren.ProjectManager.Pages
 {
     public partial class HomePage : BasePage
     {
+
         //  METHODS
+        
         private ISnippetSaver snippetSaver = new SnippetSaver();
         private ISnippetReader snippetReader = new SnippetReader();
+
         #region CLASS METHODS
 
         //  --------------------------------------------------------------------------------
         /// <summary> HomePage class constructor. </summary>
         /// <param name="pagesController"> Parent pages controller. </param>
-        public HomePage(PagesControl pagesController) : base(pagesController)
+        public HomePage(PagesControl pagesController, object[] args = null) : base(pagesController, args)
         {
             InitializeComponent();
         }
