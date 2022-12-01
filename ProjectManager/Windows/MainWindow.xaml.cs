@@ -3,6 +3,7 @@ using Hinren.ProjectManager.Data.MainMenu;
 using Hinren.ProjectManager.Pages;
 using Hinren.ProjectManager.Pages.Base;
 using Hinren.ProjectManager.Pages.Events;
+using Hinren.ProjectManager.Utilities;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Windows;
@@ -26,6 +27,8 @@ namespace Hinren.ProjectManager.Windows
             get => mainMenuControl;
         }
 
+        public InternalMessagesController InternalMessagesController { get; private set; }
+
 
         //  METHODS
 
@@ -35,7 +38,11 @@ namespace Hinren.ProjectManager.Windows
         /// <summary> MainWindow class constructor. </summary>
         public MainWindow()
         {
+            //  Initialize interface.
             InitializeComponent();
+
+            //  Initialize components.
+            InternalMessagesController = InternalMessagesController.Initialize(internalMessagesContainer);
         }
 
         #endregion CLASS METHODS
@@ -152,6 +159,15 @@ namespace Hinren.ProjectManager.Windows
         {
             //  Load first page.
             PagesController.LoadPage<HomePage>();
+
+            //  Show welcome info.
+            var welcomeMessage = ApplicationHelper.GetApplicationTitle()
+                + Environment.NewLine
+                + ApplicationHelper.GetApplicationCopyright()
+                + Environment.NewLine
+                + ApplicationHelper.GetApplicationVersion().ToString();
+
+            InternalMessagesController.ShowMessageBoxInfo("Welcome", welcomeMessage);
         }
 
         #endregion WINDOW METHODS

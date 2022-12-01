@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Hinren.ProjectManager"
     xmlns:components="clr-namespace:Hinren.ProjectManager.Components"
+    xmlns:extIm="clr-namespace:ExtendedControls.InternalMessages;assembly=ExtendedControls"
     xmlns:pgctrl="clr-namespace:Hinren.ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
@@ -32,6 +33,10 @@
             Grid.Column="0"
             MenuHeaderItemVisible="True"
             OnBackItemSelect="OnBackMenuItemSelect"/>
+
+        <extIm:InternalMessagesContainer
+            x:Name="internalMessagesContainer"
+            Grid.ColumnSpan="2"/>
 
     </Grid>
     
