@@ -1,5 +1,8 @@
-﻿using Hinren.ProjectManager.Data.Settings;
+﻿using ExtendedControls.Events;
+using ExtendedControls.Static;
+using Hinren.ProjectManager.Data.Settings;
 using Hinren.ProjectManager.Pages.Base;
+using Hinren.ProjectManager.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static ExtendedControls.Events.Delegates;
 
 namespace Hinren.ProjectManager.Pages
 {
@@ -49,7 +53,17 @@ namespace Hinren.ProjectManager.Pages
         /// <param name="e"> Routed Event Arguments. </param>
         private void SelectSnippetLocalizationPathButton_Click(object sender, RoutedEventArgs e)
         {
+            var window = (MainWindow) Application.Current.MainWindow;
 
+            InternalMessageClose<FilesSelectorInternalMessageCloseEventArgs> onClose = (s, e) =>
+            {
+                if (e.Result == InternalMessageResult.Ok)
+                {
+                    ConfigurationManager.UserName = e.FilePath;
+                }
+            };
+
+            window.InternalMessagesController.ShowSelectDirectoryMessageBox("Choose snippet localization", onClose);
         }
 
         #endregion INTERACTION METHODS

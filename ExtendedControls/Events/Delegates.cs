@@ -17,6 +17,20 @@ namespace ExtendedControls.Events
         public delegate void ColorsPalleteSelectionChanged(object sender, ColorsPaletteSelectionChangedEventArgs e);
 
 
+        //  INTERNAL MESSAGES
+
+        /// <summary> Method invoked after closing base InternalMessage. </summary>
+        /// <typeparam name="T"> Event arguments type based on InternalMessageCloseEventArgs. </typeparam>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        public delegate void InternalMessageClose<T>(object sender, T e) where T : InternalMessageCloseEventArgs;
+
+        /// <summary> Method invoked after hiding InternalMessage. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Hide Event Arguments. </param>
+        public delegate void InternalMessageHide(object sender, InternalMessageHideEventArgs e);
+
+
         //  TEXT BOXES
 
         /// <summary> Method invoked after modifying text. </summary>

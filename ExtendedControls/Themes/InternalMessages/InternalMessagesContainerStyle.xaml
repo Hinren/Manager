@@ -1,0 +1,41 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExtendedControls"
+    xmlns:localIm="clr-namespace:ExtendedControls.InternalMessages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <SolidColorBrush x:Key="InternalMessagesContainer.Background">#B0000000</SolidColorBrush>
+
+    <RelativeSource x:Key="RelativeSelfIMContainer" AncestorType="{x:Type localIm:InternalMessagesContainer}"/>
+
+    <ControlTemplate x:Key="InternalMessagesContainer.ControlTemplate" TargetType="{x:Type localIm:InternalMessagesContainer}">
+        <Border
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            Background="{TemplateBinding Background}"
+            Padding="{TemplateBinding Padding}">
+
+            <Frame
+                x:Name="contentFrame"
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                Height="Auto"
+                NavigationUIVisibility="Hidden"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Width="Auto"/>
+
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="InternalMessagesContainerStyle" TargetType="{x:Type localIm:InternalMessagesContainer}">
+        <Setter Property="Background" Value="{StaticResource InternalMessagesContainer.Background}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource InternalMessagesContainer.ControlTemplate}"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+</ResourceDictionary>

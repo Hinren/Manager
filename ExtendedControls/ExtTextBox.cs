@@ -1,4 +1,5 @@
-﻿using ExtendedControls.Static;
+﻿using ExtendedControls.Events;
+using ExtendedControls.Static;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -259,13 +260,15 @@ namespace ExtendedControls
             if (focused)
             {
                 textChanged = true;
-                TextModified?.Invoke(this, new Events.TextModifiedEventArgs(Text, true));
+                TextModified?.Invoke(this, new TextModifiedEventArgs(Text, true));
             }
             else
             {
                 textChanged = false;
+                TextModified?.Invoke(this, new TextModifiedEventArgs(Text, false));
+
                 TextModificationFinished?.Invoke(
-                    this, new Events.TextModificationFinishedEventArgs(Text, false));
+                    this, new TextModificationFinishedEventArgs(Text, false));
             }
 
             base.OnTextChanged(e);
