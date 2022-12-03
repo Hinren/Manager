@@ -35,30 +35,31 @@ namespace Hinren.ProjectManager.Pages
 
             //Database test logic
 
-            if (config.Configuration.DatabaseSettings == null)
-            {
-                config.Configuration.DatabaseSettings = new List<DatabaseSetting>();
-            }
+            //if (config.Configuration.DatabaseSettings == null)
+            //{
+            //    config.Configuration.DatabaseSettings = new List<DatabaseSetting>();
+            //}
 
-            config.Configuration.DatabaseSettings.Add(
-                new DatabaseSetting() 
-                {
-                    DatabaseSettingName = "Desktop_PW",
-                    PathDatabase = @"D:\A backup",
-                    UseDefaultPath = true,
-                    ConnectionString = @"Data Source=DESKTOP-RCI92SN\SQLEXPRESS;Initial Catalog=Learning;Integrated Security=true;", 
-                    DatabaseNameYouWantMakeBackup = "Learning", 
-                    DatabaseNameYouWantMakeRestore = "Learning_PW", 
-                    DatabaseYouDontWantOverwriten = new List<string>() { "Learning" }, 
-                    TypeDatabase = DatabaseOption.MSSQL 
-                });
+            //config.Configuration.DatabaseSettings.Add(
+            //    new DatabaseSetting() 
+            //    {
+            //        DatabaseSettingName = "Desktop_PW",
+            //        PathDatabase = @"D:\A backup",
+            //        UseDefaultPath = true,
+            //        ConnectionString = @"Data Source=DESKTOP-RCI92SN\SQLEXPRESS;Initial Catalog=Learning;Integrated Security=true;", 
+            //        DatabaseNameYouWantMakeBackup = "Learning", 
+            //        DatabaseNameYouWantMakeRestore = "Learning_PW", 
+            //        DatabaseYouDontWantOverwriten = new List<string>() { "Learning" }, 
+            //        TypeDatabase = DatabaseOption.MSSQL 
+            //    });
 
-            var selectDatabaseConfig = config.Configuration.DatabaseSettings.First(x => x.DatabaseSettingName == "Desktop_PW");
-            DatabaseManager databaseManager = new DatabaseManager(selectDatabaseConfig);
+            //var selectDatabaseConfig = config.Configuration.DatabaseSettings.First(x => x.DatabaseSettingName == "Desktop_PW");
+            //DatabaseManager databaseManager = new DatabaseManager(selectDatabaseConfig);
 
-            databaseManager.MakeBackup();
-            var databaseBackup = @"D:\REPOSITORY\Manager\ProjectManager\bin\Debug\net6.0-windows\Backup\Learning_2022_12_02_15_12.bak";
-            databaseManager.MakeRestoreForDifferentName(databaseBackup);
+            //databaseManager.MakeBackup();
+            //var databaseBackup = @"D:\REPOSITORY\Manager\ProjectManager\bin\Debug\net6.0-windows\Backup\Learning_2022_12_02_15_12.bak";
+            //databaseManager.MakeRestoreOrginalDatabaseName(databaseBackup);
+            //databaseManager.MakeRestoreButNotOrginalDatabaseName(databaseBackup);
 
             //Test snippet saver
             //snippetSaver.SaveSnippetsOnLocalPath(@"D:\REPOSITORY\Snippets");

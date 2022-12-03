@@ -7,12 +7,14 @@ namespace DomainLogic.Database
 {
     public class MSSQLStrategy : ISelectDatabaseStrategy
     {
-        // 0 - Set databaseName to restore/clone/backup 
-        // 1 - choose path (later should work with global seeting for app)
         private readonly string _getAssemlyEntry = Assembly.GetEntryAssembly().Location.Replace(@"\ProjectManager.dll", "");
         private readonly string _backupDatabaseSql = "BACKUP DATABASE {0} TO DISK = '{1}{2}_{3}.bak'";
-        private readonly string _restoreDatabaseSql = "RESTORE DATABASE {0} FROM DISK = '{1}'";
-        private readonly string _getAllDatabaseName = @"exec sp_databases";
+        private readonly string _restoreDatabaseSql = @"RESTORE DATABASE [{0}] FROM  
+                        DISK = N'{1}' 
+                        WITH FILE = 1,
+                        MOVE N'Learning' TO N'C:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\{0}.mdf',
+                        MOVE N'Learning_log' TO N'C:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\{0}_log.ldf',
+                        NOUNLOAD, STATS = 5";
         private readonly DatabaseSetting _databaseSetting;
 
         public MSSQLStrategy(DatabaseSetting selectDatabaseConfig)
@@ -20,7 +22,7 @@ namespace DomainLogic.Database
             _databaseSetting = selectDatabaseConfig;
         }
 
-        public void RestoreDatabase(string path)
+        public void MakeRestoreOrginalDatabaseName(string path)
         {
             if (_databaseSetting.DatabaseYouDontWantOverwriten.Contains(_databaseSetting.DatabaseNameYouWantMakeBackup))
             {
@@ -38,7 +40,7 @@ namespace DomainLogic.Database
             ExecuteNonQueryOperation(querry);
         }
 
-        public void RestoreDatatabaseButUnderDifferentName(string path)
+        public void MakeRestoreButNotOrginalDatabaseName(string path)
         {
             var querry = string.Format(_restoreDatabaseSql, _databaseSetting.DatabaseNameYouWantMakeRestore, path);
             ExecuteNonQueryOperation(querry);

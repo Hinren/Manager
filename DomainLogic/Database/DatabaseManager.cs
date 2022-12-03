@@ -24,13 +24,8 @@ namespace DomainLogic.Database
                     throw new NotImplementedException();
             }
         }
-        public void MakeBackup()
-        {
-            _selectDatabaseStrategy.MakeBackup();
-        }
-        public void MakeRestoreForDifferentName(string path)
-        {
-            _selectDatabaseStrategy.RestoreDatatabaseButUnderDifferentName(path);
-        }
+        public void MakeBackup() => _selectDatabaseStrategy.MakeBackup();
+        public void MakeRestoreButNotOrginalDatabaseName(string path) => _selectDatabaseStrategy.MakeRestoreButNotOrginalDatabaseName(path);
+        public void MakeRestoreOrginalDatabaseName(string path) => _selectDatabaseStrategy.MakeRestoreOrginalDatabaseName(path);
     }
 }
