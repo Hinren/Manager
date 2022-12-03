@@ -93,6 +93,8 @@ namespace DomainLogic.Snippet
 
         private void SaveSnippet(CodeSnippets snippets, string path)
         {
+            //If you make in one session twice then in second time you can't do it, because file is used by another process. I must find the reason 
+            //Find all IDisopaple interface and making in using!!
             var xmlserializer = new XmlSerializer(typeof(CodeSnippets));
             var stringWriter = new Utf8StringWriter();
             var xml = "";

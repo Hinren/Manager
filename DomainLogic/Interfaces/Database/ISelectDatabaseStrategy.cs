@@ -10,10 +10,10 @@
         /// <summary>
         /// This method allow to restore database when for some reason is deleted.
         /// </summary>
-        public void RestoreDatabase();
+        public void MakeRestoreOrginalDatabaseName(string path);
         /// <summary>
         /// This method allow to restore database but under different name.
         /// </summary>
-        public void RestoreDatatabaseButUnderDifferentName(string newDatabaseName);
+        public void MakeRestoreButNotOrginalDatabaseName(string path);
     }
 }

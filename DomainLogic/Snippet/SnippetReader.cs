@@ -8,14 +8,7 @@ namespace DomainLogic.Snippet
 {
     public class SnippetReader : ISnippetReader
     {
-        private readonly ISnippetsPath _snippetPath;
-        private readonly Regex _getFileName = new Regex(@".*\\([^\\]+$)", RegexOptions.Compiled);
         private readonly string _getAssemlyEntry = Assembly.GetEntryAssembly().Location.Replace(@"\ProjectManager.dll", "");
-
-        public SnippetReader()
-        {
-            _snippetPath = new SnippetsLocalizations();
-        }
 
         public CodeSnippets ReadSnippet(string path)
         {
@@ -32,21 +25,25 @@ namespace DomainLogic.Snippet
 
         public List<CodeSnippets> ReadSnippets(string path)
         {
-            //Making better... Here can be folder inside folders so is very important do search every folder to find folder with excension .snippet. Also later 
-            //is important too add validation for checking format files. We don't want anything else. Here is only importat .snippet
             var snippets = new List<CodeSnippets>();
-            var directories = path.Contains("Snippet") ? Directory.GetDirectories(path) : Directory.GetDirectories(path, "Snippet");
-            //string[] directories = Directory.GetDirectories(path, "Snippet");
-            foreach (var direct in directories)
+            var directories = Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly).ToList();
+            var filePaths = new List<string>();
+            int count = directories.Count;
+            for (int i = 0; i < count; i++)
             {
-                if (!direct.Contains(".git"))
+                var attributeFile = File.GetAttributes(directories[i]);
+                if (attributeFile == FileAttributes.Directory)
                 {
-                    string[] filePaths = Directory.GetFiles(direct);
-                    foreach (var filename in filePaths)
-                    {
-                        string filePath = filename.ToString();
-                        snippets.Add(ReadSnippet(filePath));
-                    }
+                    var directoriesInsideDirectory = Directory.GetDirectories(directories[i], "*", SearchOption.TopDirectoryOnly);
+                    directories.AddRange(directoriesInsideDirectory);
+                    count = directories.Count;
+                }
+
+                var files = Directory.GetFiles(directories[i]).Where(x => x.Contains(".snippet"));
+                foreach (var filename in files)
+                {
+                    string filePath = filename.ToString();
+                    snippets.Add(ReadSnippet(filePath));
                 }
             }
 
