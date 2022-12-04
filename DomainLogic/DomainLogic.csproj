@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp" Version="108.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
@@ -16,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Mapper\" />
+    <Folder Include="TranslateWord\" />
   </ItemGroup>
 
 </Project>

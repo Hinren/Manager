@@ -1,6 +1,7 @@
 ﻿using DomainLogic.Database;
 using DomainLogic.Interfaces.Snippet;
 using DomainLogic.Snippet;
+using DomainLogic.TextReader;
 using DomainModel.Enums;
 using DomainModel.Models.SettingsUserApp.DatabaseSetting;
 using Hinren.ProjectManager.Data.Settings;
@@ -32,6 +33,14 @@ namespace Hinren.ProjectManager.Pages
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var config = ConfigurationManager.Instance;
+
+            //Text analyzer. Get most repeated words
+
+            //WordReader textReader = new WordReader();
+            //textReader.ReadWord(new List<string>() 
+            //{
+            //    "https://quod.lib.umich.edu/e/eebo2/b25409.0001.001/7?page=root;size=125;vid=207116;view=text"
+            //});
 
             //Database test logic
 
