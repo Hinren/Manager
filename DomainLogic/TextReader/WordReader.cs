@@ -1,4 +1,7 @@
 ﻿using DomainModel.Enums;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DomainLogic.TextReader
@@ -39,13 +42,24 @@ namespace DomainLogic.TextReader
 
         private void ReadWordsFromFiles(string path)
         {
-            //word, text will be the easiet 
-            //xml, json 
-            //Make read pdf or diffrent file extension
-            //read also file extension .cs. Find all summaries inside code and we know the names method should be seperated to words also (Classes too)
-            //that logic allow to maxime using PARETO style during learning langs we want. 
+            StringBuilder text = new StringBuilder();
 
-            throw new NotImplementedException();
+            if (File.Exists(path))
+            {
+                PdfReader pdfReader = new PdfReader(path);
+
+                for (int page = 1; page <= pdfReader.NumberOfPages; page++)
+                {
+                    ITextExtractionStrategy strategy = new SimpleTextExtractionStrategy();
+                    string currentText = PdfTextExtractor.GetTextFromPage(pdfReader, page, strategy);
+
+                    currentText = Encoding.UTF8.GetString(ASCIIEncoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(currentText)));
+                    text.Append(currentText);
+                }
+                pdfReader.Close();
+            }
+
+            AnalyzeText(text.ToString(), SourceOptionWords.pdf);
         }
 
         //That method should be tested. Here is manys examples from webstites etc. For now reader for files is not implement
@@ -66,6 +80,7 @@ namespace DomainLogic.TextReader
                 case SourceOptionWords.txt:
                     break;
                 case SourceOptionWords.pdf:
+                    CountWords(text);
                     break;
                 case SourceOptionWords.ProgrammingExtension:
                     break;
@@ -78,15 +93,20 @@ namespace DomainLogic.TextReader
         {
             foreach (var matchetText in matchedTexts.Where(x => !string.IsNullOrEmpty(x.Value)))
             {
-                var words = _wordSplitterRegex.Split(matchetText.Value).Where(x => !string.IsNullOrEmpty(x) || !string.IsNullOrWhiteSpace(x));
-                foreach (var word in words)
-                {
-                    var clearedWord = WordRules(word);
-                    if (_mostRepeatedWord.ContainsKey(clearedWord))
-                        _mostRepeatedWord[clearedWord]++;
-                    else
-                        _mostRepeatedWord[clearedWord] = 1;
-                }
+                CountWords(matchetText.Value);
+            }
+        }
+
+        public void CountWords(string text)
+        {
+            var words = _wordSplitterRegex.Split(text).Where(x => !string.IsNullOrEmpty(x) || !string.IsNullOrWhiteSpace(x));
+            foreach (var word in words)
+            {
+                var clearedWord = WordRules(word);
+                if (_mostRepeatedWord.ContainsKey(clearedWord))
+                    _mostRepeatedWord[clearedWord]++;
+                else
+                    _mostRepeatedWord[clearedWord] = 1;
             }
         }
 

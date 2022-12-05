@@ -34,12 +34,21 @@ namespace Hinren.ProjectManager.Pages
         {
             var config = ConfigurationManager.Instance;
 
+            //PdfReader reader = new PdfReader(pdfPath);
+
+            //StringWriter output = new StringWriter();
+
+            //for (int i = 1; i <= reader.NumberOfPages; i++)
+            //    output.WriteLine(PdfTextExtractor.GetTextFromPage(reader, i, new SimpleTextExtractionStrategy()));
+
             //Text analyzer. Get most repeated words
 
             //WordReader textReader = new WordReader();
-            //textReader.ReadWord(new List<string>() 
+            //textReader.ReadWord(new List<string>()
             //{
-            //    "https://quod.lib.umich.edu/e/eebo2/b25409.0001.001/7?page=root;size=125;vid=207116;view=text"
+            //    @"D:\ksiazki\Mistrz czystego kodu. Kodeks postępowania profesjonalnych programistów - Robert C. Martin.pdf",
+            //    @"D:\ksiazki\talent-nie-istnieje-droga-do-praktycznego-osiagania-mistrzowskich-umiejetnosci-artur-krol-Ebookpoint.pl.pdf",
+            //    @"D:\ksiazki\PUŁAPKI MYŚLENIA O myśleniu szybkim i wolnym. Przełożył Piotr Szymczak.pdf"
             //});
 
             //Database test logic
