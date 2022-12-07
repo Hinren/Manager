@@ -11,6 +11,7 @@ namespace DomainLogic.TextReader
     /// </summary>
     public class WordReader
     {
+        string testCase = @"";
         private readonly Dictionary<string, int> _mostRepeatedWord = new Dictionary<string, int>();
         private readonly Regex _wordSplitterRegex = new Regex(@"\b[\s,\.-:;]*", RegexOptions.Compiled);
         private readonly Regex _getTextFromWebisteRegex = new Regex(@"(?<=\>)[A-z\s\w]*(?=\<)?", RegexOptions.Compiled);
@@ -116,6 +117,6 @@ namespace DomainLogic.TextReader
             return word.Trim();
         }
 
-        public Dictionary<string, int> getMostRepeatedWords => _mostRepeatedWord;
+        public Dictionary<string, int> getMostRepeatedWords() => _mostRepeatedWord;  
     }
 }
