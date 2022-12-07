@@ -46,9 +46,10 @@ namespace Hinren.ProjectManager.Pages
             //WordReader textReader = new WordReader();
             //textReader.ReadWord(new List<string>()
             //{
-            //    @"D:\ksiazki\Mistrz czystego kodu. Kodeks postępowania profesjonalnych programistów - Robert C. Martin.pdf",
-            //    @"D:\ksiazki\talent-nie-istnieje-droga-do-praktycznego-osiagania-mistrzowskich-umiejetnosci-artur-krol-Ebookpoint.pl.pdf",
-            //    @"D:\ksiazki\PUŁAPKI MYŚLENIA O myśleniu szybkim i wolnym. Przełożył Piotr Szymczak.pdf"
+            //    //@"D:\ksiazki\Mistrz czystego kodu. Kodeks postępowania profesjonalnych programistów - Robert C. Martin.pdf",
+            //    //@"D:\ksiazki\talent-nie-istnieje-droga-do-praktycznego-osiagania-mistrzowskich-umiejetnosci-artur-krol-Ebookpoint.pl.pdf",
+            //    //@"D:\ksiazki\PUŁAPKI MYŚLENIA O myśleniu szybkim i wolnym. Przełożył Piotr Szymczak.pdf"
+            //    "https://pl.wikipedia.org/wiki/Eksperyment_Ascha"
             //});
 
             //Database test logic
