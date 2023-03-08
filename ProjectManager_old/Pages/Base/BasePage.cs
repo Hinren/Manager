@@ -1,16 +1,10 @@
-﻿using ProjectManager.Data.MainMenu;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ProjectManager.Pages.Base
+namespace Hinren.ProjectManager.Pages.Base
 {
-    public class BasePage : Page, INotifyPropertyChanged
+    public class BasePage : Page, IPage, INotifyPropertyChanged
     {
 
         //  EVENTS
@@ -18,14 +12,9 @@ namespace ProjectManager.Pages.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        //  VARIABLES
-
-        protected PagesManager _pagesManager;
-
-
         //  GETTERS & SETTERS
 
-        public virtual List<MainMenuItem> MainMenuItems { get; }
+        public PagesControl PagesController { get; private set; }
 
 
         //  METHODS
@@ -34,10 +23,10 @@ namespace ProjectManager.Pages.Base
 
         //  --------------------------------------------------------------------------------
         /// <summary> BasePage class constructor. </summary>
-        /// <param name="pagesManager"> Pages Manager. </param>
-        public BasePage(PagesManager pagesManager)
+        /// <param name="pagesController"> Parent pages controller. </param>
+        public BasePage(PagesControl pagesController, object[] args = null) : base()
         {
-            _pagesManager = pagesManager;
+            PagesController = pagesController;
         }
 
         //  --------------------------------------------------------------------------------
@@ -64,6 +53,19 @@ namespace ProjectManager.Pages.Base
         }
 
         #endregion NOTIFY PROPERTIES CHANGED INTERFACE METHODS
+
+        #region TEMPLATE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> When overridden in a derived class,cis invoked whenever 
+        /// application code or internal processes call ApplyTemplate. </summary>
+        public override void OnApplyTemplate()
+        {
+            //  Apply Template
+            base.OnApplyTemplate();
+        }
+
+        #endregion TEMPLATE METHODS
 
     }
 }

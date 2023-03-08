@@ -1,20 +1,23 @@
-﻿<Window
-    x:Class="Hinren.ProjectManager.Windows.MainWindow"
+﻿<cexWin:WindowEx
+    x:Class="ProjectManager.Windows.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Hinren.ProjectManager"
-    xmlns:components="clr-namespace:Hinren.ProjectManager.Components"
-    xmlns:extIm="clr-namespace:ExtendedControls.InternalMessages;assembly=ExtendedControls"
-    xmlns:pgctrl="clr-namespace:Hinren.ProjectManager.Pages.Base"
+    xmlns:cexWin="clr-namespace:chkam05.Tools.ControlsEx.WindowsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:local="clr-namespace:ProjectManager.Windows"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
-    Title="Project Manager"
+    Background="#F3F3F3"
+    BackgroundOpacity="0.87"
+    BorderBrush="#E0F3F3F3"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Height="450"
-    Style="{DynamicResource ResourceKey=WindowDefaultStyle}"
+    Title="Project Manager"
     Width="800"
-    Loaded="Window_Loaded">
+    Loaded="WindowEx_Loaded">
     
     <Grid>
 
@@ -23,21 +26,25 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <pgctrl:PagesControl
-            x:Name="pagesControl"
-            Grid.Column="1"
-            OnPageLoaded="OnPageLoaded"/>
-
-        <components:MainMenuControl
-            x:Name="mainMenuControl"
+        <components:MainMenuUserControl
+            x:Name="mainMenu"
             Grid.Column="0"
+            MenuBackItemVisible="{Binding CanGoBack, ElementName=pagesManager}"
             MenuHeaderItemVisible="True"
-            OnBackItemSelect="OnBackMenuItemSelect"/>
+            OnBackItemSelect="mainMenu_OnBackItemSelect"/>
 
-        <extIm:InternalMessagesContainer
-            x:Name="internalMessagesContainer"
-            Grid.ColumnSpan="2"/>
+        <Border
+            Background="White"
+            ClipToBounds="True"
+            CornerRadius="8,0,8,0"
+            Grid.Column="1">
+
+            <pages:PagesManager
+                x:Name="pagesManager"
+                OnPageLoaded="pagesManager_OnPageLoaded"/>
+
+        </Border>
 
     </Grid>
     
-</Window>
+</cexWin:WindowEx>

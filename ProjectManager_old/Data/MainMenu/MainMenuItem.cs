@@ -2,8 +2,7 @@
 using System;
 using System.ComponentModel;
 
-
-namespace ProjectManager.Data.MainMenu
+namespace Hinren.ProjectManager.Data.MainMenu
 {
     public class MainMenuItem : INotifyPropertyChanged
     {

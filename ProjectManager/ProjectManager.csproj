@@ -5,25 +5,23 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <RootNamespace>Hinren.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <Authors>Patryk Wiśniewski, Kamil Karpiński</Authors>
-    <Copyright>Copyright (c) Hinren 2022</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignColors" Version="2.0.9" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+    <Compile Remove="MainWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="MainWindow.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="chkam05.Tools.ControlsEx" Version="2.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Common\DomainModel.csproj" />
-    <ProjectReference Include="..\DomainLogic\DomainLogic.csproj" />
-    <ProjectReference Include="..\ExtendedControls\ExtendedControls.csproj" />
   </ItemGroup>
 
 </Project>
