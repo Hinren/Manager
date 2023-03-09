@@ -5,20 +5,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cexWin="clr-namespace:chkam05.Tools.ControlsEx.WindowsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
     xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:convUI="clr-namespace:ProjectManager.Converters.UI"
     xmlns:local="clr-namespace:ProjectManager.Windows"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
-    Background="#F3F3F3"
+    Background="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     BackgroundOpacity="0.87"
-    BorderBrush="#E0F3F3F3"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Height="450"
     Title="Project Manager"
     Width="800"
     Loaded="WindowEx_Loaded">
-    
+
+    <cexWin:WindowEx.Resources>
+        <ResourceDictionary>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+            <!-- CONVERTERS -->
+
+            <convUI:SolidColorBrushOpacityConverter x:Key="SolidColorBrushOpacityConverter"/>
+
+        </ResourceDictionary>
+    </cexWin:WindowEx.Resources>
+
+    <cexWin:WindowEx.BorderBrush>
+        <Binding
+            Path="AppearanceThemeShadeBackgroundBrush"
+            Source="{StaticResource ConfigManager}"
+            Mode="OneWay"
+            Converter="{StaticResource SolidColorBrushOpacityConverter}"
+            ConverterParameter="0.87"/>
+    </cexWin:WindowEx.BorderBrush>
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -34,13 +56,16 @@
             OnBackItemSelect="mainMenu_OnBackItemSelect"/>
 
         <Border
-            Background="White"
+            Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}}"
+            BorderBrush="{x:Null}"
+            BorderThickness="0"
             ClipToBounds="True"
             CornerRadius="8,0,8,0"
             Grid.Column="1">
 
             <pages:PagesManager
                 x:Name="pagesManager"
+                OnPageBack="pagesManager_OnPageBack"
                 OnPageLoaded="pagesManager_OnPageLoaded"/>
 
         </Border>

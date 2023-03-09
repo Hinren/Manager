@@ -16,10 +16,19 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
             <!-- CONVERTERS -->
 
             <convUI:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+            
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_MainMenuListViewItemExStyle" BasedOn="{StaticResource MainMenuListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="Visibility" Value="{Binding Visible, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
+            </Style>
 
             <!-- STORYBOARDS -->
 
@@ -31,36 +40,6 @@
                     Storyboard.TargetProperty="Width"
                     To="{Binding Path=ExpandMenuStoryboardTargetWidth, Mode=TwoWay}"/>
             </Storyboard>
-
-            <!-- STYLES -->
-
-            <Style x:Key="MainMenuListViewItemExStyle" TargetType="{x:Type cex:ListViewItemEx}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="Height" Value="32"/>
-                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                <Setter Property="Margin" Value="1"/>
-                <Setter Property="Padding" Value="2"/>
-                <Setter Property="ToolTip" Value="{Binding Title}"/>
-                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                <Setter Property="Visibility" Value="{Binding Visible, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
-            </Style>
-
-            <Style x:Key="SideBarListViewExStyle" TargetType="{x:Type cex:ListViewEx}">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="CornerRadius" Value="8"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                <Setter Property="Margin" Value="2"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-                <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
-                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-            </Style>
 
             <!-- DATA TEMPLATES -->
 
@@ -104,10 +83,10 @@
             MouseLeave="MainMenu_MouseLeave">
 
             <cex:ListViewEx
-                ItemContainerStyle="{StaticResource MainMenuListViewItemExStyle}"
+                ItemContainerStyle="{StaticResource Internal_MainMenuListViewItemExStyle}"
                 ItemsSource="{Binding MenuItems}"
                 ItemTemplate="{StaticResource MainMenuItemDataTemplate}"
-                Style="{StaticResource SideBarListViewExStyle}"
+                Style="{StaticResource MainMenuListViewExStyle}"
                 SelectionChanged="MainMenu_SelectionChanged"/>
 
         </Border>

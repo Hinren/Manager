@@ -1,4 +1,6 @@
-﻿using ProjectManager.Pages.Base;
+﻿using MaterialDesignThemes.Wpf;
+using ProjectManager.Data.MainMenu;
+using ProjectManager.Pages.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,18 @@ namespace ProjectManager.Pages.Settings
 {
     public partial class SettingsGeneralPage : BasePage
     {
+
+        //  GETTERS & SETTERS
+
+        public override List<MainMenuItem> MainMenuItems
+        {
+            get => new List<MainMenuItem>()
+            {
+                new MainMenuItem("Appearance", PackIconKind.Palette, (s, e) => { _pagesManager.LoadSettingsAppearancePage(); }),
+                new MainMenuItem("General", PackIconKind.Application, (s, e) => { _pagesManager.LoadSettingsMainPage(); }),
+            };
+        }
+
 
         //  METHODS
 

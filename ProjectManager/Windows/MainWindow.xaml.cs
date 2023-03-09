@@ -50,6 +50,20 @@ namespace ProjectManager.Windows
         #region MAIN MENU METHODS
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Load main menu items defined in page. </summary>
+        /// <param name="page"> Page. </param>
+        private void LoadMenuFromPage(BasePage page)
+        {
+            if (page?.MainMenuItems != null)
+            {
+                MainMenu.ClearItems();
+
+                if (page.MainMenuItems.Any())
+                    MainMenu.AddMenuItems(page.MainMenuItems);
+            }
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after pressing BackButton in MainMenu. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Event arguments. </param>
@@ -64,18 +78,21 @@ namespace ProjectManager.Windows
         #region PAGES MANAGER METHODS
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after navigating to previous page. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Page Loaded Event Arguments. </param>
+        private void pagesManager_OnPageBack(object sender, Pages.Events.PageLoadedEventArgs e)
+        {
+            LoadMenuFromPage(e.Page);
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after loading page. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Page Loaded Event Arguments. </param>
         private void pagesManager_OnPageLoaded(object sender, Pages.Events.PageLoadedEventArgs e)
         {
-            if (e.Page.MainMenuItems != null)
-            {
-                MainMenu.ClearItems();
-
-                if (e.Page.MainMenuItems.Any())
-                    MainMenu.AddMenuItems(e.Page.MainMenuItems);
-            }
+            LoadMenuFromPage(e.Page);
         }
 
         #endregion PAGES MANAGER METHODS
