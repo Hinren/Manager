@@ -15,6 +15,7 @@
     Background="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     BackgroundOpacity="0.87"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     Height="450"
     Title="Project Manager"
     Width="800"

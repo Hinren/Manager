@@ -54,6 +54,20 @@ namespace ProjectManager.Utilities
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Get application assembly name. </summary>
+        /// <returns> Application assembly name. </returns>
+        public static string GetApplicationDescription()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attributes = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), true);
+
+            if (attributes.Length > 0)
+                return ((AssemblyDescriptionAttribute)attributes.FirstOrDefault())?.Description;
+
+            return null;
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Get application executable file location path. </summary>
         /// <returns> Application executable file location path. </returns>
         public static string GetApplicationLocation()

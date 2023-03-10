@@ -15,8 +15,8 @@ namespace ProjectManager.Data.Configuration
         //  CONST
 
         public static Color BASE_ACCENT_COLOR = Color.FromArgb(255, 0, 120, 215);
-        public static Color BASE_DARK_THEME_COLOR = Color.FromArgb(255, 24, 24, 24);
-        public static Color BASE_LIGHT_THEME_COLOR = Color.FromArgb(255, 243, 243, 243);
+        public static Color BASE_DARK_THEME_COLOR = Color.FromArgb(255, 36, 36, 36);
+        public static Color BASE_LIGHT_THEME_COLOR = Color.FromArgb(255, 219, 219, 219);
         public static int APPEARANCE_INACTIVE_FACTOR = 15;
         public static int APPEARANCE_MOUSE_OVER_FACTOR = 15;
         public static int APPEARANCE_PRESSED_FACTOR = 10;
@@ -27,6 +27,7 @@ namespace ProjectManager.Data.Configuration
 
         public Color AccentColor { get; set; }
         public AppearanceThemeType AppearanceThemeType { get; set; }
+        public List<AppearanceColor> AppearanceColorsList { get; set; }
 
 
         //  GETTERS & SETTERS
@@ -37,7 +38,15 @@ namespace ProjectManager.Data.Configuration
             get => new AppearanceConfig()
             {
                 AccentColor = BASE_ACCENT_COLOR,
-                AppearanceThemeType = AppearanceThemeType.LIGHT
+                AppearanceThemeType = AppearanceThemeType.LIGHT,
+                AppearanceColorsList = new List<AppearanceColor>()
+                {
+                    new AppearanceColor("#0078D7", "Blue"),
+                    new AppearanceColor("#E81123", "Red"),
+                    new AppearanceColor("#FFB900", "Gold Yellow"),
+                    new AppearanceColor("#107C10", "Green"),
+                    new AppearanceColor("#464F54", "Dark Gray")
+                }
             };
         }
 

@@ -44,6 +44,19 @@ namespace ProjectManager.Utilities
 
         #endregion ATTRIBUTES METHODS
 
+        #region ENUM METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get list of enum values. </summary>
+        /// <typeparam name="T"> Enum type. </typeparam>
+        /// <returns> List of enum values. </returns>
+        public static List<T> GetEnumValues<T>() where T : Enum
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>().ToList();
+        }
+
+        #endregion ENUM METHODS
+
         #region PROPERTIES METHODS
 
         //  --------------------------------------------------------------------------------

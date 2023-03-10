@@ -5,6 +5,14 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Title>Project Manager</Title>
+    <Authors>Patryk Wiśniewski, Kamil Karpiński</Authors>
+    <Company>$(AuthorPrefix)</Company>
+    <Product>Project Manager</Product>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Copyright>Hinren (c) 2023</Copyright>
+    <Description>Application for managing projects and faster work organization.</Description>
   </PropertyGroup>
 
   <ItemGroup>

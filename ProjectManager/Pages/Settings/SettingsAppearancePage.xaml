@@ -6,17 +6,31 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:convDat="clr-namespace:ProjectManager.Converters.Data"
     xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
-    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base" xmlns:components="clr-namespace:ProjectManager.Components"
     mc:Ignorable="d"
     
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
-    Title="Settings - Appearance">
+    Title="Settings - Appearance"
+    Unloaded="BasePage_Unloaded">
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
 
             <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- CONVERTERS -->
+
+            <convDat:AppearanceThemeTypeNameConverter x:Key="AppearanceThemeTypeNameConverter"/>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="AppearanceThemeTypeDataTemplate">
+                <TextBlock
+                    Text="{Binding Converter={StaticResource AppearanceThemeTypeNameConverter}}"/>
+            </DataTemplate>
 
         </ResourceDictionary>
     </pages:BasePage.Resources>
@@ -25,8 +39,31 @@
 
         <cex:ScrollViewerEx
             HorizontalScrollBarVisibility="Disabled"
-            Padding="8,8,4,8"
-            VerticalScrollBarVisibility="Disabled">
+            Padding="8"
+            VerticalScrollBarVisibility="Auto">
+
+            <StackPanel
+                Orientation="Vertical">
+
+                <components:SettingsOptionControl
+                    IconKind="Theme"
+                    Title="Theme"
+                    Description="Sets the app theme.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding AppearanceThemeTypesCollection}"
+                            ItemTemplate="{StaticResource AppearanceThemeTypeDataTemplate}"
+                            SelectedItem="{Binding ConfigManager.AppearanceThemeType}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <cex:ColorsPaletteEx
+                    ColorSelectionChanged="AppearanceColorsPaletteEx_ColorSelectionChanged"
+                    ColorsHistory="{Binding PalleteColorsCollection}"/>
+
+            </StackPanel>
 
         </cex:ScrollViewerEx>
         

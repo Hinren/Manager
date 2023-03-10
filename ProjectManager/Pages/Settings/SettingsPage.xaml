@@ -1,15 +1,17 @@
 ﻿<pages:BasePage
-    x:Class="ProjectManager.Pages.Settings.SettingsGeneralPage"
+    x:Class="ProjectManager.Pages.Settings.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
     xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Title="Settings - General">
@@ -26,8 +28,25 @@
 
         <cex:ScrollViewerEx
             HorizontalScrollBarVisibility="Disabled"
-            Padding="8,8,4,8"
-            VerticalScrollBarVisibility="Disabled">
+            Padding="8"
+            VerticalScrollBarVisibility="Auto">
+
+            <StackPanel
+                Orientation="Vertical">
+
+                <components:SettingsOptionButtonControl
+                    IconKind="Palette"
+                    Title="Appearance"
+                    Description="Configure application appearance."
+                    Click="AppearanceSettingsOptionButtonControl_Click"/>
+
+                <components:SettingsOptionButtonControl
+                    IconKind="InfoOutline"
+                    Title="About"
+                    Description="Informations about application."
+                    Click="InfoSettingsOptionButtonControl_Click"/>
+
+            </StackPanel>
 
         </cex:ScrollViewerEx>
 

@@ -206,7 +206,7 @@ namespace ProjectManager.Pages.Base
         #region STATIC PAGES LOADERS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load SettingsPage (Appearance). </summary>
+        /// <summary> Load Settings Page (Appearance). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsAppearancePage()
         {
@@ -216,11 +216,21 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Load Settings Page (Informations). </summary>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadSettingsInformationsPage()
+        {
+            var page = new SettingsInfoPage(this);
+            LoadPage(page);
+            return page;
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Load SettingsPage (General). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsMainPage()
         {
-            var page = new SettingsGeneralPage(this);
+            var page = new SettingsPage(this);
             LoadPage(page);
             return page;
         }

@@ -120,6 +120,17 @@ namespace ProjectManager.Data.Configuration
             }
         }
 
+        [ConfigPropertyUpdateAttrib(AllowUpdate = false)]
+        public List<AppearanceColor> AppearanceColorsList
+        {
+            get => _config.AppearanceConfig.AppearanceColorsList;
+            set
+            {
+                _config.AppearanceConfig.AppearanceColorsList = value;
+                OnPropertyChanged(nameof(AppearanceColorsList));
+            }
+        }
+
         //  Internal
 
         [ConfigPropertyUpdateAttrib(AllowUpdate = false)]
