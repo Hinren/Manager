@@ -35,7 +35,6 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -73,7 +72,8 @@
                         FontStyle="{TemplateBinding DescriptionFontStyle}"
                         FontWeight="{TemplateBinding DescriptionFontWeight}"
                         Margin="0,4,0,0"
-                        Text="{TemplateBinding Description}"/>
+                        Text="{TemplateBinding Description}"
+                        TextWrapping="Wrap"/>
 
                 </StackPanel>
 
@@ -81,15 +81,17 @@
                     x:Name="contentPresenter"
                     Content="{TemplateBinding Content}"
                     Focusable="False"
-                    Grid.Column="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
                     RecognizesAccessKey="True"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     VerticalAlignment="Center"/>
 
                 <materialDesign:PackIcon
                     x:Name="packIconGo"
-                    Grid.Column="4"
+                    Grid.Column="3"
                     Foreground="{TemplateBinding Foreground}"
+                    HorizontalAlignment="Right"
                     Kind="ChevronRight"
                     Height="18"
                     Margin="8,0,0,0"

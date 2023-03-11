@@ -32,8 +32,4 @@
     <ProjectReference Include="..\Common\DomainModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Themes\Settings\" />
-  </ItemGroup>
-
 </Project>

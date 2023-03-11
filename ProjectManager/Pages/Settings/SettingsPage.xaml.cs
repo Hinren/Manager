@@ -28,6 +28,7 @@ namespace ProjectManager.Pages.Settings
             get => new List<MainMenuItem>()
             {
                 new MainMenuItem("Appearance", PackIconKind.Palette, (s, e) => { _pagesManager.LoadSettingsAppearancePage(); }),
+                new MainMenuItem("Databases", PackIconKind.Database, (s, e) => { _pagesManager.LoadSettingsDatabasePage(); }),
                 new MainMenuItem("About", PackIconKind.InfoOutline, (s, e) => { _pagesManager.LoadSettingsInformationsPage(); }),
             };
         }
@@ -57,6 +58,15 @@ namespace ProjectManager.Pages.Settings
         private void AppearanceSettingsOptionButtonControl_Click(object sender, RoutedEventArgs e)
         {
             _pagesManager.LoadSettingsAppearancePage();
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking Appearance settings option button control. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void DatabasesSettingsOptionButtonControl_Click(object sender, RoutedEventArgs e)
+        {
+            _pagesManager.LoadSettingsDatabasePage();
         }
 
         //  --------------------------------------------------------------------------------

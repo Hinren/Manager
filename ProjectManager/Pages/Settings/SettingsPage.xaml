@@ -39,6 +39,12 @@
                     Title="Appearance"
                     Description="Configure application appearance."
                     Click="AppearanceSettingsOptionButtonControl_Click"/>
+                
+                <components:SettingsOptionButtonControl
+                    IconKind="Database"
+                    Title="Databases"
+                    Description="Configure database profiles, connection strings, etc."
+                    Click="DatabasesSettingsOptionButtonControl_Click"/>
 
                 <components:SettingsOptionButtonControl
                     IconKind="InfoOutline"

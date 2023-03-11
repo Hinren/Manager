@@ -216,6 +216,16 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Load Settings Page (Database). </summary>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadSettingsDatabasePage()
+        {
+            var page = new SettingsDatabasesPage(this);
+            LoadPage(page);
+            return page;
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Load Settings Page (Informations). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsInformationsPage()

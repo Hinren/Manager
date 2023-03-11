@@ -1,4 +1,5 @@
-﻿using chkam05.Tools.ControlsEx.WindowsEx;
+﻿using chkam05.Tools.ControlsEx.InternalMessages;
+using chkam05.Tools.ControlsEx.WindowsEx;
 using ProjectManager.Components;
 using ProjectManager.Pages.Base;
 using System;
@@ -21,6 +22,11 @@ namespace ProjectManager.Windows
     {
 
         //  GETTERS & SETTERS
+
+        public InternalMessagesExContainer InternalMessagesContainer
+        {
+            get => imContainer;
+        }
 
         public MainMenuUserControl MainMenu
         {

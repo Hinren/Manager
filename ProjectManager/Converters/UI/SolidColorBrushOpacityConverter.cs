@@ -19,7 +19,8 @@ namespace ProjectManager.Converters.UI
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var brush = (SolidColorBrush)value;
-            var opacity = double.TryParse((string)parameter, out double convResult) ? (double?)convResult : null;
+            var opacityValue = ((string)parameter)?.Replace(".", ",") ?? string.Empty;
+            var opacity = double.TryParse(opacityValue, out double convResult) ? (double?)convResult : null;
 
             return new SolidColorBrush(GetAlphaColor(brush.Color, opacity));
         }

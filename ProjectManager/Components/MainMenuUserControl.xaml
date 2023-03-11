@@ -27,6 +27,7 @@
             <!-- STYLES -->
 
             <Style x:Key="Internal_MainMenuListViewItemExStyle" BasedOn="{StaticResource MainMenuListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="ToolTip" Value="{Binding Title}"/>
                 <Setter Property="Visibility" Value="{Binding Visible, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
             </Style>
 

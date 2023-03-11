@@ -18,7 +18,6 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
@@ -52,13 +51,16 @@
                         FontStyle="{TemplateBinding DescriptionFontStyle}"
                         FontWeight="{TemplateBinding DescriptionFontWeight}"
                         Margin="0,4,0,0"
-                        Text="{TemplateBinding Description}"/>
+                        Text="{TemplateBinding Description}"
+                        TextWrapping="WrapWithOverflow"/>
 
                 </StackPanel>
 
                 <ContentPresenter
                     Content="{TemplateBinding Content}"
-                    Grid.Column="3"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Margin="8,0,0,0"
                     VerticalAlignment="Center"/>
 
             </Grid>

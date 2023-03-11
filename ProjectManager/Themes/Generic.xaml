@@ -6,21 +6,31 @@
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/ButtonExStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/CheckBoxExStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/ColorsPaletteExStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/ComboBoxExStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/ScrollViewerExStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/TextBoxExStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Base/UpDownTextBoxExStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Components/MainMenuListViewExStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Components/SettingsOptionButtonControlStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Components/SettingsOptionControlStyle.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Pages/BasePageStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Settings/SettingsButtonExStyle.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Settings/SettingsListViewExStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!-- BASE -->
 
+    <Style BasedOn="{StaticResource ButtonExStyle}" TargetType="{x:Type cex:ButtonEx}"/>
+    <Style BasedOn="{StaticResource CheckBoxExStyle}" TargetType="{x:Type cex:CheckBoxEx}"/>
     <Style BasedOn="{StaticResource ColorsPaletteExStyle}" TargetType="{x:Type cex:ColorsPaletteEx}"/>
     <Style BasedOn="{StaticResource ComboBoxExStyle}" TargetType="{x:Type cex:ComboBoxEx}"/>
     <Style BasedOn="{StaticResource ComboBoxItemExStyle}" TargetType="{x:Type cex:ComboBoxItemEx}"/>
     <Style BasedOn="{StaticResource ScrollViewerExStyle}" TargetType="{x:Type cex:ScrollViewerEx}"/>
+    <Style BasedOn="{StaticResource TextBoxExStyle}" TargetType="{x:Type cex:TextBoxEx}"/>
+    <Style BasedOn="{StaticResource UpDownTextBoxExStyle}" TargetType="{x:Type cex:UpDownTextBoxEx}"/>
     
     <!-- COMPONENTS -->
 

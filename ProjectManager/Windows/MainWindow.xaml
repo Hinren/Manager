@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cexIM="clr-namespace:chkam05.Tools.ControlsEx.InternalMessages;assembly=chkam05.Tools.ControlsEx"
     xmlns:cexWin="clr-namespace:chkam05.Tools.ControlsEx.WindowsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
     xmlns:components="clr-namespace:ProjectManager.Components"
@@ -70,6 +71,10 @@
                 OnPageLoaded="pagesManager_OnPageLoaded"/>
 
         </Border>
+
+        <cexIM:InternalMessagesExContainer
+            x:Name="imContainer"
+            Grid.ColumnSpan="2"/>
 
     </Grid>
     

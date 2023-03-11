@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration">
+
+    <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+    <Style x:Key="CheckBoxExStyle" TargetType="{x:Type cex:CheckBoxEx}">
+        <Setter Property="CheckBoxStyle" Value="Filled"/>
+        <Setter Property="CheckMarkBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="CheckMarkHeight" Value="24"/>
+        <Setter Property="CheckMarkWidth" Value="24"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverCheckMarkBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="PressedCheckMarkBrush" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+    </Style>
+    
+</ResourceDictionary>
