@@ -71,6 +71,22 @@
                         VerticalAlignment="Center">
 
                         <cex:ButtonEx
+                            Command="{Binding DataContext.DatabaseProfilesManager.CopyToClipboard,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="ContentCopy"
+                            Style="{StaticResource SettingsButtonExStyle}">
+                            <cex:ButtonEx.Content>
+                                <TextBlock
+                                    TextAlignment="Center">
+                                    <Run Text="Copy to"/>
+                                    <LineBreak/>
+                                    <Run Text="clipboard"/>
+                                </TextBlock>
+                            </cex:ButtonEx.Content>
+                        </cex:ButtonEx>
+
+                        <cex:ButtonEx
                             Command="{Binding DataContext.DatabaseProfilesManager.EditCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
                             CommandParameter="{Binding}"

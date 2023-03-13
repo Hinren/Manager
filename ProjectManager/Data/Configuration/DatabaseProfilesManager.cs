@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -30,6 +31,7 @@ namespace ProjectManager.Data.Configuration
         private DatabaseProfile _selectedProfile;
 
         public ICommand EditCommand { get; set; }
+        public ICommand CopyToClipboard { get; set; }
         public ICommand RemoveCommand { get; set; }
 
 
@@ -83,6 +85,7 @@ namespace ProjectManager.Data.Configuration
 
             ProfilesPath = profilesPath;
 
+            CopyToClipboard = new RelayCommand(OnCopyToClipboardCommandExecute);
             EditCommand = new RelayCommand(OnEditCommandExecute);
             RemoveCommand = new RelayCommand(OnRemoveCommandExecute);
 
@@ -92,6 +95,17 @@ namespace ProjectManager.Data.Configuration
         #endregion CLASS METHODS
 
         #region COMMANDS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after pressing Copy to clipboard database profile button. </summary>
+        /// <param name="profile"> Database profile as object. </param>
+        private void OnCopyToClipboardCommandExecute(object profile)
+        {
+            var databaseProfile = profile as DatabaseProfile;
+
+            if (databaseProfile != null)
+                Clipboard.SetText(databaseProfile.ToString());
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after pressing Edit database profile button. </summary>
