@@ -1,4 +1,6 @@
-﻿using chkam05.Tools.ControlsEx.InternalMessages;
+﻿using chkam05.Tools.ControlsEx.Data;
+using chkam05.Tools.ControlsEx.Events;
+using chkam05.Tools.ControlsEx.InternalMessages;
 using ProjectManager.Data.Configuration;
 using ProjectManager.InternalMessages;
 using ProjectManager.Pages.Base;
@@ -61,7 +63,11 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void CreateDatabaseProfileButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+            var im = new DatabaseProfileEditorIM(imContainer, null);
+
+            im.OnClose += OnProfileEditorClose;
+            imContainer.ShowMessage(im);
         }
 
         //  --------------------------------------------------------------------------------
@@ -73,7 +79,20 @@ namespace ProjectManager.Pages.Settings
             var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
             var im = new DatabaseProfileEditorIM(imContainer, profile);
 
+            im.OnClose += OnProfileEditorClose;
             imContainer.ShowMessage(im);
+        }
+
+        //  --------------------------------------------------------------------------------
+        private void OnProfileEditorClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as DatabaseProfileEditorIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+            {
+                DatabaseProfile profile = im.DatabaseProfile;
+                DatabaseProfilesManager.UpdateProfile(profile);
+            }
         }
 
         #endregion PROFILES MANAGEMENT METHODS
