@@ -15,7 +15,10 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
     Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
-    BorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BorderBrush="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomBackground="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomPadding="8"
     ButtonBackground="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     ButtonBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     ButtonForeground="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
@@ -26,8 +29,13 @@
     ButtonPressedBorderBrush="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     ButtonPressedForeground="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderBackground="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderPadding="8"
     IconKind="DatabaseEdit"
-    Title="Database profile editor.">
+    Padding="0"
+    Title="Database profile editor."
+    UseCustomSectionBreaksBorderBrush="True">
 
     <cexIM:StandardInternalMessageEx.Resources>
         <ResourceDictionary>
@@ -41,6 +49,7 @@
             <convData:DatabaseProviderValueConverter x:Key="DatabaseProviderValueConverter"/>
             <convData:DatabaseServerCertificateValidationModeValueConverter x:Key="DatabaseServerCertificateValidationModeValueConverter"/>
             <convData:DatabaseSSLModeValueConverter x:Key="DatabaseSSLModeValueConverter"/>
+            <convData:NullableBoolValueConverter x:Key="NullableBoolValueConverter"/>
 
             <!-- STYLES -->
 
@@ -78,11 +87,15 @@
                     Text="{Binding Mode=OneWay, Converter={StaticResource DatabaseCharacterSetValueConverter}}"/>
             </DataTemplate>
 
+            <DataTemplate x:Key="NullableBoolDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource NullableBoolValueConverter}}"/>
+            </DataTemplate>
+
         </ResourceDictionary>
     </cexIM:StandardInternalMessageEx.Resources>
 
-    <Grid
-        Height="400">
+    <Grid>
 
         <cex:ScrollViewerEx
             HorizontalScrollBarVisibility="Disabled"
@@ -195,8 +208,11 @@
                     Description="Specifies whether connection pooling should be enabled.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:CheckBoxEx
-                            IsChecked="{Binding DatabaseProfile.Pooling}"/>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.Pooling}"/>
                     </components:SettingsOptionControl.Content>
 
                 </components:SettingsOptionControl>
@@ -207,8 +223,11 @@
                     Description="Specifies whether to enable multiple active query results.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:CheckBoxEx
-                            IsChecked="{Binding DatabaseProfile.MultipleActiveResultSets}"/>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.MultipleActiveResultSets}"/>
                     </components:SettingsOptionControl.Content>
 
                 </components:SettingsOptionControl>
@@ -219,8 +238,11 @@
                     Description="Specifies whether data transmitted between the client and the server is to be encrypted.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:CheckBoxEx
-                            IsChecked="{Binding DatabaseProfile.Encrypt}"/>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.Encrypt}"/>
                     </components:SettingsOptionControl.Content>
 
                 </components:SettingsOptionControl>
@@ -231,8 +253,11 @@
                     Description="Specifies whether to trust the SSL certificate used by the database server.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:CheckBoxEx
-                            IsChecked="{Binding DatabaseProfile.TrustServerCertificate}"/>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.TrustServerCertificate}"/>
                     </components:SettingsOptionControl.Content>
 
                 </components:SettingsOptionControl>
@@ -323,8 +348,11 @@
                     Description="Specifies whether the client can retrieve the server's public key from the database.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:CheckBoxEx
-                            IsChecked="{Binding DatabaseProfile.AllowPublicKeyRetrieval}"/>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.AllowPublicKeyRetrieval}"/>
                     </components:SettingsOptionControl.Content>
 
                 </components:SettingsOptionControl>

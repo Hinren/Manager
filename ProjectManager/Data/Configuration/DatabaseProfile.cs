@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using ProjectManager.Converters.Data;
 using ProjectManager.Data.Configuration.Static;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,17 +51,17 @@ namespace ProjectManager.Data.Configuration
         private string _userID;
         private string _password;
         private int _connectTimeout;
-        private bool _pooling;
-        private bool _multipleActiveResultSets;
-        private bool _encrypt;
-        private bool _trustServerCertificate;
+        private bool? _pooling;
+        private bool? _multipleActiveResultSets;
+        private bool? _encrypt;
+        private bool? _trustServerCertificate;
         private string _applicationName;
         private string _workstationID;
         private DatabaseProvider _provider = DatabaseProvider.SQL_CLIENT;
         private int _port;
         private DatabaseSSLMode _sslMode = DatabaseSSLMode.NONE;
         private DatabaseServerCertificateValidationMode _serverCertificateValidationMode = DatabaseServerCertificateValidationMode.NONE;
-        private bool _allowPublicKeyRetrieval;
+        private bool? _allowPublicKeyRetrieval;
         private DatabaseCharacterSet _characterSet = DatabaseCharacterSet.UTF_8;
 
 
@@ -152,7 +154,7 @@ namespace ProjectManager.Data.Configuration
         }
 
         /// <summary> Represents connection pooling enabled status. </summary>
-        public bool Pooling
+        public bool? Pooling
         {
             get => _pooling;
             set
@@ -163,7 +165,7 @@ namespace ProjectManager.Data.Configuration
         }
 
         /// <summary> Represents configuration for permit perform multiple active results at the same time. </summary>
-        public bool MultipleActiveResultSets
+        public bool? MultipleActiveResultSets
         {
             get => _multipleActiveResultSets;
             set
@@ -174,7 +176,7 @@ namespace ProjectManager.Data.Configuration
         }
 
         /// <summary> Represents configuration for enable encryption. </summary>
-        public bool Encrypt
+        public bool? Encrypt
         {
             get => _encrypt;
             set
@@ -185,7 +187,7 @@ namespace ProjectManager.Data.Configuration
         }
 
         /// <summary> Represents configuration for trusting the server's certificate. </summary>
-        public bool TrustServerCertificate
+        public bool? TrustServerCertificate
         {
             get => _trustServerCertificate;
             set
@@ -262,7 +264,7 @@ namespace ProjectManager.Data.Configuration
         }
 
         /// <summary> Represents configuration for retrieving public keys from the server. </summary>
-        public bool AllowPublicKeyRetrieval
+        public bool? AllowPublicKeyRetrieval
         {
             get => _allowPublicKeyRetrieval;
             set
@@ -303,6 +305,28 @@ namespace ProjectManager.Data.Configuration
         /// <returns> Database profile. </returns>
         public DatabaseProfile FromConnectionString(string connectionString)
         {
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                var parameters = connectionString.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(o => o.Split('=', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray())
+                    .ToList();
+
+                foreach (var parameter in parameters)
+                {
+                    try
+                    {
+                        var header = parameter[0];
+                        var value = parameter[1];
+
+
+                    }
+                    catch (Exception)
+                    {
+                        //  Invalid value or header.
+                    }
+                }
+            }
+
             return new DatabaseProfile(null);
         }
 
@@ -315,7 +339,76 @@ namespace ProjectManager.Data.Configuration
         /// <returns> String that represents the object instance. </returns>
         public override string ToString()
         {
-            return base.ToString();
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrWhiteSpace(DataSource))
+                sb.Append($"{DATA_SOURCE_HEADER}={DataSource};");
+
+            if (!string.IsNullOrWhiteSpace(InitialCatalog))
+                sb.Append($"{INITIAL_CATALOG_HEADER}={InitialCatalog};");
+
+            if (!string.IsNullOrWhiteSpace(UserID))
+                sb.Append($"{USER_ID_HEADER}={UserID};");
+
+            if (!string.IsNullOrWhiteSpace(Password))
+                sb.Append($"{PASSWORD_HEADER}={Password};");
+
+            if (ConnectTimeout > 0)
+                sb.Append($"{CONNECT_TIMEOUT}={ConnectTimeout};");
+
+            if (Pooling.HasValue)
+                sb.Append($"{POOLING_HEADER}={Pooling.Value.ToString().ToLower()};");
+
+            if (MultipleActiveResultSets.HasValue)
+                sb.Append($"{MULTIPLE_ACTIVE_RESULT_SETS_HEADER}={MultipleActiveResultSets.Value.ToString().ToLower()};");
+
+            if (Encrypt.HasValue)
+                sb.Append($"{ENCRYPT_HEADER}={Encrypt.Value.ToString().ToLower()};");
+
+            if (TrustServerCertificate.HasValue)
+                sb.Append($"{TRUST_SERVER_CERTIFICATE_HEADER}={TrustServerCertificate.Value.ToString().ToLower()};");
+
+            if (!string.IsNullOrWhiteSpace(ApplicationName))
+                sb.Append($"{APPLICATION_NAME_HEADER}={ApplicationName};");
+
+            if (!string.IsNullOrWhiteSpace(WorkstationID))
+                sb.Append($"{WORKSTATION_ID_HEADER}={WorkstationID};");
+
+            if (Provider != DatabaseProvider.DEFAULT)
+            {
+                var conv = new DatabaseProviderValueConverter();
+                var value = (string)conv.Convert(Provider, typeof(string), null, CultureInfo.InvariantCulture);
+                sb.Append($"{PROVIDER_HEADER}={value};");
+            }
+
+            if (Port > -1)
+                sb.Append($"{PORT_HEADER}={Port};");
+
+            if (SSLMode != DatabaseSSLMode.DEFAULT)
+            {
+                var conv = new DatabaseSSLModeValueConverter();
+                var value = (string)conv.Convert(SSLMode, typeof(string), null, CultureInfo.InvariantCulture);
+                sb.Append($"{SLL_MODE_HEADER}={value};");
+            }
+
+            if (ServerCertificateValidationMode != DatabaseServerCertificateValidationMode.DEFAULT)
+            {
+                var conv = new DatabaseServerCertificateValidationModeValueConverter();
+                var value = (string)conv.Convert(ServerCertificateValidationMode, typeof(string), null, CultureInfo.InvariantCulture);
+                sb.Append($"{SERVER_CERTIFICATE_VALIDATION_MODE_HEADER}={value};");
+            }
+
+            if (AllowPublicKeyRetrieval.HasValue)
+                sb.Append($"{ALLOW_PUBLIC_KEY_RETRIEVAL_HEADER}={AllowPublicKeyRetrieval.Value.ToString().ToLower()};");
+
+            if (CharacterSet != DatabaseCharacterSet.DEFAULT)
+            {
+                var conv = new DatabaseCharacterSetValueConverter();
+                var value = (string)conv.Convert(CharacterSet, typeof(string), null, CultureInfo.InvariantCulture);
+                sb.Append($"{CHARACTER_SET_HEADER}={value};");
+            }
+
+            return sb.ToString();
         }
 
         #endregion GET METHODS

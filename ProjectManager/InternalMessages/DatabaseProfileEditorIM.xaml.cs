@@ -34,6 +34,7 @@ namespace ProjectManager.InternalMessages
         private ObservableCollection<DatabaseProvider> _providersCollection;
         private ObservableCollection<DatabaseServerCertificateValidationMode> _serverCertificateValidationModesCollection;
         private ObservableCollection<DatabaseSSLMode> _sslModesCollection;
+        private ObservableCollection<bool?> _nullableBoolCollection;
 
 
         //  GETTERS & SETTERS
@@ -93,6 +94,17 @@ namespace ProjectManager.InternalMessages
             }
         }
 
+        public ObservableCollection<bool?> NullableBoolCollection
+        {
+            get => _nullableBoolCollection;
+            set
+            {
+                _nullableBoolCollection = value;
+                _nullableBoolCollection.CollectionChanged += (s, e) => { OnPropertyChanged(nameof(NullableBoolCollection)); };
+                OnPropertyChanged(nameof(NullableBoolCollection));
+            }
+        }
+
 
         //  METHODS
 
@@ -107,11 +119,9 @@ namespace ProjectManager.InternalMessages
             //  Data setup.
             SetupDataCollections();
 
-            bool isNew = databaseProfile == null;
-
-            DatabaseProfile = isNew
-                ? new DatabaseProfile() { ProfileName = "New profile" }
-                : databaseProfile;
+            DatabaseProfile = (databaseProfile != null)
+                ? databaseProfile
+                : new DatabaseProfile() { ProfileName = "New profile" };
 
             //  Initialize interface components.
             InitializeComponent();
@@ -123,8 +133,8 @@ namespace ProjectManager.InternalMessages
                 InternalMessageButtons.CancelButton
             };
 
-            IconKind = isNew ? PackIconKind.DatabaseAdd : PackIconKind.DatabaseEdit;
-            Title = $"Database profile editor: \"{databaseProfile.ProfileName}\"";
+            IconKind = databaseProfile == null ? PackIconKind.DatabaseAdd : PackIconKind.DatabaseEdit;
+            Title = $"Database profile editor: \"{DatabaseProfile.ProfileName}\"";
         }
 
         #endregion CLASS METHODS
@@ -146,6 +156,11 @@ namespace ProjectManager.InternalMessages
 
             SslModes = new ObservableCollection<DatabaseSSLMode>(
                 ObjectHelper.GetEnumValues<DatabaseSSLMode>());
+
+            NullableBoolCollection = new ObservableCollection<bool?>()
+            {
+                null, true, false
+            };
         }
 
         #endregion SETUP METHODS

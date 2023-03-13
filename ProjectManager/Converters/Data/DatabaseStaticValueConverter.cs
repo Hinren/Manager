@@ -9,43 +9,14 @@ using System.Windows.Data;
 
 namespace ProjectManager.Converters.Data
 {
-    public class DatabaseStaticValueConverter<T> : IValueConverter
-    {
-
-        //  VALUES
-
-        public virtual T DefaultKey { get => default(T); }
-        public virtual string DefaultValue { get => string.Empty; }
-        public virtual Dictionary<T, string> ValuesDict { get => null; }
-
-
-        //  METHODS
-
-        //  --------------------------------------------------------------------------------
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var enumValue = (T)value;
-            return (ValuesDict?.TryGetValue(enumValue, out string name) ?? false) ? name : DefaultValue;
-        }
-
-        //  --------------------------------------------------------------------------------
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var stringValue = (string)value;
-            return (ValuesDict?.ContainsValue(stringValue) ?? false)
-                ? ValuesDict.FirstOrDefault(x => x.Value == stringValue).Key
-                : default(T);
-        }
-
-    }
-
-    public class DatabaseCharacterSetValueConverter : DatabaseStaticValueConverter<DatabaseCharacterSet>
+    public class DatabaseCharacterSetValueConverter : EnumValueConverter<DatabaseCharacterSet>
     {
 
         //  CONST
 
         private static readonly Dictionary<DatabaseCharacterSet, string> _valuesDict = new Dictionary<DatabaseCharacterSet, string>()
         {
+            { DatabaseCharacterSet.DEFAULT, "Default" },
             { DatabaseCharacterSet.UTF_8, "utf8" },
             { DatabaseCharacterSet.UTF_16, "utf-16" },
             { DatabaseCharacterSet.ISO_8859_1, "iso-8859-1" },
@@ -57,8 +28,8 @@ namespace ProjectManager.Converters.Data
 
         //  VALUES
 
-        public override DatabaseCharacterSet DefaultKey => DatabaseCharacterSet.UTF_8;
-        public override string DefaultValue => "utf8";
+        public override DatabaseCharacterSet DefaultKey => DatabaseCharacterSet.DEFAULT;
+        public override string DefaultValue => "Default";
 
         public override Dictionary<DatabaseCharacterSet, string> ValuesDict
         {
@@ -67,13 +38,14 @@ namespace ProjectManager.Converters.Data
 
     }
 
-    public class DatabaseProviderValueConverter : DatabaseStaticValueConverter<DatabaseProvider>
+    public class DatabaseProviderValueConverter : EnumValueConverter<DatabaseProvider>
     {
 
         //  CONST
 
         private static readonly Dictionary<DatabaseProvider, string> _valuesDict = new Dictionary<DatabaseProvider, string>()
         {
+            { DatabaseProvider.DEFAULT, "Default" },
             { DatabaseProvider.MICROSOFT_ACE_OLEDB_12_0, "Microsoft.ACE.OLEDB.12.0" },
             { DatabaseProvider.MICROSOFT_JET_OLEDB_4_0, "Microsoft.Jet.OLEDB.4.0" },
             { DatabaseProvider.SQL_CLIENT, "System.Data.SqlClient" },
@@ -83,8 +55,8 @@ namespace ProjectManager.Converters.Data
 
         //  VALUES
 
-        public override DatabaseProvider DefaultKey => DatabaseProvider.SQL_CLIENT;
-        public override string DefaultValue => "System.Data.SqlClient";
+        public override DatabaseProvider DefaultKey => DatabaseProvider.DEFAULT;
+        public override string DefaultValue => "Default";
 
         public override Dictionary<DatabaseProvider, string> ValuesDict
         {
@@ -93,13 +65,14 @@ namespace ProjectManager.Converters.Data
 
     }
 
-    public class DatabaseSSLModeValueConverter : DatabaseStaticValueConverter<DatabaseSSLMode>
+    public class DatabaseSSLModeValueConverter : EnumValueConverter<DatabaseSSLMode>
     {
 
         //  CONST
 
         private static readonly Dictionary<DatabaseSSLMode, string> _valuesDict = new Dictionary<DatabaseSSLMode, string>()
         {
+            { DatabaseSSLMode.DEFAULT, "Default" },
             { DatabaseSSLMode.NONE, "None" },
             { DatabaseSSLMode.REQUIRED, "Required" },
             { DatabaseSSLMode.PREFFERED, "Preferred" },
@@ -109,8 +82,8 @@ namespace ProjectManager.Converters.Data
 
         //  VALUES
 
-        public override DatabaseSSLMode DefaultKey => DatabaseSSLMode.NONE;
-        public override string DefaultValue => "None";
+        public override DatabaseSSLMode DefaultKey => DatabaseSSLMode.DEFAULT;
+        public override string DefaultValue => "Default";
 
         public override Dictionary<DatabaseSSLMode, string> ValuesDict
         {
@@ -119,13 +92,14 @@ namespace ProjectManager.Converters.Data
 
     }
 
-    public class DatabaseServerCertificateValidationModeValueConverter : DatabaseStaticValueConverter<DatabaseServerCertificateValidationMode>
+    public class DatabaseServerCertificateValidationModeValueConverter : EnumValueConverter<DatabaseServerCertificateValidationMode>
     {
 
         //  CONST
 
         private static readonly Dictionary<DatabaseServerCertificateValidationMode, string> _valuesDict = new Dictionary<DatabaseServerCertificateValidationMode, string>()
         {
+            { DatabaseServerCertificateValidationMode.DEFAULT, "Default" },
             { DatabaseServerCertificateValidationMode.NONE, "None" },
             { DatabaseServerCertificateValidationMode.FULL, "Full" },
             { DatabaseServerCertificateValidationMode.VERIFY_CA, "VerifyCA" },
@@ -136,8 +110,8 @@ namespace ProjectManager.Converters.Data
 
         //  VALUES
 
-        public override DatabaseServerCertificateValidationMode DefaultKey => DatabaseServerCertificateValidationMode.NONE;
-        public override string DefaultValue => "None";
+        public override DatabaseServerCertificateValidationMode DefaultKey => DatabaseServerCertificateValidationMode.DEFAULT;
+        public override string DefaultValue => "Default";
 
         public override Dictionary<DatabaseServerCertificateValidationMode, string> ValuesDict
         {

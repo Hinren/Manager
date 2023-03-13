@@ -8,6 +8,7 @@ namespace ProjectManager.Data.Configuration.Static
 {
     public enum DatabaseCharacterSet
     {
+        DEFAULT,
         UTF_8,
         UTF_16,
         ISO_8859_1,
@@ -18,6 +19,7 @@ namespace ProjectManager.Data.Configuration.Static
 
     public enum DatabaseProvider
     {
+        DEFAULT,
         MICROSOFT_ACE_OLEDB_12_0,
         MICROSOFT_JET_OLEDB_4_0,
         SQL_CLIENT,
@@ -26,6 +28,7 @@ namespace ProjectManager.Data.Configuration.Static
 
     public enum DatabaseSSLMode
     {
+        DEFAULT,
         NONE,
         REQUIRED,
         PREFFERED,
@@ -34,6 +37,7 @@ namespace ProjectManager.Data.Configuration.Static
 
     public enum DatabaseServerCertificateValidationMode
     {
+        DEFAULT,
         NONE,
         FULL,
         VERIFY_CA,

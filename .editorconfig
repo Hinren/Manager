@@ -1,25 +1,4 @@
 ﻿[*.cs]
 
-# IDE0025: Użyj treści wyrażenia dla właściwości
-dotnet_diagnostic.IDE0025.severity = none
-
-# CS8618: Pole niedopuszczające wartości null musi zawierać wartość inną niż null podczas kończenia działania konstruktora. Rozważ zadeklarowanie pola jako dopuszczającego wartość null.
-dotnet_diagnostic.CS8618.severity = none
-
-# CS8612: Obsługa wartości null dla typów referencyjnych w typie jest niezgodna z niejawnie implementowaną składową.
-dotnet_diagnostic.CS8612.severity = none
-
-# CS8622: Dopuszczanie wartości null dla typów referencyjnych w typie parametru nie jest zgodne z docelowym delegatem (prawdopodobnie z powodu atrybutów dopuszczania wartości null).
-dotnet_diagnostic.CS8622.severity = none
-
-# CS8600: Konwertowanie literału null lub możliwej wartości null na nienullowalny typ.
-dotnet_diagnostic.CS8600.severity = none
-
-# CS8602: Wyłuskanie odwołania, które może mieć wartość null.
-dotnet_diagnostic.CS8602.severity = none
-
-# CS8603: Możliwe zwrócenie odwołania o wartości null.
-dotnet_diagnostic.CS8603.severity = none
-
-# CS8625: Nie można przekonwertować literału o wartości null na nienullowalny typ referencyjny.
-dotnet_diagnostic.CS8625.severity = none
+# CS8601: Możliwe przypisanie odwołania o wartości null.
+dotnet_diagnostic.CS8601.severity = none
