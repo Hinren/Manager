@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Common.Models.Snippet;
+using Newtonsoft.Json;
 using ProjectManager.Converters.Data;
 using ProjectManager.Data.Configuration.Static;
 using System;
@@ -303,8 +304,14 @@ namespace ProjectManager.Data.Configuration
         /// <summary> Create database profile from connection string. </summary>
         /// <param name="connectionString"> Connection string. </param>
         /// <returns> Database profile. </returns>
-        public DatabaseProfile FromConnectionString(string connectionString)
+        public static DatabaseProfile FromConnectionString(string connectionString, out Dictionary<string, string> errors)
         {
+            errors = new Dictionary<string, string>();
+            int headersCounter = 0;
+            var profile = new DatabaseProfile();
+            string? header = null;
+            string? value = null;
+
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
                 var parameters = connectionString.Split(';', StringSplitOptions.RemoveEmptyEntries)
@@ -315,19 +322,109 @@ namespace ProjectManager.Data.Configuration
                 {
                     try
                     {
-                        var header = parameter[0];
-                        var value = parameter[1];
+                        header = parameter[0];
+                        value = parameter[1];
 
+                        switch (header)
+                        {
+                            case DATA_SOURCE_HEADER:
+                                profile.DataSource = value;
+                                break;
+
+                            case INITIAL_CATALOG_HEADER:
+                                profile.InitialCatalog = value;
+                                break;
+
+                            case USER_ID_HEADER:
+                                profile.UserID = value;
+                                break;
+
+                            case PASSWORD_HEADER:
+                                profile.Password = value;
+                                break;
+
+                            case CONNECT_TIMEOUT:
+                                profile.ConnectTimeout = int.TryParse(value, out int connectionTimeout) ? connectionTimeout : 0;
+                                break;
+
+                            case POOLING_HEADER:
+                                profile.Pooling = bool.TryParse(value, out bool pooling) ? pooling : null;
+                                break;
+
+                            case MULTIPLE_ACTIVE_RESULT_SETS_HEADER:
+                                profile.MultipleActiveResultSets = bool.TryParse(value, out bool mtpActResSets) ? mtpActResSets : null;
+                                break;
+
+                            case ENCRYPT_HEADER:
+                                profile.Encrypt = bool.TryParse(value, out bool encrypt) ? encrypt : null;
+                                break;
+
+                            case TRUST_SERVER_CERTIFICATE_HEADER:
+                                profile.TrustServerCertificate = bool.TryParse(value, out bool trustSrvCert) ? trustSrvCert : null;
+                                break;
+
+                            case APPLICATION_NAME_HEADER:
+                                profile.ApplicationName = value;
+                                break;
+
+                            case WORKSTATION_ID_HEADER:
+                                profile.WorkstationID = value;
+                                break;
+
+                            case PROVIDER_HEADER:
+                                var provConv = new DatabaseProviderValueConverter();
+                                var provider = (DatabaseProvider)provConv
+                                    .ConvertBack(value, typeof(DatabaseProvider), 1, CultureInfo.InvariantCulture);
+                                profile.Provider = provider;
+                                break;
+
+                            case PORT_HEADER:
+                                profile.Port = int.TryParse(value, out int port) ? port : 0;
+                                break;
+
+                            case SLL_MODE_HEADER:
+                                var sslModeConv = new DatabaseSSLModeValueConverter();
+                                var sslMode = (DatabaseSSLMode)sslModeConv
+                                    .Convert(value, typeof(DatabaseSSLMode), 1, CultureInfo.InvariantCulture);
+                                profile.SSLMode = sslMode;
+                                break;
+
+                            case SERVER_CERTIFICATE_VALIDATION_MODE_HEADER:
+                                var srvCertValidModeConv = new DatabaseServerCertificateValidationModeValueConverter();
+                                var srvCertValidMode = (DatabaseServerCertificateValidationMode)srvCertValidModeConv
+                                    .Convert(value, typeof(DatabaseServerCertificateValidationMode), 1, CultureInfo.InvariantCulture);
+                                profile.ServerCertificateValidationMode = srvCertValidMode;
+                                break;
+
+                            case ALLOW_PUBLIC_KEY_RETRIEVAL_HEADER:
+                                profile.AllowPublicKeyRetrieval = bool.TryParse(value, out bool allowPubKeyRetrieval) ? allowPubKeyRetrieval : null;
+                                break;
+
+                            case CHARACTER_SET_HEADER:
+                                var charSetConv = new DatabaseCharacterSetValueConverter();
+                                var charSet = (DatabaseCharacterSet)charSetConv
+                                    .Convert(value, typeof(DatabaseCharacterSet), 1, CultureInfo.InvariantCulture);
+                                profile.CharacterSet = charSet;
+                                break;
+                        }
 
                     }
-                    catch (Exception)
+                    catch (Exception exc)
                     {
-                        //  Invalid value or header.
+                        var errorKey = !string.IsNullOrEmpty(header)
+                            ? $"{headersCounter}:{header}"
+                            : $"{headersCounter}:unknown_key";
+
+                        errors.Add(errorKey, exc.Message);
                     }
+
+                    headersCounter++;
+                    header = null;
+                    value = null;
                 }
             }
 
-            return new DatabaseProfile(null);
+            return profile;
         }
 
         #endregion CLASS METHODS

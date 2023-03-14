@@ -145,7 +145,25 @@
                         <cex:ButtonEx
                             Content="Create new profile"
                             IconKind="DatabaseAdd"
-                            Click="CreateDatabaseProfileButtonEx_Click"/>
+                            PreviewMouseDown="CreateDatabaseProfileButtonEx_PreviewMouseDown">
+
+                            <cex:ButtonEx.ContextMenu>
+                                <cex:ContextMenuEx>
+
+                                    <cex:ContextMenuItemEx
+                                        Header="Create empty profile"
+                                        IconKind="DatabaseAdd"
+                                        Click="CreateDatabaseContextMenuItemEx_Click"/>
+
+                                    <cex:ContextMenuItemEx
+                                        Header="Create from ConnectionString"
+                                        IconKind="DatabaseImport"
+                                        Click="ImportDbFromConnectionStringContextMenuItemEx_Click"/>
+
+                                </cex:ContextMenuEx>
+                            </cex:ButtonEx.ContextMenu>
+                            
+                        </cex:ButtonEx>
 
                     </StackPanel>
 

@@ -1,6 +1,8 @@
-﻿using chkam05.Tools.ControlsEx.Data;
+﻿using chkam05.Tools.ControlsEx;
+using chkam05.Tools.ControlsEx.Data;
 using chkam05.Tools.ControlsEx.Events;
 using chkam05.Tools.ControlsEx.InternalMessages;
+using MaterialDesignThemes.Wpf;
 using ProjectManager.Data.Configuration;
 using ProjectManager.InternalMessages;
 using ProjectManager.Pages.Base;
@@ -58,16 +60,74 @@ namespace ProjectManager.Pages.Settings
         #region PROFILES MANAGEMENT METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after clicking create database profile ButtonEx. </summary>
+        /// <summary> Method invoked after pressing mouse button on create database profile ButtonEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void CreateDatabaseProfileButtonEx_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Middle)
+                return;
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                ButtonEx button = (ButtonEx)sender;
+                ContextMenuEx contextMenu = (ContextMenuEx)button.ContextMenu;
+                contextMenu.PlacementTarget = button;
+                contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                contextMenu.IsOpen = true;
+            }
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking create database profile ContextMenuItemEx. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Routed Event Arguments. </param>
-        private void CreateDatabaseProfileButtonEx_Click(object sender, RoutedEventArgs e)
+        private void CreateDatabaseContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
             var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
             var im = new DatabaseProfileEditorIM(imContainer, null);
 
             im.OnClose += OnProfileEditorClose;
             imContainer.ShowMessage(im);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking import db from connection string ContextMenuItemEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void ImportDbFromConnectionStringContextMenuItemEx_Click(object sender, RoutedEventArgs e)
+        {
+            var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+            var imStringInput = new StringInputIM(imContainer, "Import database profile config", "ConnectionString:", PackIconKind.DatabaseImport);
+
+            imStringInput.OnClose += (s, e) =>
+            {
+                if (e.Result == InternalMessageResult.Ok)
+                {
+                    var profile = DatabaseProfile.FromConnectionString(imStringInput.Text, out Dictionary<string, string> errors);
+                    var imProfileEditor = new DatabaseProfileEditorIM(imContainer, profile);
+
+                    imStringInput.OnClose += OnProfileEditorClose;
+                    imContainer.ShowMessage(imStringInput);
+
+                    if (errors.Any())
+                    {
+                        StringBuilder sbErrors = new StringBuilder();
+                        
+                        foreach (var error in errors)
+                        {
+                            sbErrors.AppendLine(error.Key);
+                            sbErrors.AppendLine(error.Value);
+                        }
+
+                        var imError = InternalMessageEx.CreateErrorMessage(
+                            imContainer, "Importing database profile errors", sbErrors.ToString());
+                        imContainer.ShowMessage(imError);
+                    }
+                }
+            };
+
+            imContainer.ShowMessage(imStringInput);
         }
 
         //  --------------------------------------------------------------------------------
@@ -96,11 +156,6 @@ namespace ProjectManager.Pages.Settings
         }
 
         #endregion PROFILES MANAGEMENT METHODS
-
-        #region SETUP METHODS
-
-
-        #endregion SETUP METHODS
 
     }
 }
