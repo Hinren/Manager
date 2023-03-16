@@ -1,0 +1,380 @@
+﻿<cexIM:StandardInternalMessageEx
+    x:Class="ProjectManager.InternalMessages.DatabaseProfileEditorIM"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cexIM="clr-namespace:chkam05.Tools.ControlsEx.InternalMessages;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:convData="clr-namespace:ProjectManager.Converters.Data"
+    xmlns:local="clr-namespace:ProjectManager.InternalMessages"
+    mc:Ignorable="d"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    d:DesignWidth="800"
+    Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BorderBrush="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomBackground="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    BottomPadding="8"
+    ButtonBackground="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonForeground="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonMouseOverBackground="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonMouseOverBorderBrush="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonMouseOverForeground="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonPressedBackground="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonPressedBorderBrush="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    ButtonPressedForeground="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderBackground="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderBorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    HeaderPadding="8"
+    IconKind="DatabaseEdit"
+    Padding="0"
+    Title="Database profile editor."
+    UseCustomSectionBreaksBorderBrush="True">
+
+    <cexIM:StandardInternalMessageEx.Resources>
+        <ResourceDictionary>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- CONVERTERS -->
+
+            <convData:IntToStringConverter x:Key="IntToStringConverter"/>
+            <convData:DatabaseCharacterSetValueConverter x:Key="DatabaseCharacterSetValueConverter"/>
+            <convData:DatabaseProviderValueConverter x:Key="DatabaseProviderValueConverter"/>
+            <convData:DatabaseServerCertificateValidationModeValueConverter x:Key="DatabaseServerCertificateValidationModeValueConverter"/>
+            <convData:DatabaseSSLModeValueConverter x:Key="DatabaseSSLModeValueConverter"/>
+            <convData:NullableBoolValueConverter x:Key="NullableBoolValueConverter"/>
+
+            <!-- STYLES -->
+
+            <Style BasedOn="{StaticResource ComboBoxExStyle}" TargetType="{x:Type cex:ComboBoxEx}">
+                <Setter Property="MinWidth" Value="192"/>
+            </Style>
+
+            <Style BasedOn="{StaticResource TextBoxExStyle}" TargetType="{x:Type cex:TextBoxEx}">
+                <Setter Property="MinWidth" Value="192"/>
+            </Style>
+
+            <Style BasedOn="{StaticResource UpDownTextBoxExStyle}" TargetType="{x:Type cex:UpDownTextBoxEx}">
+                <Setter Property="MinWidth" Value="64"/>
+            </Style>
+            
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="DatabaseProviderDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource DatabaseProviderValueConverter}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DatabaseSSLModeDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource DatabaseSSLModeValueConverter}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DatabaseServerCertificateValidationModesDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource DatabaseServerCertificateValidationModeValueConverter}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DatabaseCharacterSetsDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource DatabaseCharacterSetValueConverter}}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="NullableBoolDataTemplate">
+                <TextBlock
+                    Text="{Binding Mode=OneWay, Converter={StaticResource NullableBoolValueConverter}}"/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </cexIM:StandardInternalMessageEx.Resources>
+
+    <Grid>
+
+        <cex:ScrollViewerEx
+            HorizontalScrollBarVisibility="Disabled"
+            Padding="8"
+            VerticalScrollBarVisibility="Auto">
+
+            <StackPanel
+                Orientation="Vertical">
+
+                <components:SettingsOptionControl
+                    IconKind="Identifier"
+                    Title="Identifier"
+                    Description="Database profile identifier.">
+
+                    <components:SettingsOptionControl.Content>
+                        <TextBlock
+                            Text="{Binding DatabaseProfile.Id}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="TextBox"
+                    Title="Name"
+                    Description="Database profile name.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.ProfileName}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="TextBoxEdit"
+                    Title="Description"
+                    Description="Database profile description.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.ProfileDescription}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="IpNetwork"
+                    Title="Data Source"
+                    Description="It's can be a name of the database server or a database file.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.DataSource}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Folder"
+                    Title="Initial Catalog"
+                    Description="Name of the start directory of the database to connect to.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.InitialCatalog}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="User"
+                    Title="User ID"
+                    Description="Name of the user to access the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.UserID}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Password"
+                    Title="Password"
+                    Description="Password of the user to access the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.Password}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="TimerRefresh"
+                    Title="Connect Timeout"
+                    Description="Waiting time for connecting to the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:UpDownTextBoxEx
+                            MinValue="0"
+                            Text="{Binding DatabaseProfile.ConnectTimeout, Converter={StaticResource IntToStringConverter}}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Connection"
+                    Title="Pooling"
+                    Description="Specifies whether connection pooling should be enabled.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.Pooling}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="SqlQuery"
+                    Title="Multiple Active Result Sets"
+                    Description="Specifies whether to enable multiple active query results.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.MultipleActiveResultSets}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="SqlQuery"
+                    Title="Encrypt"
+                    Description="Specifies whether data transmitted between the client and the server is to be encrypted.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.Encrypt}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Certificate"
+                    Title="Trust Server Certificate"
+                    Description="Specifies whether to trust the SSL certificate used by the database server.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.TrustServerCertificate}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Application"
+                    Title="Application Name"
+                    Description="Specifies the name of the application that connects to the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.ApplicationName}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Computer"
+                    Title="Workstation ID"
+                    Description="Specifies the ID of the workstation that connects to the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:TextBoxEx
+                            Text="{Binding DatabaseProfile.WorkstationID}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="DatabaseCheck"
+                    Title="Provider"
+                    Description="Specifies which library use to provide an interface to communicate with a given database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding ProviderCollection}"
+                            ItemTemplate="{StaticResource DatabaseProviderDataTemplate}"
+                            SelectedItem="{Binding DatabaseProfile.Provider}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Connection"
+                    Title="Port"
+                    Description="Specifies the port number on which the database server listens for network connections.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:UpDownTextBoxEx
+                            MaxValue="65535"
+                            MinValue="0"
+                            Text="{Binding DatabaseProfile.Port, Converter={StaticResource IntToStringConverter}}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Encryption"
+                    Title="SSL Mode"
+                    Description="Specifies whether the connection to the database should be encrypted using SSL.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding SslModes}"
+                            ItemTemplate="{StaticResource DatabaseSSLModeDataTemplate}"
+                            SelectedItem="{Binding DatabaseProfile.SSLMode}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Encryption"
+                    Title="Server Certificate Validation Mode"
+                    Description="Specifies the conditions that must be met by the server's certificate for SSL connection.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding ServerCertificateValidationModes}"
+                            ItemTemplate="{StaticResource DatabaseServerCertificateValidationModesDataTemplate}"
+                            SelectedItem="{Binding DatabaseProfile.ServerCertificateValidationMode}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Key"
+                    Title="Allow Public Key Retrieval"
+                    Description="Specifies whether the client can retrieve the server's public key from the database.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding NullableBoolCollection}"
+                            ItemTemplate="{StaticResource NullableBoolDataTemplate}"
+                            MinWidth="128"
+                            SelectedItem="{Binding DatabaseProfile.AllowPublicKeyRetrieval}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    IconKind="Code"
+                    Title="Character Set"
+                    Description="Specifies which character encoding should be used in communication.">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:ComboBoxEx
+                            ItemsSource="{Binding CharacterSetsCollection}"
+                            ItemTemplate="{StaticResource DatabaseCharacterSetsDataTemplate}"
+                            SelectedItem="{Binding DatabaseProfile.CharacterSet}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+            </StackPanel>
+
+        </cex:ScrollViewerEx>
+
+    </Grid>
+    
+</cexIM:StandardInternalMessageEx>

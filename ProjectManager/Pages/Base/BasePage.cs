@@ -1,10 +1,16 @@
-﻿using System.ComponentModel;
+﻿using ProjectManager.Data.MainMenu;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Hinren.ProjectManager.Pages.Base
+namespace ProjectManager.Pages.Base
 {
-    public class BasePage : Page, IPage, INotifyPropertyChanged
+    public class BasePage : Page, INotifyPropertyChanged
     {
 
         //  EVENTS
@@ -12,9 +18,14 @@ namespace Hinren.ProjectManager.Pages.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
 
+        //  VARIABLES
+
+        protected PagesManager _pagesManager;
+
+
         //  GETTERS & SETTERS
 
-        public PagesControl PagesController { get; private set; }
+        public virtual List<MainMenuItem> MainMenuItems { get; }
 
 
         //  METHODS
@@ -23,10 +34,10 @@ namespace Hinren.ProjectManager.Pages.Base
 
         //  --------------------------------------------------------------------------------
         /// <summary> BasePage class constructor. </summary>
-        /// <param name="pagesController"> Parent pages controller. </param>
-        public BasePage(PagesControl pagesController, object[] args = null) : base()
+        /// <param name="pagesManager"> Pages Manager. </param>
+        public BasePage(PagesManager pagesManager)
         {
-            PagesController = pagesController;
+            _pagesManager = pagesManager;
         }
 
         //  --------------------------------------------------------------------------------
@@ -53,19 +64,6 @@ namespace Hinren.ProjectManager.Pages.Base
         }
 
         #endregion NOTIFY PROPERTIES CHANGED INTERFACE METHODS
-
-        #region TEMPLATE METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> When overridden in a derived class,cis invoked whenever 
-        /// application code or internal processes call ApplyTemplate. </summary>
-        public override void OnApplyTemplate()
-        {
-            //  Apply Template
-            base.OnApplyTemplate();
-        }
-
-        #endregion TEMPLATE METHODS
 
     }
 }

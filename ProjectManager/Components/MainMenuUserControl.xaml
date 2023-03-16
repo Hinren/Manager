@@ -1,0 +1,96 @@
+﻿<UserControl
+    x:Class="ProjectManager.Components.MainMenuUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:convUI="clr-namespace:ProjectManager.Converters.UI"
+    xmlns:local="clr-namespace:ProjectManager.Components"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- CONVERTERS -->
+
+            <convUI:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+            
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_MainMenuListViewItemExStyle" BasedOn="{StaticResource MainMenuListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="ToolTip" Value="{Binding Title}"/>
+                <Setter Property="Visibility" Value="{Binding Visible, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
+            </Style>
+
+            <!-- STORYBOARDS -->
+
+            <Storyboard x:Key="ExpandCollapseMainMenuStoryboard" Completed="ExpandCollapseMainMenuStoryboard_Completed">
+                <DoubleAnimation 
+                    BeginTime="00:00:0"
+                    Duration="00:00:0.25"
+                    Storyboard.TargetName="mainMenuBorder"
+                    Storyboard.TargetProperty="Width"
+                    To="{Binding Path=ExpandMenuStoryboardTargetWidth, Mode=TwoWay}"/>
+            </Storyboard>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="MainMenuItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                        Grid.Column="0"
+                        Height="auto"
+                        Kind="{Binding IconKind}"
+                        VerticalAlignment="Stretch"
+                        Width="auto"/>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,16,0"
+                        Text="{Binding Title}"
+                        VerticalAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <Border
+            x:Name="mainMenuBorder"
+            Background="Transparent"
+            BorderBrush="{x:Null}"
+            BorderThickness="0"
+            Margin="2"
+            MouseEnter="MainMenu_MouseEnter"
+            MouseLeave="MainMenu_MouseLeave">
+
+            <cex:ListViewEx
+                ItemContainerStyle="{StaticResource Internal_MainMenuListViewItemExStyle}"
+                ItemsSource="{Binding MenuItems}"
+                ItemTemplate="{StaticResource MainMenuItemDataTemplate}"
+                Style="{StaticResource MainMenuListViewExStyle}"
+                SelectionChanged="MainMenu_SelectionChanged"/>
+
+        </Border>
+    </Grid>
+    
+</UserControl>

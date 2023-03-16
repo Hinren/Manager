@@ -5,15 +5,22 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <RootNamespace>Hinren.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Title>Project Manager</Title>
     <Authors>Patryk Wiśniewski, Kamil Karpiński</Authors>
-    <Copyright>Copyright (c) Hinren 2022</Copyright>
+    <Company>$(AuthorPrefix)</Company>
+    <Product>Project Manager</Product>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Copyright>Hinren (c) 2023</Copyright>
+    <Description>Application for managing projects and faster work organization.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignColors" Version="2.0.9" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Compile Remove="MainWindow.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="MainWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,9 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="chkam05.Tools.ControlsEx" Version="2.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Common\DomainModel.csproj" />
-    <ProjectReference Include="..\DomainLogic\DomainLogic.csproj" />
-    <ProjectReference Include="..\ExtendedControls\ExtendedControls.csproj" />
   </ItemGroup>
 
 </Project>

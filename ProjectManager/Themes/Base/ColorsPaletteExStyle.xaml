@@ -1,0 +1,27 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration">
+
+    <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+    <Style x:Key="ColorsPaletteExStyle" TargetType="{x:Type cex:ColorsPaletteEx}">
+        <Setter Property="Background" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemCornerRadius" Value="4"/>
+        <Setter Property="ColorItemKeepSelected" Value="False"/>
+        <Setter Property="ColorItemMouseOverBackground" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemMouseOverBorderBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemSelectedBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemSelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemSelectedInactiveBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ColorItemSelectedInactiveBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Padding" Value="8"/>
+    </Style>
+    
+</ResourceDictionary>

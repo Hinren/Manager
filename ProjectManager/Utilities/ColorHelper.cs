@@ -1,8 +1,12 @@
-﻿using ExtendedControls.Data;
+﻿using chkam05.Tools.ControlsEx.Colors;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace Hinren.ProjectManager.Utilities
+namespace ProjectManager.Utilities
 {
     public static class ColorHelper
     {
@@ -102,13 +106,13 @@ namespace Hinren.ProjectManager.Utilities
         #region CONSTRAST METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Find font color that contrasts with the background color. </summary>
-        /// <param name="backgroundColor"> Background color. </param>
-        /// <returns> Text color. </returns>
-        public static Color FoundFontColorContrastingWithBackground(Color backgroundColor)
+        /// <summary> Find color that contrasts with the input color. </summary>
+        /// <param name="color"> Color. </param>
+        /// <returns> Contrast color. </returns>
+        public static Color GetContrastColor(Color color)
         {
-            double luminance = (LUMINANCE_R * backgroundColor.R + LUMINANCE_G * backgroundColor.G
-                + LUMINANCE_B * backgroundColor.B) / 255;
+            double luminance = (LUMINANCE_R * color.R + LUMINANCE_G * color.G
+                + LUMINANCE_B * color.B) / 255;
 
             if (luminance > 0.5)
                 return System.Windows.Media.Colors.Black;

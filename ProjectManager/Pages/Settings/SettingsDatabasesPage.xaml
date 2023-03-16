@@ -1,0 +1,184 @@
+﻿<pages:BasePage
+    x:Class="ProjectManager.Pages.Settings.SettingsDatabasesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    mc:Ignorable="d"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    d:DesignWidth="800"
+    Title="Settings - Databases">
+
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_SettingsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                
+            </Style>
+            
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="DatabaseProfileDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                        Grid.Column="0"
+                        Kind="Database"
+                        Height="28"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Width="28"/>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Text="{Binding ProfileName}"/>
+
+                        <TextBlock
+                            Margin="0,4,0,0"
+                            Text="{Binding ProfileDescription}"/>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Command="{Binding DataContext.DatabaseProfilesManager.CopyToClipboard,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="ContentCopy"
+                            Style="{StaticResource SettingsButtonExStyle}">
+                            <cex:ButtonEx.Content>
+                                <TextBlock
+                                    TextAlignment="Center">
+                                    <Run Text="Copy to"/>
+                                    <LineBreak/>
+                                    <Run Text="clipboard"/>
+                                </TextBlock>
+                            </cex:ButtonEx.Content>
+                        </cex:ButtonEx>
+
+                        <cex:ButtonEx
+                            Command="{Binding DataContext.DatabaseProfilesManager.EditCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            Content="Edit"
+                            IconKind="DatabaseEdit"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                        <cex:ButtonEx
+                            Command="{Binding DataContext.DatabaseProfilesManager.RemoveCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            Content="Remove"
+                            IconKind="DatabaseRemove"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+
+    <Grid>
+
+        <cex:ScrollViewerEx
+            HorizontalScrollBarVisibility="Disabled"
+            Padding="8"
+            VerticalScrollBarVisibility="Auto">
+
+            <StackPanel
+                Orientation="Vertical">
+
+                <Grid
+                    Margin="4,0,4,8">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Left"
+                        Text="Database profiles:"
+                        VerticalAlignment="Center"/>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Content="Create new profile"
+                            IconKind="DatabaseAdd"
+                            PreviewMouseDown="CreateDatabaseProfileButtonEx_PreviewMouseDown">
+
+                            <cex:ButtonEx.ContextMenu>
+                                <cex:ContextMenuEx>
+
+                                    <cex:ContextMenuItemEx
+                                        Header="Create empty profile"
+                                        IconKind="DatabaseAdd"
+                                        Click="CreateDatabaseContextMenuItemEx_Click"/>
+
+                                    <cex:ContextMenuItemEx
+                                        Header="Create from ConnectionString"
+                                        IconKind="DatabaseImport"
+                                        Click="ImportDbFromConnectionStringContextMenuItemEx_Click"/>
+
+                                </cex:ContextMenuEx>
+                            </cex:ButtonEx.ContextMenu>
+                            
+                        </cex:ButtonEx>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <cex:ListViewEx
+                    ItemContainerStyle="{StaticResource SettingsListViewItemExStyle}"
+                    ItemsSource="{Binding DatabaseProfilesManager.ProfilesCollection}"
+                    ItemTemplate="{StaticResource DatabaseProfileDataTemplate}"
+                    Style="{StaticResource SettingsListViewExStyle}"/>
+
+            </StackPanel>
+
+        </cex:ScrollViewerEx>
+
+    </Grid>
+    
+</pages:BasePage>

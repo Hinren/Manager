@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Hinren.ProjectManager.Utilities
+namespace ProjectManager.Utilities
 {
-    public static class ApplicationHelper
+    public class ApplicationHelper
     {
 
         //  METHODS
@@ -46,6 +49,20 @@ namespace Hinren.ProjectManager.Utilities
 
             if (attributes.Length > 0)
                 return ((AssemblyCopyrightAttribute)attributes.FirstOrDefault())?.Copyright;
+
+            return null;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get application assembly name. </summary>
+        /// <returns> Application assembly name. </returns>
+        public static string GetApplicationDescription()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var attributes = assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), true);
+
+            if (attributes.Length > 0)
+                return ((AssemblyDescriptionAttribute)attributes.FirstOrDefault())?.Description;
 
             return null;
         }

@@ -1,0 +1,83 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+    <ControlTemplate x:Key="SettingsOptionControlTemplate" TargetType="{x:Type components:SettingsOptionControl}">
+        <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            Padding="{TemplateBinding Padding}">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:PackIcon
+                    Grid.Column="0"
+                    Foreground="{TemplateBinding Foreground}"
+                    Kind="{TemplateBinding IconKind}"
+                    Height="{TemplateBinding IconSize}"
+                    Margin="{TemplateBinding IconMargin}"
+                    Width="{TemplateBinding IconSize}"
+                    VerticalAlignment="Center"/>
+
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center">
+
+                    <TextBlock
+                        FontFamily="{TemplateBinding TitleFontFamily}"
+                        FontSize="{TemplateBinding TitleFontSize}"
+                        FontStretch="{TemplateBinding TitleFontStretch}"
+                        FontStyle="{TemplateBinding TitleFontStyle}"
+                        FontWeight="{TemplateBinding TitleFontWeight}"
+                        Text="{TemplateBinding Title}"/>
+
+                    <TextBlock
+                        FontFamily="{TemplateBinding DescriptionFontFamily}"
+                        FontSize="{TemplateBinding DescriptionFontSize}"
+                        FontStretch="{TemplateBinding DescriptionFontStretch}"
+                        FontStyle="{TemplateBinding DescriptionFontStyle}"
+                        FontWeight="{TemplateBinding DescriptionFontWeight}"
+                        Margin="0,4,0,0"
+                        Text="{TemplateBinding Description}"
+                        TextWrapping="WrapWithOverflow"/>
+
+                </StackPanel>
+
+                <ContentPresenter
+                    Content="{TemplateBinding Content}"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Margin="8,0,0,0"
+                    VerticalAlignment="Center"/>
+
+            </Grid>
+            
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="SettingsOptionControlStyle" TargetType="{x:Type components:SettingsOptionControl}">
+        <Setter Property="Background" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="IconMargin" Value="0,0,8,0"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="Template" Value="{StaticResource SettingsOptionControlTemplate}"/>
+    </Style>
+
+</ResourceDictionary>
