@@ -1,0 +1,106 @@
+﻿<pages:BasePage
+    x:Class="ProjectManager.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:local="clr-namespace:ProjectManager.Pages"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base" xmlns:controlsex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    mc:Ignorable="d"
+    
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Title="Project Manager}">
+
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+            <!-- STYLES -->
+
+            <Style BasedOn="{StaticResource ExpanderExStyle}" TargetType="{x:Type controlsex:ExpanderEx}">
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Padding" Value="8"/>
+            </Style>
+
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+
+    <Grid>
+
+        <controlsex:ScrollViewerEx
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+
+            <Grid>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="0"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type controlsex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+
+                    <controlsex:ExpanderEx
+                        Header="Welcome"
+                        IconKind="HumanWelcome"
+                        IsExpanded="True"
+                        MouseDown="ExpanderEx_MouseDown">
+
+                        <StackPanel
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Text="{Binding WelcomeText}"/>
+
+                        </StackPanel>
+
+                    </controlsex:ExpanderEx>
+
+                    <controlsex:ExpanderEx
+                        Header="Recently used functionalities"
+                        IconKind="Recent"
+                        IsExpanded="True"
+                        MouseDown="ExpanderEx_MouseDown">
+
+                    </controlsex:ExpanderEx>
+
+                </StackPanel>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="1"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type controlsex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+
+                    <controlsex:ExpanderEx
+                        Header="Tips &amp; Tricks"
+                        IconKind="Help"
+                        IsExpanded="True"
+                        MouseDown="ExpanderEx_MouseDown">
+
+                    </controlsex:ExpanderEx>
+
+                </StackPanel>
+                
+            </Grid>
+            
+        </controlsex:ScrollViewerEx>
+
+    </Grid>
+
+    
+</pages:BasePage>

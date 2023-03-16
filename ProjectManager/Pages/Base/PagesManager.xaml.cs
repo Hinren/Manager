@@ -246,11 +246,11 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load and show WelcomePage. </summary>
+        /// <summary> Load and show DashboardPage. </summary>
         /// <returns> Loaded page. </returns>
-        public BasePage LoadWelcomePage()
+        public BasePage LoadDashboardPage()
         {
-            var page = new WelcomePage(this);
+            var page = new DashboardPage(this);
             LoadPage(page);
             return page;
         }

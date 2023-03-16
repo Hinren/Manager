@@ -111,7 +111,7 @@ namespace ProjectManager.Windows
         /// <param name="e"> Routed Event Arguments. </param>
         private void WindowEx_Loaded(object sender, RoutedEventArgs e)
         {
-            PagesManager.LoadWelcomePage();
+            PagesManager.LoadDashboardPage();
         }
 
         #endregion WINDOW METHODS

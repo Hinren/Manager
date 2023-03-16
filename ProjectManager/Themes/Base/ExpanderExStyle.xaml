@@ -1,0 +1,23 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration">
+
+    <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+    <Style x:Key="ExpanderExStyle" TargetType="{x:Type cex:ExpanderEx}">
+        <Setter Property="ArrowPosition" Value="Right"/>
+        <Setter Property="ArrowBrush" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ArrowMouseOverBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ArrowPressedBrush" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="Background" Value="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="HeaderBackground" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="HeaderBorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="HeaderForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+    </Style>
+    
+</ResourceDictionary>
