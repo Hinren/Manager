@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using ProjectManager.Pages.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace ProjectManager.Data.Dashboard
 
         private string _key;
         private string _name;
+        private DashboardRecentlyUsedItemKind _kind;
         private PackIconKind _icon;
         private long _usageAmount;
 
@@ -43,6 +45,16 @@ namespace ProjectManager.Data.Dashboard
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        public DashboardRecentlyUsedItemKind Kind
+        {
+            get => _kind;
+            set
+            {
+                _kind = value;
+                OnPropertyChanged(nameof(Kind));
             }
         }
 
@@ -76,6 +88,18 @@ namespace ProjectManager.Data.Dashboard
         public DashboardRecentlyUsedItem()
         {
             //
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> DashboardRecentlyUsedItem constructor. </summary>
+        /// <param name="page"> Page. </param>
+        public DashboardRecentlyUsedItem(BasePage page)
+        {
+            Key = page.GetType().Name;
+            Name = page.Title;
+            Kind = DashboardRecentlyUsedItemKind.Page;
+            Icon = page.IconKind;
+            UsageAmount = 1;
         }
 
         #endregion CLASS METHODS

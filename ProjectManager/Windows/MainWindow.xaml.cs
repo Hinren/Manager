@@ -1,6 +1,7 @@
 ﻿using chkam05.Tools.ControlsEx.InternalMessages;
 using chkam05.Tools.ControlsEx.WindowsEx;
 using ProjectManager.Components;
+using ProjectManager.Data.Configuration;
 using ProjectManager.Pages.Base;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,16 @@ namespace ProjectManager.Windows
         #endregion PAGES MANAGER METHODS
 
         #region WINDOW METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked before closing window. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Cancel Event Arguments. </param>
+        private void WindowEx_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //  Save settings.
+            ConfigManager.Instance.SaveSettings();
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after loading window. </summary>

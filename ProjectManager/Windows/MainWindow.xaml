@@ -20,7 +20,8 @@
     Height="450"
     Title="Project Manager"
     Width="800"
-    Loaded="WindowEx_Loaded">
+    Loaded="WindowEx_Loaded"
+    Closing="WindowEx_Closing">
 
     <cexWin:WindowEx.Resources>
         <ResourceDictionary>

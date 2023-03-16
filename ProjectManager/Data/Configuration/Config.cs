@@ -18,6 +18,7 @@ namespace ProjectManager.Data.Configuration
         public AppearanceConfig AppearanceConfig { get; set; }
         public Converting ConvertingConfig { get; set; }
         public DatabaseSetting DatabaseConfig { get; set; }
+        public DashboardConfig DashboardConfig { get; set; }
 
         public List<DashboardRecentlyUsedItem> RecentlyUsedItems { get; set; }
 
@@ -29,9 +30,10 @@ namespace ProjectManager.Data.Configuration
         //  --------------------------------------------------------------------------------
         /// <summary> Config class constructor. </summary>
         [JsonConstructor]
-        public Config(AppearanceConfig appearanceConfig = null)
+        public Config(AppearanceConfig appearanceConfig = null, DashboardConfig dashboardConfig = null)
         {
             AppearanceConfig = appearanceConfig ?? AppearanceConfig.Default;
+            DashboardConfig = dashboardConfig ?? new DashboardConfig();
         }
 
         #endregion CLASS METHODS

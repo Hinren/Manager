@@ -1,4 +1,5 @@
 ﻿using ProjectManager.Components;
+using ProjectManager.Data.Dashboard;
 using ProjectManager.Pages.Events;
 using ProjectManager.Pages.Settings;
 using System;
@@ -22,6 +23,24 @@ namespace ProjectManager.Pages.Base
     public partial class PagesManager : UserControl, INotifyPropertyChanged
     {
 
+        //  CONST
+
+        private static readonly List<Type> RESTRICTED_RECENT_PAGES = new List<Type>()
+        {
+            typeof(DashboardPage),
+            typeof(SettingsPage)
+        };
+
+        private static readonly Dictionary<string, Type> PAGES_NAMES_MAPPING = new Dictionary<string, Type>()
+        {
+            { nameof(DashboardPage), typeof(DashboardPage) },
+            { nameof(SettingsAppearancePage), typeof(SettingsAppearancePage) },
+            { nameof(SettingsDatabasesPage), typeof(SettingsDatabasesPage) },
+            { nameof(SettingsInfoPage), typeof(SettingsInfoPage) },
+            { nameof(SettingsPage), typeof(SettingsPage) },
+        };
+
+
         //  EVENTS
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -33,6 +52,7 @@ namespace ProjectManager.Pages.Base
         //  VARIABLES
 
         private List<BasePage> _loadedPages;
+        private DashboardRecentlyUsedItemsManager _recentlyUsedItems;
 
 
         //  GETTERS & SETTERS
@@ -63,6 +83,7 @@ namespace ProjectManager.Pages.Base
         {
             //  Setup Data Containers.
             _loadedPages = new List<BasePage>();
+            _recentlyUsedItems = DashboardRecentlyUsedItemsManager.Instance;
 
             //  Initialize interface.
             InitializeComponent();
@@ -159,6 +180,10 @@ namespace ProjectManager.Pages.Base
                 var args = new PageLoadedEventArgs(page);
                 OnPageLoaded?.Invoke(this, args);
 
+                //  Add page to recently used items.
+                if (!RESTRICTED_RECENT_PAGES.Contains(page.GetType()))
+                    _recentlyUsedItems.AddItem(new DashboardRecentlyUsedItem(page));
+
                 OnPropertyChanged(nameof(CanGoBack));
                 OnPropertyChanged(nameof(LoadedPage));
             }
@@ -203,7 +228,26 @@ namespace ProjectManager.Pages.Base
 
         #endregion PAGES MANAGEMENT METHODS
 
-        #region STATIC PAGES LOADERS
+        #region STATIC PAGES LOADERS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Load page by it's name. </summary>
+        /// <param name="pageName"> Page name. </param>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadPageByName(string pageName)
+        {
+            var pageNameLowercase = pageName.ToLower();
+            var pageNameMapping = PAGES_NAMES_MAPPING.FirstOrDefault(k => k.Key.ToLower() == pageNameLowercase);
+
+            if (pageNameMapping.Value != null)
+            {
+                var page = (BasePage)Activator.CreateInstance(pageNameMapping.Value, this);
+                LoadPage(page);
+                return page;
+            }
+
+            return null;
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Load Settings Page (Appearance). </summary>
@@ -255,7 +299,7 @@ namespace ProjectManager.Pages.Base
             return page;
         }
 
-        #endregion STATIC PAGES LOADERS
+        #endregion STATIC PAGES LOADERS METHODS
 
     }
 }
