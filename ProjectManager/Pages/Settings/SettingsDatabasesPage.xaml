@@ -13,6 +13,7 @@
     
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
+    IconKind="Database"
     Title="Settings - Databases">
 
     <pages:BasePage.Resources>

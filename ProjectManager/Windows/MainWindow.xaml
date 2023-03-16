@@ -58,15 +58,15 @@
             OnBackItemSelect="mainMenu_OnBackItemSelect"/>
 
         <Border
-            Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}}"
+            Background="Transparent"
             BorderBrush="{x:Null}"
             BorderThickness="0"
-            ClipToBounds="True"
             CornerRadius="8,0,8,0"
             Grid.Column="1">
 
             <pages:PagesManager
                 x:Name="pagesManager"
+                ClipToBounds="True"
                 OnPageBack="pagesManager_OnPageBack"
                 OnPageLoaded="pagesManager_OnPageLoaded"/>
 

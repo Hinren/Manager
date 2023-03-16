@@ -14,6 +14,7 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    IconKind="Gear"
     Title="Settings - General">
 
     <pages:BasePage.Resources>

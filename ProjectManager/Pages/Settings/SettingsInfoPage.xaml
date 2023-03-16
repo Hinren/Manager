@@ -12,7 +12,8 @@
     
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
-    Title="Settings - Info">
+    IconKind="InfoOutline"
+    Title="About">
 
     <pages:BasePage.Resources>
         <ResourceDictionary>

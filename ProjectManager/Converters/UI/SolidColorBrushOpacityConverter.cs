@@ -20,7 +20,17 @@ namespace ProjectManager.Converters.UI
         {
             var brush = (SolidColorBrush)value;
             var opacityValue = ((string)parameter) ?? string.Empty;
-            var opacity = double.TryParse(opacityValue, out double convResult) ? (double?)convResult : null;
+            var opacity = double.TryParse(opacityValue, out double convResult1) ? (double?)convResult1 : null;
+
+            if (opacity == null || opacity > 0)
+            {
+                if (opacityValue.Contains(','))
+                    opacityValue = opacityValue.Replace(',', '.');
+                else if (opacityValue.Contains('.'))
+                    opacityValue = opacityValue.Replace('.', ',');
+
+                opacity = double.TryParse(opacityValue, out double convResult2) ? (double?)convResult2 : null;
+            }
 
             return new SolidColorBrush(GetAlphaColor(brush.Color, opacity));
         }

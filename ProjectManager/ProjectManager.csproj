@@ -36,8 +36,4 @@
     <ProjectReference Include="..\Common\DomainModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Dashboard\" />
-  </ItemGroup>
-
 </Project>

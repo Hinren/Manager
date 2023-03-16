@@ -1,6 +1,7 @@
 ﻿using DomainModel.Models.SettingsUserApp;
 using DomainModel.Models.SettingsUserApp.DatabaseSetting;
 using Newtonsoft.Json;
+using ProjectManager.Data.Dashboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace ProjectManager.Data.Configuration
         public AppearanceConfig AppearanceConfig { get; set; }
         public Converting ConvertingConfig { get; set; }
         public DatabaseSetting DatabaseConfig { get; set; }
+
+        public List<DashboardRecentlyUsedItem> RecentlyUsedItems { get; set; }
 
 
         //  METHODS
