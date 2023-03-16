@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ProjectManager.Data.Configuration
 {
@@ -21,6 +22,9 @@ namespace ProjectManager.Data.Configuration
         public DashboardConfig DashboardConfig { get; set; }
 
         public List<DashboardRecentlyUsedItem> RecentlyUsedItems { get; set; }
+
+        public Point WindowPosition { get; set; }
+        public Size WindowSize { get; set; }
 
 
         //  METHODS

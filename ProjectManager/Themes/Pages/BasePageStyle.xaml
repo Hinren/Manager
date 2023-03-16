@@ -50,6 +50,7 @@
                     VerticalAlignment="Center">
 
                     <materialDesign:PackIcon
+                        Foreground="{TemplateBinding Foreground}"
                         Height="24"
                         Kind="{Binding IconKind}"
                         Width="24"/>
@@ -57,6 +58,7 @@
                     <TextBlock
                         FontSize="14"
                         FontWeight="SemiBold"
+                        Foreground="{TemplateBinding Foreground}"
                         Margin="8,0,0,0"
                         Text="{Binding Title}"
                         VerticalAlignment="Center"
@@ -71,6 +73,7 @@
 
     <Style x:Key="BasePageStyle" TargetType="{x:Type pages:BasePage}">
         <Setter Property="Background" Value="{Binding AppearanceThemeBackgroundBrush, Mode=OneWay, Source={StaticResource ConfigManager}}"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceThemeForegroundBrush, Mode=OneWay, Source={StaticResource ConfigManager}}"/>
         <Setter Property="Template" Value="{StaticResource BasePageControlTemplate}"/>
     </Style>
 

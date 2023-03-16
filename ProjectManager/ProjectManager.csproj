@@ -13,6 +13,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Copyright>Hinren (c) 2023</Copyright>
     <Description>Application for managing projects and faster work organization.</Description>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>

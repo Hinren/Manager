@@ -18,6 +18,8 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     Height="450"
+    MinHeight="450"
+    MinWidth="800"
     Title="Project Manager"
     Width="800"
     Loaded="WindowEx_Loaded"

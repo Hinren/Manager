@@ -3,6 +3,7 @@ using chkam05.Tools.ControlsEx.WindowsEx;
 using ProjectManager.Components;
 using ProjectManager.Data.Configuration;
 using ProjectManager.Pages.Base;
+using ProjectManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,11 @@ namespace ProjectManager.Windows
 {
     public partial class MainWindow : WindowEx
     {
+
+        //  VARIABLES
+
+        public ConfigManager ConfigManager { get; private set; }
+
 
         //  GETTERS & SETTERS
 
@@ -48,6 +54,9 @@ namespace ProjectManager.Windows
         /// <summary> MainWindow class constructor. </summary>
         public MainWindow()
         {
+            //  Initialize modules.
+            ConfigManager = ConfigManager.Instance;
+
             //  Initialize interface.
             InitializeComponent();
         }
@@ -112,8 +121,11 @@ namespace ProjectManager.Windows
         /// <param name="e"> Cancel Event Arguments. </param>
         private void WindowEx_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            ConfigManager.Configuration.WindowPosition = new Point(Left, Top);
+            ConfigManager.Configuration.WindowSize = new Size(Width, Height);
+
             //  Save settings.
-            ConfigManager.Instance.SaveSettings();
+            ConfigManager.SaveSettings();
         }
 
         //  --------------------------------------------------------------------------------
@@ -122,6 +134,21 @@ namespace ProjectManager.Windows
         /// <param name="e"> Routed Event Arguments. </param>
         private void WindowEx_Loaded(object sender, RoutedEventArgs e)
         {
+            //  Load window size and position.
+            Left = ConfigManager.Configuration.WindowPosition.X;
+            Top = ConfigManager.Configuration.WindowPosition.Y;
+            Height = ConfigManager.Configuration.WindowSize.Height;
+            Width = ConfigManager.Configuration.WindowSize.Width;
+
+            //  Fix position on screen.
+            var screen = ApplicationHelper.GetScreenWhereIsWindow(this);
+
+            if (screen != null)
+                ApplicationHelper.AdjustWindowToScreen(this, screen);
+            else
+                ApplicationHelper.AdjustWindowToPrimaryScreen(this);
+
+            //  Load start page.
             PagesManager.LoadDashboardPage();
         }
 
