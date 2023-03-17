@@ -16,7 +16,9 @@
     d:DesignWidth="800"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     IconKind="Home"
-    Title="Dashboard">
+    Title="Dashboard"
+    Loaded="BasePage_Loaded"
+    SizeChanged="BasePage_SizeChanged">
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
@@ -97,11 +99,13 @@
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
 
-            <Grid>
+            <Grid
+                x:Name="dashboardGrid">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel
@@ -113,11 +117,14 @@
                     Drop="StackPanel_Drop">
 
                     <cex:ExpanderEx
+                        x:Name="welcomeTab"
                         Header="Welcome"
                         IconKind="HumanWelcome"
                         IsExpanded="{Binding ConfigManager.WelcomeTabExtended}"
                         Visibility="{Binding ConfigManager.WelcomeTabEnabled, Converter={StaticResource BoolVisibilityConverter}}"
-                        MouseDown="ExpanderEx_MouseDown">
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
 
                         <Grid>
 
@@ -153,11 +160,14 @@
                     </cex:ExpanderEx>
 
                     <cex:ExpanderEx
+                        x:Name="recentlyUsedTab"
                         Header="Recently used"
                         IconKind="Recent"
                         IsExpanded="{Binding ConfigManager.RecentlyUsedItemsExtended}"
                         Visibility="{Binding ConfigManager.RecentlyUsedItemsEnabled, Converter={StaticResource BoolVisibilityConverter}}"
-                        MouseDown="ExpanderEx_MouseDown">
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
 
                         <cex:ListViewEx
                             ItemContainerStyle="{StaticResource DashboardRecentlyUsedItemsListViewItemExStyle}"
@@ -187,11 +197,14 @@
                     Drop="StackPanel_Drop">
 
                     <cex:ExpanderEx
+                        x:Name="tipsNTricksTab"
                         Header="Tips &amp; Tricks"
                         IconKind="Help"
                         IsExpanded="{Binding ConfigManager.TipsAndTricksTabExtended}"
                         Visibility="{Binding ConfigManager.TipsAndTricksTabEnabled, Converter={StaticResource BoolVisibilityConverter}}"
-                        MouseDown="ExpanderEx_MouseDown">
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
 
                         <TextBlock
                             Text="System.NotImplementedException: The method or operation is not implemented. at ProjectManager.Pages.DashboardPage..ctor(PagesManager pagesManager) in E:\OneDrive\Projekty\Source\CSharp\GitHub\Hinren_Manager\ProjectManager\Pages\DashboardPage.xaml.cs"
@@ -199,6 +212,18 @@
 
                     </cex:ExpanderEx>
 
+                </StackPanel>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="2"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type cex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+                    
+                    
+                    
                 </StackPanel>
 
             </Grid>

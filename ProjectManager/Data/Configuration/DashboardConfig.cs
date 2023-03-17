@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using ProjectManager.Data.Dashboard;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,7 @@ namespace ProjectManager.Data.Configuration
 
         //  VARIABLES
 
+        public List<DashboardComponentPosition> ComponentsPosition;
         public bool RecentlyUsedItemsEnabled { get; set; } = true;
         public bool RecentlyUsedItemsExtended { get; set; } = true;
         public bool TipsAndTricksTabEnabled { get; set; } = true;
@@ -25,9 +28,10 @@ namespace ProjectManager.Data.Configuration
 
         //  --------------------------------------------------------------------------------
         /// <summary> DashboardConfig class constructor. </summary>
-        public DashboardConfig()
+        [JsonConstructor]
+        public DashboardConfig(List<DashboardComponentPosition> componentsPosition = null)
         {
-            //
+            ComponentsPosition = componentsPosition ?? new List<DashboardComponentPosition>();
         }
 
         #endregion CLASS METHODS
