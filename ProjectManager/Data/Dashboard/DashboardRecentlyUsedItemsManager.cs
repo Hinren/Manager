@@ -76,7 +76,7 @@ namespace ProjectManager.Data.Dashboard
         #region CLASS METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> DashboardRecentlyUsedItemsManager constructor. </summary>
+        /// <summary> Private DashboardRecentlyUsedItemsManager constructor. </summary>
         private DashboardRecentlyUsedItemsManager()
         {
             //

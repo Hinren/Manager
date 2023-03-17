@@ -122,11 +122,10 @@ namespace ProjectManager.Utilities
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Get all children components in parent component (without sub components). </summary>
+        /// <summary> Get all children components in parent component. </summary>
         /// <param name="parent"> Parent component. </param>
-        /// <param name="onlyWithNames"> Get components only with names. </param>
         /// <returns> List of all children components of parent components. </returns>
-        public static List<FrameworkElement> GetChildComponents(DependencyObject parent, bool onlyWithNames = false)
+        public static List<FrameworkElement> GetChildComponents(DependencyObject parent)
         {
             var children = new List<FrameworkElement>();
 
@@ -140,10 +139,7 @@ namespace ProjectManager.Utilities
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
 
                 if (child is FrameworkElement frameworkElement)
-                {
-                    if (!onlyWithNames || !string.IsNullOrEmpty(frameworkElement.Name))
-                        children.Add(frameworkElement);
-                }
+                    children.Add(frameworkElement);
             }
 
             return children;
