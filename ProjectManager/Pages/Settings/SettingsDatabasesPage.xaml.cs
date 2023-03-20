@@ -10,6 +10,7 @@ using ProjectManager.Utilities;
 using ProjectManager.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,16 +47,71 @@ namespace ProjectManager.Pages.Settings
         {
             //  Initialize data containers.
             ConfigManager = ConfigManager.Instance;
-            DatabaseProfilesManager = new DatabaseProfilesManager(
-                Path.Combine(ApplicationHelper.GetApplicationPath(), "db.json"));
 
-            DatabaseProfilesManager.OnEditProfileRequest += OnEditProfile;
+            //  Setup modules.
+            SetupDatabaseProfilesManager(ConfigManager.DatabaseProfilesFilePath, out string _);
 
             //  Initialize interface.
             InitializeComponent();
         }
 
         #endregion CLASS METHODS
+
+        #region INTERACTION METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after ButtonEx for select database profiles file. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void DatabaseProfilesFileOpenButtonEx_Click(object sender, RoutedEventArgs e)
+        {
+            var imContainer = GetIMContainer();
+            var im = FilesSelectorInternalMessageEx.CreateOpenFileInternalMessageEx(imContainer, "Open database profiles file.");
+
+            im.AllowCreate = true;
+            im.InitialDirectory = ConfigManager.InternalMessageInitialDirectory;
+            im.UseFilesTypes = true;
+            im.FilesTypes = new ObservableCollection<InternalMessageFileType>()
+            {
+                new InternalMessageFileType("JSON File.", new string[] { "*.json" })
+            };
+
+            InternalMessagesHelper.ApplyVisualStyle(im);
+
+            im.OnClose += OnDatabaseProfilesFileOpenClose;
+            imContainer.ShowMessage(im);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing FilesSelectorInternalMessageEx for selecting database profiles file path. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Files Selector Internal Message Close Event Arguments. </param>
+        private void OnDatabaseProfilesFileOpenClose(object sender, FilesSelectorInternalMessageCloseEventArgs e)
+        {
+            var filesSelectorIM = (FilesSelectorInternalMessageEx)sender;
+
+            if (e.Result == InternalMessageResult.Ok)
+            {
+                var filePath = e.FilePath;
+
+                if (!SetupDatabaseProfilesManager(filePath, out string errorMessage))
+                {
+                    var imContainer = GetIMContainer();
+                    var im = InternalMessageEx.CreateErrorMessage(imContainer, "Loading file error", errorMessage);
+
+                    imContainer.ShowMessage(im);
+                }
+                else
+                {
+                    ConfigManager.DatabaseProfilesFilePath = filePath;
+                }
+            }
+
+            ConfigManager.InternalMessageInitialDirectory = filesSelectorIM.CurrentDirectory;
+            ConfigManager.SaveSettings();
+        }
+
+        #endregion INTERACTION METHODS
 
         #region PROFILES MANAGEMENT METHODS
 
@@ -84,7 +140,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void CreateDatabaseContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+            var imContainer = GetIMContainer();
             var im = new DatabaseProfileEditorIM(imContainer, null);
 
             im.OnClose += OnProfileEditorClose;
@@ -97,8 +153,9 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void ImportDbFromConnectionStringContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
-            var imStringInput = new StringInputIM(imContainer, "Import database profile config", "ConnectionString:", PackIconKind.DatabaseImport);
+            var imContainer = GetIMContainer();
+            var imStringInput = new StringInputIM(imContainer, "Import database profile config", "ConnectionString:",
+                iconKind: PackIconKind.DatabaseImport);
 
             imStringInput.OnClose += (s, e) =>
             {
@@ -136,7 +193,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="profile"> Database profile. </param>
         private void OnEditProfile(object sender, DatabaseProfile profile)
         {
-            var imContainer = ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+            var imContainer = GetIMContainer();
             var im = new DatabaseProfileEditorIM(imContainer, profile);
 
             im.OnClose += OnProfileEditorClose;
@@ -156,6 +213,55 @@ namespace ProjectManager.Pages.Settings
         }
 
         #endregion PROFILES MANAGEMENT METHODS
+
+        #region SETUP METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Setup database profiles manager. </summary>
+        /// <param name="databaseProfilesFilePath"> Database profiles file path. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <returns> True - database profiles manager created; False - otherwise. </returns>
+        public bool SetupDatabaseProfilesManager(string databaseProfilesFilePath, out string errorMessage)
+        {
+            errorMessage = string.Empty;
+
+            if (!File.Exists(databaseProfilesFilePath))
+            {
+                if (!FilesHelper.CreateFile(databaseProfilesFilePath, "[]"))
+                {
+                    errorMessage = "Could not open or create file.";
+                    return false;
+                }
+            }
+
+            try
+            {
+                var dbProfileManager = new DatabaseProfilesManager(databaseProfilesFilePath);
+                dbProfileManager.OnEditProfileRequest += OnEditProfile;
+                DatabaseProfilesManager = dbProfileManager;
+                return true;
+            }
+            catch
+            {
+                errorMessage = "Invalid database profiles file.";
+            }
+
+            return false;
+        }
+
+        #endregion SETUP METHODS
+
+        #region UTILITY METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get internal messages ex container from main window. </summary>
+        /// <returns> Internal messages ex container. </returns>
+        public InternalMessagesExContainer GetIMContainer()
+        {
+            return ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+        }
+
+        #endregion UTILITY METHODS
 
     }
 }

@@ -2,6 +2,7 @@
 using ProjectManager.Data.Dashboard;
 using ProjectManager.Pages.Events;
 using ProjectManager.Pages.Settings;
+using ProjectManager.Pages.Snippets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -231,7 +232,7 @@ namespace ProjectManager.Pages.Base
         #region STATIC PAGES LOADERS METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load page by it's name. </summary>
+        /// <summary> Load and show page by it's name. </summary>
         /// <param name="pageName"> Page name. </param>
         /// <returns> Loaded page. </returns>
         public BasePage LoadPageByName(string pageName)
@@ -250,7 +251,7 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load Settings Page (Appearance). </summary>
+        /// <summary> Load and show Settings Page (Appearance). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsAppearancePage()
         {
@@ -260,7 +261,7 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load Settings Page (Database). </summary>
+        /// <summary> Load and show Settings Page (Database). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsDatabasePage()
         {
@@ -270,7 +271,7 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load Settings Page (Informations). </summary>
+        /// <summary> Load and show Settings Page (Informations). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsInformationsPage()
         {
@@ -280,11 +281,21 @@ namespace ProjectManager.Pages.Base
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Load SettingsPage (General). </summary>
+        /// <summary> Load and show SettingsPage (General). </summary>
         /// <returns> Loaded page. </returns>
         public BasePage LoadSettingsMainPage()
         {
             var page = new SettingsPage(this);
+            LoadPage(page);
+            return page;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Load and show Settings Page (Snippets). </summary>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadSettingsSnippetsPage()
+        {
+            var page = new SettingsSnippetsPage(this);
             LoadPage(page);
             return page;
         }
@@ -295,6 +306,16 @@ namespace ProjectManager.Pages.Base
         public BasePage LoadDashboardPage()
         {
             var page = new DashboardPage(this);
+            LoadPage(page);
+            return page;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Load and show SnippetsPage. </summary>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadSnippetsPage()
+        {
+            var page = new SnippetsPage(this);
             LoadPage(page);
             return page;
         }

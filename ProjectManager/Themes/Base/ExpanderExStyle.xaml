@@ -18,6 +18,8 @@
         <Setter Property="HeaderBackground" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="HeaderBorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="HeaderForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="IconHeight" Value="28"/>
+        <Setter Property="IconWidth" Value="28"/>
     </Style>
     
 </ResourceDictionary>

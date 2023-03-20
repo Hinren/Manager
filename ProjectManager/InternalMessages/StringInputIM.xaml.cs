@@ -25,6 +25,8 @@ namespace ProjectManager.InternalMessages
         //  VARIABLES
 
         private string _description;
+        private string _error;
+        private string[] _forbiddenNames;
         private string _text;
 
 
@@ -37,6 +39,16 @@ namespace ProjectManager.InternalMessages
             {
                 _description = value;
                 OnPropertyChanged(nameof(Description));
+            }
+        }
+
+        public string Error
+        {
+            get => _error;
+            private set
+            {
+                _error = value;
+                OnPropertyChanged(nameof(Error));
             }
         }
 
@@ -62,8 +74,9 @@ namespace ProjectManager.InternalMessages
         /// <param name="description"> Internal Message description. </param>
         /// <param name="iconKind"> Internal Message icon kind. </param>
         /// <param name="defaultText"> Default input text. </param>
-        public StringInputIM(InternalMessagesExContainer parentContainer, string title, string description, 
-            PackIconKind iconKind = PackIconKind.EditBoxOutline, string defaultText = "") : base(parentContainer)
+        public StringInputIM(InternalMessagesExContainer parentContainer, string title, string description,
+            string[] forbiddenNames = null, PackIconKind iconKind = PackIconKind.EditBoxOutline, 
+            string defaultText = "") : base(parentContainer)
         {
             //  Initialize interface components.
             InitializeComponent();
@@ -79,9 +92,42 @@ namespace ProjectManager.InternalMessages
             Description = description;
             IconKind = iconKind;
             Text = defaultText;
+
+            _forbiddenNames = forbiddenNames != null ? forbiddenNames : new string[0];
         }
 
         #endregion CLASS METHODS
+
+        #region BUTTONS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking Ok Button. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        protected override void OnOkClick(object sender, RoutedEventArgs e)
+        {
+            if (!ValidateEnteredString())
+            {
+                Error = $"\"{_text}\" is already used, or is forbidden.";
+                return;
+            }
+
+            base.OnOkClick(sender, e);
+        }
+
+        #endregion BUTTONS METHODS
+
+        #region VALIDATION METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Validate if entered string is valid. </summary>
+        /// <returns> True - string is valid; False - otherwise. </returns>
+        private bool ValidateEnteredString()
+        {
+            return !_forbiddenNames.Any(n => n.ToLower() == _text.ToLower());
+        }
+
+        #endregion VALIDATION METHODS
 
     }
 }

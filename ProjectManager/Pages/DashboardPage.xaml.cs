@@ -58,6 +58,7 @@ namespace ProjectManager.Pages
             get => new List<MainMenuItem>()
             {
                 new MainMenuItem("Dasboard", PackIconKind.Home, (s, e) => { _pagesManager.LoadSettingsMainPage(); }),
+                new MainMenuItem("Snippets", PackIconKind.LabelVariantOutline, (s, e) => { _pagesManager.LoadSnippetsPage(); }),
                 new MainMenuItem("Settings", PackIconKind.Gear, (s, e) => { _pagesManager.LoadSettingsMainPage(); }),
             };
         }

@@ -1,0 +1,44 @@
+﻿<pages:BasePage
+    x:Class="ProjectManager.Pages.Settings.SettingsSnippetsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    mc:Ignorable="d"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    d:DesignWidth="800"
+    IconKind="LabelVariantOutline"
+    Title="Settings - Snippets">
+
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+
+    <Grid>
+
+        <cex:ScrollViewerEx
+            HorizontalScrollBarVisibility="Disabled"
+            Padding="8"
+            VerticalScrollBarVisibility="Auto">
+
+            <StackPanel
+                Orientation="Vertical">
+                
+                
+                
+            </StackPanel>
+
+        </cex:ScrollViewerEx>
+
+    </Grid>
+    
+</pages:BasePage>

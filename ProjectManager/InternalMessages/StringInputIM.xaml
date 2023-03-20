@@ -58,6 +58,10 @@
                 Margin="0,0,0,4"
                 Text="{Binding Description}"/>
 
+            <TextBlock
+                Margin="0,0,0,4"
+                Text="{Binding Error}"/>
+
             <cex:TextBoxEx
                 Text="{Binding Text}"/>
 

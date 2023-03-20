@@ -29,6 +29,7 @@ namespace ProjectManager.Pages.Settings
             {
                 new MainMenuItem("Appearance", PackIconKind.Palette, (s, e) => { _pagesManager.LoadSettingsAppearancePage(); }),
                 new MainMenuItem("Databases", PackIconKind.Database, (s, e) => { _pagesManager.LoadSettingsDatabasePage(); }),
+                new MainMenuItem("Snippets", PackIconKind.LabelVariantOutline, (s, e) => { _pagesManager.LoadSettingsSnippetsPage(); }),
                 new MainMenuItem("About", PackIconKind.InfoOutline, (s, e) => { _pagesManager.LoadSettingsInformationsPage(); }),
             };
         }
@@ -76,6 +77,15 @@ namespace ProjectManager.Pages.Settings
         private void InfoSettingsOptionButtonControl_Click(object sender, RoutedEventArgs e)
         {
             _pagesManager.LoadSettingsInformationsPage();
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking Snippet settings option button control. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void SnippetsSettingsOptionButtonControl_Click(object sender, RoutedEventArgs e)
+        {
+            _pagesManager.LoadSettingsSnippetsPage();
         }
 
         #endregion INTERACTION METHODS

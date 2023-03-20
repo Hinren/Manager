@@ -93,6 +93,16 @@ namespace ProjectManager.Data.Configuration
             }
         }
 
+        public string InternalMessageInitialDirectory
+        {
+            get => _config.InternalMessageInitialDirectory;
+            set
+            {
+                _config.InternalMessageInitialDirectory = value;
+                OnPropertyChanged(nameof(InternalMessageInitialDirectory));
+            }
+        }
+
 
         #region Appearance
 
@@ -319,6 +329,20 @@ namespace ProjectManager.Data.Configuration
         }
 
         #endregion Dashboard
+
+        #region Database
+
+        public string DatabaseProfilesFilePath
+        {
+            get => _config.DatabaseConfig.DatabaseProfilesFilePath;
+            set
+            {
+                _config.DatabaseConfig.DatabaseProfilesFilePath = value;
+                OnPropertyChanged(nameof(DatabaseProfilesFilePath));
+            }
+        }
+
+        #endregion Database
 
 
         //  METHODS
