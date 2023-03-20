@@ -84,7 +84,7 @@ namespace ProjectManager.Data.Configuration
         public Config Configuration
         {
             get => _config;
-            set
+            private set
             {
                 _config = value;
                 _loaded = true;
@@ -255,6 +255,70 @@ namespace ProjectManager.Data.Configuration
         }
 
         #endregion Appearance
+
+        #region Dashboard
+
+        public bool RecentlyUsedItemsEnabled
+        {
+            get => _config.DashboardConfig.RecentlyUsedItemsEnabled;
+            set
+            {
+                _config.DashboardConfig.RecentlyUsedItemsEnabled = value;
+                OnPropertyChanged(nameof(RecentlyUsedItemsEnabled));
+            }
+        }
+
+        public bool RecentlyUsedItemsExtended
+        {
+            get => _config.DashboardConfig.RecentlyUsedItemsExtended;
+            set
+            {
+                _config.DashboardConfig.RecentlyUsedItemsExtended = value;
+                OnPropertyChanged(nameof(RecentlyUsedItemsExtended));
+            }
+        }
+
+        public bool TipsAndTricksTabEnabled
+        {
+            get => _config.DashboardConfig.TipsAndTricksTabEnabled;
+            set
+            {
+                _config.DashboardConfig.TipsAndTricksTabEnabled = value;
+                OnPropertyChanged(nameof(TipsAndTricksTabEnabled));
+            }
+        }
+
+        public bool TipsAndTricksTabExtended
+        {
+            get => _config.DashboardConfig.TipsAndTricksTabExtended;
+            set
+            {
+                _config.DashboardConfig.TipsAndTricksTabExtended = value;
+                OnPropertyChanged(nameof(TipsAndTricksTabExtended));
+            }
+        }
+
+        public bool WelcomeTabEnabled
+        {
+            get => _config.DashboardConfig.WelcomeTabEnabled;
+            set
+            {
+                _config.DashboardConfig.WelcomeTabEnabled = value;
+                OnPropertyChanged(nameof(WelcomeTabEnabled));
+            }
+        }
+
+        public bool WelcomeTabExtended
+        {
+            get => _config.DashboardConfig.WelcomeTabExtended;
+            set
+            {
+                _config.DashboardConfig.WelcomeTabExtended = value;
+                OnPropertyChanged(nameof(WelcomeTabExtended));
+            }
+        }
+
+        #endregion Dashboard
 
 
         //  METHODS

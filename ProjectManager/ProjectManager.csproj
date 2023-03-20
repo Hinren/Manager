@@ -13,6 +13,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Copyright>Hinren (c) 2023</Copyright>
     <Description>Application for managing projects and faster work organization.</Description>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="chkam05.Tools.ControlsEx" Version="2.4.1" />
+    <PackageReference Include="chkam05.Tools.ControlsEx" Version="2.4.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

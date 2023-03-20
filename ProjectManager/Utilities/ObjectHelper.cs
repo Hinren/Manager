@@ -4,6 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows;
+using System.Xml.Linq;
+using System.Windows.Controls;
 
 namespace ProjectManager.Utilities
 {
@@ -43,6 +47,105 @@ namespace ProjectManager.Utilities
         }
 
         #endregion ATTRIBUTES METHODS
+
+        #region COMPONENT METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Find child component by its name. </summary>
+        /// <typeparam name="T"> Component type. </typeparam>
+        /// <param name="parent"> Parent component (usually first). </param>
+        /// <param name="childName"> Component name. </param>
+        /// <returns> Found component or null. </returns>
+        public static T FindChildComponentByName<T>(DependencyObject parent, string childName) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            if (parent is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+                return parent as T;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < childrenCount; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                T result = FindChildComponentByName<T>(child, childName);
+
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Find parent component by its type. </summary>
+        /// <typeparam name="T"> Parent component type. </typeparam>
+        /// <param name="child"> Child component. </param>
+        /// <returns> Found parent component or null. </returns>
+        public static T FindParentComponent<T>(DependencyObject child) where T : DependencyObject
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(child);
+
+            while (parent != null && !(parent is T))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return parent as T;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get position of component in StackPanel or WrapPanel. </summary>
+        /// <param name="element"> Component which position should be obtained. </param>
+        /// <returns> Component position index. </returns>
+        public static int GetComponentPositionInPanel(FrameworkElement element)
+        {
+            if (element == null)
+                return -1;
+
+            Panel parent = VisualTreeHelper.GetParent(element) as Panel;
+
+            if (parent == null)
+                return -1;
+
+            if (parent is StackPanel stackPanel)
+            {
+                return stackPanel.Children.IndexOf(element);
+            }
+            else if (parent is WrapPanel wrapPanel)
+            {
+                return wrapPanel.Children.IndexOf(element);
+            }
+
+            return -1;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get all children components in parent component. </summary>
+        /// <param name="parent"> Parent component. </param>
+        /// <returns> List of all children components of parent components. </returns>
+        public static List<FrameworkElement> GetChildComponents(DependencyObject parent)
+        {
+            var children = new List<FrameworkElement>();
+
+            if (parent == null)
+                return children;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < childrenCount; i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is FrameworkElement frameworkElement)
+                    children.Add(frameworkElement);
+            }
+
+            return children;
+        }
+
+        #endregion COMPONENT METHODS
 
         #region ENUM METHODS
 

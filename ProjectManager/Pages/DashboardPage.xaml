@@ -1,0 +1,235 @@
+﻿<pages:BasePage
+    x:Class="ProjectManager.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:convUI="clr-namespace:ProjectManager.Converters.UI"
+    xmlns:local="clr-namespace:ProjectManager.Pages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    mc:Ignorable="d"
+    
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    IconKind="Home"
+    Title="Dashboard"
+    Loaded="BasePage_Loaded"
+    SizeChanged="BasePage_SizeChanged">
+
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- CONVERTERS -->
+
+            <convUI:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+
+            <!-- STYLES -->
+
+            <Style BasedOn="{StaticResource ExpanderExStyle}" TargetType="{x:Type cex:ExpanderEx}">
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Padding" Value="8"/>
+            </Style>
+            
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="RecentlyUsedItemDataTemplate">
+                <Border
+                    Padding="4"
+                    ToolTip="{Binding Name}">
+
+                    <materialDesign:PackIcon
+                        Height="24"
+                        Kind="{Binding Icon}"
+                        Width="24"/>
+
+                </Border>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+
+    <pages:BasePage.HeaderContent>
+        <StackPanel
+            Orientation="Vertical">
+
+            <cex:ButtonEx
+                IconKind="Gear"
+                Padding="4"
+                Style="{StaticResource SettingsButtonExStyle}"
+                PreviewMouseDown="DashboardSettingsButtonEx_PreviewMouseDown">
+
+                <cex:ButtonEx.ContextMenu>
+                    <cex:ContextMenuEx>
+
+                        <cex:ContextMenuItemEx
+                            Header="Recently used"
+                            IconKind="Recent"
+                            IsCheckable="True"
+                            IsChecked="{Binding ConfigManager.RecentlyUsedItemsEnabled}"/>
+
+                        <cex:ContextMenuItemEx
+                            Header="Tips &amp; Tricks"
+                            IconKind="Help"
+                            IsCheckable="True"
+                            IsChecked="{Binding ConfigManager.TipsAndTricksTabEnabled}"/>
+
+                        <cex:ContextMenuItemEx
+                            Header="Welcome Tab"
+                            IconKind="HumanWelcome"
+                            IsCheckable="True"
+                            IsChecked="{Binding ConfigManager.WelcomeTabEnabled}"/>
+
+                    </cex:ContextMenuEx>
+                </cex:ButtonEx.ContextMenu>
+                
+            </cex:ButtonEx>
+
+        </StackPanel>
+    </pages:BasePage.HeaderContent>
+
+    <Grid>
+
+        <cex:ScrollViewerEx
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+
+            <Grid
+                x:Name="dashboardGrid">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="0"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type cex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+
+                    <cex:ExpanderEx
+                        x:Name="welcomeTab"
+                        Header="Welcome"
+                        IconKind="HumanWelcome"
+                        IsExpanded="{Binding ConfigManager.WelcomeTabExtended}"
+                        Visibility="{Binding ConfigManager.WelcomeTabEnabled, Converter={StaticResource BoolVisibilityConverter}}"
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                                Grid.Column="1"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="14"
+                                    TextWrapping="Wrap">
+                                
+                                    <Run Text="Welcome"/>
+                                    <Run FontWeight="SemiBold" Text="{Binding WelcomeUserName}"/>
+                                    <Run Text="in"/>
+                                    <Run Text="{Binding WelcomeAppName}"/>
+                                    <Run Text="version:"/>
+                                    <Run Text="{Binding WelcomeVersion}"/>
+                                    <LineBreak/>
+                                    <Run Text="Today is"/>
+                                    <Run FontWeight="SemiBold" Text="{Binding WelcomeTime}"/>
+
+                                </TextBlock>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                    </cex:ExpanderEx>
+
+                    <cex:ExpanderEx
+                        x:Name="recentlyUsedTab"
+                        Header="Recently used"
+                        IconKind="Recent"
+                        IsExpanded="{Binding ConfigManager.RecentlyUsedItemsExtended}"
+                        Visibility="{Binding ConfigManager.RecentlyUsedItemsEnabled, Converter={StaticResource BoolVisibilityConverter}}"
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
+
+                        <cex:ListViewEx
+                            ItemContainerStyle="{StaticResource DashboardRecentlyUsedItemsListViewItemExStyle}"
+                            ItemTemplate="{StaticResource RecentlyUsedItemDataTemplate}"
+                            ItemsSource="{Binding DashboardRecentlyUsedItemsManager.RecentlyUsedItemsCollection}"
+                            Style="{StaticResource DashboardRecentlyUsedItemsListViewExStyle}"
+                            SelectionChanged="RecentlyUsedItemsListViewEx_SelectionChanged">
+                            
+                            <cex:ListViewEx.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel
+                                        Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </cex:ListViewEx.ItemsPanel>
+                        </cex:ListViewEx>
+
+                    </cex:ExpanderEx>
+
+                </StackPanel>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="1"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type cex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+
+                    <cex:ExpanderEx
+                        x:Name="tipsNTricksTab"
+                        Header="Tips &amp; Tricks"
+                        IconKind="Help"
+                        IsExpanded="{Binding ConfigManager.TipsAndTricksTabExtended}"
+                        Visibility="{Binding ConfigManager.TipsAndTricksTabEnabled, Converter={StaticResource BoolVisibilityConverter}}"
+                        PreviewMouseDown="DashboardComponent_PreviewMouseDown"
+                        PreviewMouseUp="DashboardComponent_PreviewMouseUp"
+                        PreviewMouseMove="DashboardComponent_PreviewMouseMove">
+
+                        <TextBlock
+                            Text="System.NotImplementedException: The method or operation is not implemented. at ProjectManager.Pages.DashboardPage..ctor(PagesManager pagesManager) in E:\OneDrive\Projekty\Source\CSharp\GitHub\Hinren_Manager\ProjectManager\Pages\DashboardPage.xaml.cs"
+                            TextWrapping="Wrap"/>
+
+                    </cex:ExpanderEx>
+
+                </StackPanel>
+
+                <StackPanel
+                    AllowDrop="True"
+                    Background="Transparent"
+                    Grid.Column="2"
+                    MinHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type cex:ScrollViewerEx}}}"
+                    Orientation="Vertical"
+                    Drop="StackPanel_Drop">
+                    
+                    
+                    
+                </StackPanel>
+
+            </Grid>
+
+        </cex:ScrollViewerEx>
+
+    </Grid>
+
+</pages:BasePage>

@@ -18,9 +18,12 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
     Height="450"
+    MinHeight="450"
+    MinWidth="800"
     Title="Project Manager"
     Width="800"
-    Loaded="WindowEx_Loaded">
+    Loaded="WindowEx_Loaded"
+    Closing="WindowEx_Closing">
 
     <cexWin:WindowEx.Resources>
         <ResourceDictionary>
@@ -58,15 +61,15 @@
             OnBackItemSelect="mainMenu_OnBackItemSelect"/>
 
         <Border
-            Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}}"
+            Background="Transparent"
             BorderBrush="{x:Null}"
             BorderThickness="0"
-            ClipToBounds="True"
             CornerRadius="8,0,8,0"
             Grid.Column="1">
 
             <pages:PagesManager
                 x:Name="pagesManager"
+                ClipToBounds="True"
                 OnPageBack="pagesManager_OnPageBack"
                 OnPageLoaded="pagesManager_OnPageLoaded"/>
 

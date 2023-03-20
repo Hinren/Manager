@@ -1,4 +1,5 @@
-﻿using ProjectManager.Data.MainMenu;
+﻿using MaterialDesignThemes.Wpf;
+using ProjectManager.Data.MainMenu;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,15 @@ namespace ProjectManager.Pages.Base
     public class BasePage : Page, INotifyPropertyChanged
     {
 
+        //  DEPENDENCY PROPERTIES
+
+        public static readonly DependencyProperty HeaderContentProperty = DependencyProperty.Register(
+            nameof(HeaderContent),
+            typeof(object),
+            typeof(BasePage),
+            new PropertyMetadata(null));
+
+
         //  EVENTS
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -22,10 +32,32 @@ namespace ProjectManager.Pages.Base
 
         protected PagesManager _pagesManager;
 
+        private PackIconKind _iconKind;
+
 
         //  GETTERS & SETTERS
 
         public virtual List<MainMenuItem> MainMenuItems { get; }
+
+        public object HeaderContent
+        {
+            get => GetValue(HeaderContentProperty);
+            set
+            {
+                SetValue(HeaderContentProperty, value);
+                OnPropertyChanged(nameof(HeaderContent));
+            }
+        }
+
+        public PackIconKind IconKind
+        {
+            get => _iconKind;
+            set
+            {
+                _iconKind = value;
+                OnPropertyChanged(nameof(IconKind));
+            }
+        }
 
 
         //  METHODS
