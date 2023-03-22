@@ -10,6 +10,7 @@ using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,7 @@ namespace ProjectManager.Pages.Settings
 
         private ObservableCollection<SnippetCatalogItem> _snippetCatalogItems;
 
+        public ICommand OpenFolderCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
 
 
@@ -64,6 +66,7 @@ namespace ProjectManager.Pages.Settings
             //  Initialize modules.
             ConfigManager = ConfigManager.Instance;
 
+            OpenFolderCommand = new RelayCommand(OnOpenFolderCommandExecute);
             RemoveCommand = new RelayCommand(OnRemoveCommandExecute);
 
             //  Setup data containers.
@@ -78,11 +81,20 @@ namespace ProjectManager.Pages.Settings
         #region COMMANDS METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after pressing Remove database profile button. </summary>
-        /// <param name="profile"> Database profile as object. </param>
-        private void OnRemoveCommandExecute(object profile)
+        /// <summary> Method invoked after pressing Open in explorer snippet catalog item button. </summary>
+        /// <param name="item"> Snippet catalog item as object. </param>
+        private void OnOpenFolderCommandExecute(object item)
         {
-            if (profile is SnippetCatalogItem catalogItem)
+            if (item is SnippetCatalogItem catalogItem)
+                Process.Start("explorer.exe", catalogItem.CatalogPath);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after pressing Remove snippet catalog item button. </summary>
+        /// <param name="item"> Snippet catalog item as object. </param>
+        private void OnRemoveCommandExecute(object item)
+        {
+            if (item is SnippetCatalogItem catalogItem)
             {
                 if (SnippetCatalogItems.Contains(catalogItem))
                     SnippetCatalogItems.Remove(catalogItem);

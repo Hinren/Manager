@@ -1,8 +1,11 @@
-﻿using ProjectManager.Data.Configuration;
+﻿using ProjectManager.Commands;
+using ProjectManager.Data.Configuration;
 using ProjectManager.Pages.Base;
 using SnippetsManager;
+using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +30,9 @@ namespace ProjectManager.Pages.Snippets
         public ConfigManager ConfigManager { get; private set; }
         public SnippetsManager.SnippetsManager SnippetsManager { get; private set; }
 
+        public ICommand ShowFileCommand { get; set; }
+        public ICommand RemoveCommand { get; set; }
+
 
         //  METHODS
 
@@ -41,11 +47,45 @@ namespace ProjectManager.Pages.Snippets
             ConfigManager = ConfigManager.Instance;
             SnippetsManager = new SnippetsManager.SnippetsManager(ConfigManager.Configuration.SnippetConfig);
 
+            ShowFileCommand = new RelayCommand(OnShowFileCommandExecute);
+            RemoveCommand = new RelayCommand(OnRemoveCommandExecute);
+
             //  Initialize interface.
             InitializeComponent();
         }
 
         #endregion CLASS METHODS
+
+        #region COMMANDS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after pressing Open in explorer snippet item button. </summary>
+        /// <param name="item"> Snippet item as object. </param>
+        private void OnShowFileCommandExecute(object item)
+        {
+            if (item is SnippetItem snippetItem)
+            {
+                string explorerArgs = string.Format("/e, /select, \"{0}\"", snippetItem.FilePath);
+
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.FileName = "explorer";
+                info.Arguments = explorerArgs;
+                Process.Start(info);
+            }
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after pressing Remove snippet item button. </summary>
+        /// <param name="item"> Snippet item as object. </param>
+        private void OnRemoveCommandExecute(object item)
+        {
+            if (item is SnippetItem snippetItem)
+            {
+                //
+            }
+        }
+
+        #endregion COMMANDS METHODS
 
     }
 }

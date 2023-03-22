@@ -78,13 +78,21 @@
                         VerticalAlignment="Center">
 
                         <cex:ButtonEx
+                            Content="Open in Explorer"
+                            Command="{Binding DataContext.OpenFolderCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="FolderOpen"
+                            Style="{StaticResource SettingsButtonExStyle}"
+                            ToolTip="Remove snippets directory"/>
+
+                        <cex:ButtonEx
                             Content="Remove directory"
                             Command="{Binding DataContext.RemoveCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
                             CommandParameter="{Binding}"
                             IconKind="FolderRemove"
-                            Style="{StaticResource SettingsButtonExStyle}"
-                            ToolTip="Remove snippets directory"/>
+                            Style="{StaticResource SettingsButtonExStyle}"/>
 
                     </StackPanel>
 

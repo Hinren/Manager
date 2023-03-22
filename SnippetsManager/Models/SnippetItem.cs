@@ -74,7 +74,7 @@ namespace SnippetsManager.Models
         /// <returns> True - path is valid; False - otherwise. </returns>
         private bool ValidateFilePathValue(string filePath)
         {
-            return !string.IsNullOrEmpty(filePath) && File.Exists(FilePath);
+            return !string.IsNullOrEmpty(filePath) && File.Exists(filePath);
         }
 
         #endregion VALIDATION METHODS

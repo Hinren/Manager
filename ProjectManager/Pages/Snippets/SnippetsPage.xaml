@@ -7,6 +7,7 @@
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
     xmlns:local="clr-namespace:ProjectManager.Pages.Snippets"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
@@ -17,8 +18,80 @@
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
             <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_SettingsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="Margin" Value="0,2"/>
+            </Style>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="SnippetItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                        Grid.Column="0"
+                        Kind="FileCodeOutline"
+                        Height="28"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Width="28"/>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Text="{Binding Header.Title}"/>
+
+                        <TextBlock
+                            Margin="0,4,0,0"
+                            Text="{Binding Header.Description}"
+                            TextWrapping="Wrap"/>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Content="Show in explorer"
+                            Command="{Binding DataContext.ShowFileCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="FileSearch"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                        <cex:ButtonEx
+                            Content="Delete"
+                            Command="{Binding DataContext.RemoveCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="DeleteForever"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
 
         </ResourceDictionary>
     </pages:BasePage.Resources>
@@ -33,7 +106,12 @@
             <StackPanel
                 Orientation="Vertical">
 
-                
+                <cex:ListViewEx
+                    ItemContainerStyle="{StaticResource Internal_SettingsListViewItemExStyle}"
+                    ItemsSource="{Binding SnippetsManager.SnippetItems}"
+                    ItemTemplate="{StaticResource SnippetItemDataTemplate}"
+                    Padding="0"
+                    Style="{StaticResource SettingsListViewExStyle}"/>
 
             </StackPanel>
 

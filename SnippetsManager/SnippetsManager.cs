@@ -93,7 +93,10 @@ namespace SnippetsManager
 
                 foreach (var file in files)
                 {
-                    serializer.DeserializeFromFile(file, out string _);
+                    var snippetItem = serializer.DeserializeFromFile(file, out string _);
+
+                    if (snippetItem != null)
+                        SnippetItems.Add(snippetItem);
                 }
             }
         }
