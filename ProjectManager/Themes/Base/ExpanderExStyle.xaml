@@ -20,6 +20,7 @@
         <Setter Property="HeaderForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="IconHeight" Value="28"/>
         <Setter Property="IconWidth" Value="28"/>
+        <Setter Property="IconMargin" Value="8,4,4,4"/>
     </Style>
     
 </ResourceDictionary>

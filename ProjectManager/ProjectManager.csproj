@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\DomainModel.csproj" />
+    <ProjectReference Include="..\SnippetsManager\SnippetsManager.csproj" />
   </ItemGroup>
 
 </Project>

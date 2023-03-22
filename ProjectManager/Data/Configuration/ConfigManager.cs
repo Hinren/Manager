@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using ProjectManager.Data.Configuration.Attributes;
 using ProjectManager.Data.Configuration.Static;
 using ProjectManager.Utilities;
+using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -343,6 +344,20 @@ namespace ProjectManager.Data.Configuration
         }
 
         #endregion Database
+
+        #region Snippets
+
+        public List<SnippetCatalogItem> SnippetCatalogItems
+        {
+            get => _config.SnippetConfig.CatalogItems;
+            set
+            {
+                _config.SnippetConfig.CatalogItems = value;
+                OnPropertyChanged(nameof(SnippetCatalogItems));
+            }
+        }
+
+        #endregion Snippets
 
 
         //  METHODS

@@ -1,5 +1,6 @@
 ﻿using CoreLibs.Extensions;
 using SnippetsManager.Models;
+using SnippetsManager.Serializers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ namespace SnippetsManager
     public class SnippetsManager : INotifyPropertyChanged
     {
 
+        //  CONST
+
+        private static readonly string SNIPPET_EXTENSION = ".snippet";
+
+
         //  EVENTS
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -22,13 +28,13 @@ namespace SnippetsManager
 
         //  VARIABLES
 
-        private ObservableCollection<CatalogItem> _catalogItems;
+        private ObservableCollection<SnippetCatalogItem> _catalogItems;
         private ObservableCollection<SnippetItem> _snippetItems;
 
 
         //  GETTERS & SETTERS
 
-        public ObservableCollection<CatalogItem> CatalogItems
+        public ObservableCollection<SnippetCatalogItem> CatalogItems
         {
             get => _catalogItems;
             set
@@ -57,12 +63,16 @@ namespace SnippetsManager
 
         //  --------------------------------------------------------------------------------
         /// <summary> SnippetsManager class constructor. </summary>
-        /// <param name="catalogItems"> Catalog items list. </param>
-        public SnippetsManager(List<CatalogItem> catalogItems)
+        /// <param name="snippetsConfig"> Snippets configuration. </param>
+        public SnippetsManager(SnippetsConfig snippetsConfig)
         {
+            var catalogItems = snippetsConfig.CatalogItems;
+
             _catalogItems = catalogItems.IsNullOrEmpty()
-                ? new ObservableCollection<CatalogItem>()
-                : new ObservableCollection<CatalogItem>(catalogItems);
+                ? new ObservableCollection<SnippetCatalogItem>()
+                : new ObservableCollection<SnippetCatalogItem>(catalogItems);
+
+            OnUpdateCatalogItemsCollection();
         }
 
         #endregion CLASS METHODS
@@ -72,15 +82,26 @@ namespace SnippetsManager
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after adding catalog item - to load snippets. </summary>
         /// <param name="catalogItem"> New catalog item. </param>
-        private void OnAddCatalogItem(CatalogItem catalogItem)
+        private void OnAddCatalogItem(SnippetCatalogItem catalogItem)
         {
-            //
+            var files = Directory.GetFiles(catalogItem.CatalogPath, "*.*")
+                .Where(f => f.ToLower().EndsWith(SNIPPET_EXTENSION));
+
+            if (!files.IsNullOrEmpty())
+            {
+                var serializer = new SnippetSerializer();
+
+                foreach (var file in files)
+                {
+                    serializer.DeserializeFromFile(file, out string _);
+                }
+            }
         }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after removing catalog item - for unload snippets. </summary>
         /// <param name="catalogItem"> Removed catalog item. </param>
-        private void OnRemoveCatalogItem(CatalogItem catalogItem)
+        private void OnRemoveCatalogItem(SnippetCatalogItem catalogItem)
         {
             SnippetItems.RemoveAll(s => s.FilePath.StartsWith(catalogItem.CatalogPath));
         }
@@ -89,14 +110,10 @@ namespace SnippetsManager
         /// <summary> Method invoked after significant changes in catalog items to load snippets. </summary>
         private void OnUpdateCatalogItemsCollection()
         {
-            var snippetItems = new List<SnippetItem>();
+            SnippetItems = new ObservableCollection<SnippetItem>();
 
             foreach (var catalogItem in CatalogItems)
-            {
-
-            }
-
-            SnippetItems = new ObservableCollection<SnippetItem>(snippetItems);
+                OnAddCatalogItem(catalogItem);
         }
 
         #endregion CATALOGS MANAGEMENT METHODS
@@ -112,16 +129,16 @@ namespace SnippetsManager
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    InvokeUpdateAction<CatalogItem>(e.NewItems, OnAddCatalogItem);
+                    InvokeUpdateAction<SnippetCatalogItem>(e.NewItems, OnAddCatalogItem);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    InvokeUpdateAction<CatalogItem>(e.OldItems, OnRemoveCatalogItem);
+                    InvokeUpdateAction<SnippetCatalogItem>(e.OldItems, OnRemoveCatalogItem);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    InvokeUpdateAction<CatalogItem>(e.OldItems, OnRemoveCatalogItem);
-                    InvokeUpdateAction<CatalogItem>(e.NewItems, OnAddCatalogItem);
+                    InvokeUpdateAction<SnippetCatalogItem>(e.OldItems, OnRemoveCatalogItem);
+                    InvokeUpdateAction<SnippetCatalogItem>(e.NewItems, OnAddCatalogItem);
                     break;
 
                 case NotifyCollectionChangedAction.Reset:

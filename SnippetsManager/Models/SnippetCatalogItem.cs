@@ -10,7 +10,7 @@ using CoreLibs.ViewModels;
 
 namespace SnippetsManager.Models
 {
-    public class CatalogItem : BaseViewModel
+    public class SnippetCatalogItem : BaseViewModel
     {
 
         //  VARIABLES
@@ -42,7 +42,7 @@ namespace SnippetsManager.Models
         /// <summary> CatalogItem class constructor. </summary>
         /// <param name="catalogPath"> Catalog path. </param>
         [JsonConstructor]
-        public CatalogItem(string catalogPath = null)
+        public SnippetCatalogItem(string catalogPath = null)
         {
             CatalogPath = catalogPath;
         }
@@ -57,7 +57,7 @@ namespace SnippetsManager.Models
         /// <returns> True - catalog path is valid; False - otherwise. </returns>
         private bool ValidateCatalogPathValue(string catalogPath)
         {
-            return !string.IsNullOrEmpty(catalogPath) && Directory.Exists(CatalogPath);
+            return !string.IsNullOrEmpty(catalogPath) && Directory.Exists(catalogPath);
         }
 
         #endregion VALIDATION METHODS

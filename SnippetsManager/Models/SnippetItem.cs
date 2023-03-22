@@ -9,12 +9,15 @@ using System.Xml.Serialization;
 
 namespace SnippetsManager.Models
 {
+    [XmlRoot("CodeSnippet", Namespace = "http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet")]
     public class SnippetItem : BaseViewModel
     {
 
         //  VARIABLES
 
         private string _filePath;
+        private SnippetHeader _header;
+        private SnippetContent _snippet;
 
 
         //  GETTERS & SETTERS
@@ -32,6 +35,26 @@ namespace SnippetsManager.Models
             }
         }
 
+        public SnippetHeader Header
+        {
+            get => _header;
+            set
+            {
+                _header = value;
+                OnPropertyChanged(nameof(Header));
+            }
+        }
+
+        public SnippetContent Snippet
+        {
+            get => _snippet;
+            set
+            {
+                _snippet = value;
+                OnPropertyChanged(nameof(Snippet));
+            }
+        }
+
 
         //  METHODS
 
@@ -39,12 +62,7 @@ namespace SnippetsManager.Models
 
         //  --------------------------------------------------------------------------------
         /// <summary> SnippetItem class constructor. </summary>
-        /// <param name="path"> Snippet file path. </param>
-        [JsonConstructor]
-        public SnippetItem(string filePath = null)
-        {
-            FilePath = filePath;
-        }
+        public SnippetItem() { }
 
         #endregion CLASS METHODS
 

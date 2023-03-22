@@ -201,6 +201,9 @@ namespace ProjectManager.Pages.Settings
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing profile edit internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnProfileEditorClose(object sender, InternalMessageCloseEventArgs e)
         {
             var im = (sender as DatabaseProfileEditorIM);

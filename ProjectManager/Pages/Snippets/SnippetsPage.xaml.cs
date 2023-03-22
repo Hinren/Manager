@@ -1,5 +1,6 @@
 ﻿using ProjectManager.Data.Configuration;
 using ProjectManager.Pages.Base;
+using SnippetsManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace ProjectManager.Pages.Snippets
 {
     public partial class SnippetsPage : BasePage
@@ -23,6 +25,7 @@ namespace ProjectManager.Pages.Snippets
         //  VARIABLES
 
         public ConfigManager ConfigManager { get; private set; }
+        public SnippetsManager.SnippetsManager SnippetsManager { get; private set; }
 
 
         //  METHODS
@@ -36,6 +39,7 @@ namespace ProjectManager.Pages.Snippets
         {
             //  Initialize data containers.
             ConfigManager = ConfigManager.Instance;
+            SnippetsManager = new SnippetsManager.SnippetsManager(ConfigManager.Configuration.SnippetConfig);
 
             //  Initialize interface.
             InitializeComponent();

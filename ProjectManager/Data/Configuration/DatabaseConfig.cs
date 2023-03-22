@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManager.Data
+namespace ProjectManager.Data.Configuration
 {
     public class DatabaseConfig
     {

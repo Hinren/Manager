@@ -39,6 +39,8 @@ namespace ProjectManager.Pages.Base
             { nameof(SettingsDatabasesPage), typeof(SettingsDatabasesPage) },
             { nameof(SettingsInfoPage), typeof(SettingsInfoPage) },
             { nameof(SettingsPage), typeof(SettingsPage) },
+            { nameof(SettingsSnippetsPage), typeof(SettingsSnippetsPage) },
+            { nameof(SnippetsPage), typeof(SnippetsPage) },
         };
 
 

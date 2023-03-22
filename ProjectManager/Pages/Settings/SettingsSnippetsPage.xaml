@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:convFiles="clr-namespace:ProjectManager.Converters.Files"
     xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
     mc:Ignorable="d"
     
@@ -17,8 +19,77 @@
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
             <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+            
+            <!-- CONVERTERS -->
+
+            <convFiles:PathToFileNameConverter x:Key="PathToFileNameConverter"/>
+
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_SettingsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="Margin" Value="0,2"/>
+            </Style>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="SnippetCatalogItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                        Grid.Column="0"
+                        Kind="Folder"
+                        Height="28"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Width="28"/>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Text="{Binding CatalogPath, Converter={StaticResource PathToFileNameConverter}}"/>
+
+                        <TextBlock
+                            Margin="0,4,0,0"
+                            Text="{Binding CatalogPath}"
+                            TextWrapping="Wrap"/>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Content="Remove directory"
+                            Command="{Binding DataContext.RemoveCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="FolderRemove"
+                            Style="{StaticResource SettingsButtonExStyle}"
+                            ToolTip="Remove snippets directory"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
 
         </ResourceDictionary>
     </pages:BasePage.Resources>
@@ -32,9 +103,63 @@
 
             <StackPanel
                 Orientation="Vertical">
-                
-                
-                
+
+                <cex:ExpanderEx
+                    HeaderHorizontalContentAlignment="Stretch"
+                    IconKind="FolderEdit"
+                    IsExpanded="True"
+                    Margin="4"
+                    Padding="4,2">
+
+                    <cex:ExpanderEx.Header>
+                        <Grid
+                            Margin="0,4"
+                            MinHeight="44">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                Orientation="Vertical"
+                                VerticalAlignment="Center">
+
+                                <TextBlock
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    HorizontalAlignment="Left"
+                                    Text="Snippets catalogs"/>
+
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Margin="0,4,0,0"
+                                    Text="List of directories where snippets are located."
+                                    TextWrapping="WrapWithOverflow"/>
+
+                            </StackPanel>
+
+                            <cex:ButtonEx
+                                Content="Add directory"
+                                Grid.Column="2"
+                                IconKind="FolderAdd"
+                                VerticalAlignment="Center"
+                                Click="AddCatalogButtonEx_Click"/>
+
+                        </Grid>
+                    </cex:ExpanderEx.Header>
+
+                    <cex:ListViewEx
+                        ItemContainerStyle="{StaticResource Internal_SettingsListViewItemExStyle}"
+                        ItemsSource="{Binding SnippetCatalogItems}"
+                        ItemTemplate="{StaticResource SnippetCatalogItemDataTemplate}"
+                        Padding="0"
+                        Style="{StaticResource SettingsListViewExStyle}"/>
+
+                </cex:ExpanderEx>
+
             </StackPanel>
 
         </cex:ScrollViewerEx>
