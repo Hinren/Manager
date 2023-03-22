@@ -5,34 +5,31 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using CoreLibs.ViewModels;
 
 namespace SnippetsManager.Models
 {
-    public class CatalogItem
+    public class CatalogItem : BaseViewModel
     {
 
         //  VARIABLES
 
-        private string _path;
+        private string _catalogPath;
 
 
         //  GETTERS & SETTERS
 
-        [JsonIgnore]
-        public string Name
+        public string CatalogPath
         {
-            get => System.IO.Path.GetFileName(Path);
-        }
-
-        public string Path
-        {
-            get => _path;
+            get => _catalogPath;
             set
             {
-                if (!ValidatePathValue(value))
+                if (!ValidateCatalogPathValue(value))
                     throw new ArgumentException("Directory does not exists.");
 
-                _path = value;
+                _catalogPath = value;
+                OnPropertyChanged(nameof(CatalogPath));
             }
         }
 
@@ -43,11 +40,11 @@ namespace SnippetsManager.Models
 
         //  --------------------------------------------------------------------------------
         /// <summary> CatalogItem class constructor. </summary>
-        /// <param name="path"> Catalog path. </param>
+        /// <param name="catalogPath"> Catalog path. </param>
         [JsonConstructor]
-        public CatalogItem(string path = null)
+        public CatalogItem(string catalogPath = null)
         {
-            Path = path;
+            CatalogPath = catalogPath;
         }
 
         #endregion CLASS METHODS
@@ -55,12 +52,12 @@ namespace SnippetsManager.Models
         #region VALIDATION METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Validate path value. </summary>
-        /// <param name="value"> Path value. </param>
-        /// <returns> True - path is valid; False - otherwise. </returns>
-        private bool ValidatePathValue(string value)
+        /// <summary> Validate catalog path value. </summary>
+        /// <param name="catalogPath"> Catalog path value. </param>
+        /// <returns> True - catalog path is valid; False - otherwise. </returns>
+        private bool ValidateCatalogPathValue(string catalogPath)
         {
-            return !string.IsNullOrEmpty(value) && Directory.Exists(Path);
+            return !string.IsNullOrEmpty(catalogPath) && Directory.Exists(CatalogPath);
         }
 
         #endregion VALIDATION METHODS

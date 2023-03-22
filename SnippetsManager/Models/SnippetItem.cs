@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CoreLibs.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace SnippetsManager.Models
 {
-    public class SnippetItem
+    public class SnippetItem : BaseViewModel
     {
 
         //  VARIABLES
@@ -51,11 +52,11 @@ namespace SnippetsManager.Models
 
         //  --------------------------------------------------------------------------------
         /// <summary> Validate file path value. </summary>
-        /// <param name="value"> File path value. </param>
+        /// <param name="filePath"> File path value. </param>
         /// <returns> True - path is valid; False - otherwise. </returns>
-        private bool ValidateFilePathValue(string value)
+        private bool ValidateFilePathValue(string filePath)
         {
-            return !string.IsNullOrEmpty(value) && File.Exists(FilePath);
+            return !string.IsNullOrEmpty(filePath) && File.Exists(FilePath);
         }
 
         #endregion VALIDATION METHODS
