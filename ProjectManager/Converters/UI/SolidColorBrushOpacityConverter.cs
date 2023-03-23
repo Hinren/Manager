@@ -22,7 +22,7 @@ namespace ProjectManager.Converters.UI
             var opacityValue = ((string)parameter) ?? string.Empty;
             var opacity = double.TryParse(opacityValue, out double convResult1) ? (double?)convResult1 : null;
 
-            if (opacity == null || opacity > 0)
+            if (opacity == null || opacity > 1)
             {
                 if (opacityValue.Contains(','))
                     opacityValue = opacityValue.Replace(',', '.');

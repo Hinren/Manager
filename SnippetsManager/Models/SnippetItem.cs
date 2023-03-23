@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace SnippetsManager.Models
 {
     [XmlRoot("CodeSnippet", Namespace = "http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet")]
-    public class SnippetItem : BaseViewModel
+    public class SnippetItem : BaseViewModel, ICloneable
     {
 
         //  VARIABLES
@@ -65,6 +65,16 @@ namespace SnippetsManager.Models
         public SnippetItem() { }
 
         #endregion CLASS METHODS
+
+        #region CLONE METHODS
+
+        //  --------------------------------------------------------------------------------
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion CLONE METHODS
 
         #region VALIDATION METHODS
 

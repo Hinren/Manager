@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
     xmlns:local="clr-namespace:ProjectManager.Pages.Snippets"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
@@ -14,7 +15,8 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
     IconKind="LabelVariantOutline"
-    Title="Snippets">
+    Title="Snippets"
+    Loaded="BasePage_Loaded">
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
@@ -23,7 +25,23 @@
             </ResourceDictionary.MergedDictionaries>
 
             <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+            <RelativeSource x:Key="RelativeSelf" Mode="FindAncestor" AncestorType="{x:Type pages:BasePage}"/>
+
+            <!-- STORYBOARDS -->
             
+            <Storyboard x:Key="ShowHideQuickViewStoryboard" Completed="Storyboard_Completed">
+                <ThicknessAnimationUsingKeyFrames
+                    BeginTime="00:00:0"
+                    Duration="00:00:0.25"
+                    Storyboard.TargetName="snippetQuickView"
+                    Storyboard.TargetProperty="Margin">
+                    <ThicknessAnimationUsingKeyFrames.KeyFrames>
+                        <LinearThicknessKeyFrame Value="{Binding Path=SnippetQuickViewMargin, Mode=TwoWay, RelativeSource={StaticResource RelativeSelf}}"/>
+                    </ThicknessAnimationUsingKeyFrames.KeyFrames>
+                </ThicknessAnimationUsingKeyFrames>
+            </Storyboard>
+
             <!-- STYLES -->
 
             <Style x:Key="Internal_SettingsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
@@ -111,11 +129,20 @@
                     ItemsSource="{Binding SnippetsManager.SnippetItems}"
                     ItemTemplate="{StaticResource SnippetItemDataTemplate}"
                     Padding="0"
-                    Style="{StaticResource SettingsListViewExStyle}"/>
+                    Style="{StaticResource SettingsListViewExStyle}"
+                    MouseDoubleClick="SnippetItemsListViewEx_MouseDoubleClick"/>
 
             </StackPanel>
 
         </cex:ScrollViewerEx>
+
+        <components:SnippetQuickView
+            x:Name="snippetQuickView"
+            HorizontalAlignment="Right"
+            Margin="8,8,16,8"
+            OnAdvancedEditClick="snippetQuickView_OnAdvancedEditClick"
+            OnCancelClick="snippetQuickView_OnCancelClick"
+            OnSaveClick="snippetQuickView_OnSaveClick"/>
 
     </Grid>
 
