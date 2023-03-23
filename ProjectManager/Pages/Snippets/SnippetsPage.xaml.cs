@@ -34,7 +34,7 @@ namespace ProjectManager.Pages.Snippets
         private bool _snippetQuickViewShowed = false;
 
         public ConfigManager ConfigManager { get; private set; }
-        public SnippetsManager.SnippetsManager SnippetsManager { get; private set; }
+        public SnippetsManager.SnippetsManager Manager { get; private set; }
 
         public ICommand ShowFileCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
@@ -64,7 +64,7 @@ namespace ProjectManager.Pages.Snippets
         {
             //  Initialize data containers.
             ConfigManager = ConfigManager.Instance;
-            SnippetsManager = new SnippetsManager.SnippetsManager(ConfigManager.Configuration.SnippetConfig);
+            Manager = SnippetsManager.SnippetsManager.CreateInstance(ConfigManager.Configuration.SnippetConfig);
 
             ShowFileCommand = new RelayCommand(OnShowFileCommandExecute);
             RemoveCommand = new RelayCommand(OnRemoveCommandExecute);

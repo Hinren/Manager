@@ -126,7 +126,7 @@
 
                 <cex:ListViewEx
                     ItemContainerStyle="{StaticResource Internal_SettingsListViewItemExStyle}"
-                    ItemsSource="{Binding SnippetsManager.SnippetItems}"
+                    ItemsSource="{Binding Manager.SnippetItems}"
                     ItemTemplate="{StaticResource SnippetItemDataTemplate}"
                     Padding="0"
                     Style="{StaticResource SettingsListViewExStyle}"

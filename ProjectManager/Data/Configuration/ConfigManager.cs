@@ -357,6 +357,16 @@ namespace ProjectManager.Data.Configuration
             }
         }
 
+        public bool SnippetUseCache
+        {
+            get => _config.SnippetConfig.UseCache;
+            set
+            {
+                _config.SnippetConfig.UseCache = value;
+                OnPropertyChanged(nameof(SnippetUseCache));
+            }
+        }
+
         #endregion Snippets
 
 

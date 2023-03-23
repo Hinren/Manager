@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +28,8 @@ namespace SnippetsManager
 
 
         //  VARIABLES
+
+        private static SnippetsManager _cache;
 
         private ObservableCollection<SnippetCatalogItem> _catalogItems;
         private ObservableCollection<SnippetItem> _snippetItems;
@@ -56,6 +59,11 @@ namespace SnippetsManager
             }
         }
 
+        public static bool HasCache
+        {
+            get => _cache != null;
+        }
+
 
         //  METHODS
 
@@ -64,7 +72,7 @@ namespace SnippetsManager
         //  --------------------------------------------------------------------------------
         /// <summary> SnippetsManager class constructor. </summary>
         /// <param name="snippetsConfig"> Snippets configuration. </param>
-        public SnippetsManager(SnippetsConfig snippetsConfig)
+        private SnippetsManager(SnippetsConfig snippetsConfig)
         {
             var catalogItems = snippetsConfig.CatalogItems;
 
@@ -75,7 +83,112 @@ namespace SnippetsManager
             OnUpdateCatalogItemsCollection();
         }
 
+        //  --------------------------------------------------------------------------------
+        /// <summary> SnippetsManager instance creator. </summary>
+        /// <param name="snippetsConfig"> Snippets configuration. </param>
+        /// <returns> SnippetsManager </returns>
+        public static SnippetsManager CreateInstance(SnippetsConfig snippetsConfig)
+        {
+            if (snippetsConfig.UseCache)
+                return HasCache ? GetCache(snippetsConfig) : CreateCache(snippetsConfig);
+
+            _cache = null;
+            return new SnippetsManager(snippetsConfig);
+        }
+
         #endregion CLASS METHODS
+
+        #region CACHE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Create cache. </summary>
+        /// <param name="snippetsConfig"> Snippets configuration. </param>
+        /// <returns> Newly created snippets manager cache. </returns>
+        private static SnippetsManager CreateCache(SnippetsConfig snippetsConfig)
+        {
+            _cache = new SnippetsManager(snippetsConfig);
+            return _cache;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Clear cache. </summary>
+        public static void ClearCache()
+        {
+            _cache = null;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get snippets manager cache. </summary>
+        /// <param name="snippetsConfig"> Snippets configuration. </param>
+        /// <returns> Snippets manager cache. </returns>
+        private static SnippetsManager GetCache(SnippetsConfig snippetsConfig)
+        {
+            //  Update cache.
+            _cache.UpdateCache(snippetsConfig.CatalogItems);
+
+            //  Return cache.
+            return _cache;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get cache size in memory. </summary>
+        public static long GetCacheSize()
+        {
+            long size = 0;
+
+            if (_cache != null)
+            {
+                using (Stream s = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(s, _cache.CatalogItems);
+                    size += s.Length;
+                    s.Flush();
+                    s.Close();
+                }
+
+                using (Stream s = new MemoryStream())
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(s, _cache.SnippetItems);
+                    size += s.Length;
+                    s.Flush();
+                    s.Close();
+                }
+            }
+
+            return size;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update items in cache. </summary>
+        /// <param name="newCatalogItems"> New catalog items list. </param>
+        private void UpdateCache(List<SnippetCatalogItem> newCatalogItems)
+        {
+            //  Remove all catalogs if new catalog items list is empty.
+            if (newCatalogItems.IsNullOrEmpty())
+            {
+                CatalogItems.Clear();
+                return;
+            }
+
+            //  Remove old catalogs.
+            CatalogItems.RemoveAll(c1 => !newCatalogItems.Any(c2 
+                => c1.CatalogPath.ToLower() == c2.CatalogPath.ToLower()));
+
+            //  Add new catalogs.
+            newCatalogItems.ForEach(c1 =>
+            {
+                if (!CatalogItems.Any(c2 => c1.CatalogPath.ToLower() == c2.CatalogPath.ToLower()))
+                    CatalogItems.Add(c1);
+            });
+
+            //  Update snippets in other catalogs.
+            foreach (var catalogItem in CatalogItems)
+                _cache.OnAddCatalogItem(catalogItem);
+        }
+
+        #endregion CACHE METHODS
 
         #region CATALOGS MANAGEMENT METHODS
 
@@ -93,6 +206,9 @@ namespace SnippetsManager
 
                 foreach (var file in files)
                 {
+                    if (SnippetItems.Any(s => s.FilePath == file))
+                        continue;
+
                     var snippetItem = serializer.DeserializeFromFile(file, out string _);
 
                     if (snippetItem != null)

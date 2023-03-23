@@ -10,6 +10,7 @@ using CoreLibs.ViewModels;
 
 namespace SnippetsManager.Models
 {
+    [Serializable]
     public class SnippetCatalogItem : BaseViewModel
     {
 

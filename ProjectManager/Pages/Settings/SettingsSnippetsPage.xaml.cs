@@ -34,6 +34,7 @@ namespace ProjectManager.Pages.Settings
 
         public ConfigManager ConfigManager { get; private set; }
 
+        private double _snippetCacheSize = 0;
         private ObservableCollection<SnippetCatalogItem> _snippetCatalogItems;
 
         public ICommand OpenFolderCommand { get; set; }
@@ -41,6 +42,16 @@ namespace ProjectManager.Pages.Settings
 
 
         //  GETTERS & SETTERS
+
+        public double SnippetCacheSize
+        {
+            get => Math.Round(_snippetCacheSize, 2);
+            set
+            {
+                _snippetCacheSize = value;
+                OnPropertyChanged(nameof(SnippetCacheSize));
+            }
+        }
 
         public ObservableCollection<SnippetCatalogItem> SnippetCatalogItems
         {
@@ -130,6 +141,16 @@ namespace ProjectManager.Pages.Settings
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking clear snippets cache ButtonEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void ClearSnippetsCacheButtonEx_Click(object sender, RoutedEventArgs e)
+        {
+            if (SnippetsManager.SnippetsManager.HasCache)
+                SnippetsManager.SnippetsManager.ClearCache();
+        }
+
+        //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after closing FilesSelectorInternalMessageEx for adding snippets catalog. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Files Selector Internal Message Close Event Arguments. </param>
@@ -169,6 +190,19 @@ namespace ProjectManager.Pages.Settings
 
         #endregion INTERACTION METHODS
 
+        #region PAGES METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after unloading page. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
+        private void BasePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ConfigManager.SaveSettings();
+        }
+
+        #endregion PAGES METHODS
+
         #region SETUP METHODS
 
         //  --------------------------------------------------------------------------------
@@ -176,6 +210,8 @@ namespace ProjectManager.Pages.Settings
         private void SetupData()
         {
             SnippetCatalogItems = new ObservableCollection<SnippetCatalogItem>(ConfigManager.SnippetCatalogItems);
+            SnippetCacheSize = SnippetsManager.SnippetsManager.HasCache
+                ? SnippetsManager.SnippetsManager.GetCacheSize() / 1024 : 0;
         }
 
         #endregion SETUP METHODS

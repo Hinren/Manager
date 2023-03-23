@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
     xmlns:convFiles="clr-namespace:ProjectManager.Converters.Files"
     xmlns:local="clr-namespace:ProjectManager.Pages.Settings"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -15,7 +16,8 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     d:DesignWidth="800"
     IconKind="LabelVariantOutline"
-    Title="Settings - Snippets">
+    Title="Settings - Snippets"
+    Unloaded="BasePage_Unloaded">
 
     <pages:BasePage.Resources>
         <ResourceDictionary>
@@ -111,6 +113,44 @@
 
             <StackPanel
                 Orientation="Vertical">
+
+                <components:SettingsOptionControl
+                    Description="Instead of loading snippets every snippets manager load. Keep data in cache."
+                    IconKind="Cached"
+                    Title="Use cache">
+
+                    <components:SettingsOptionControl.Content>
+                        <cex:CheckBoxEx
+                            IsChecked="{Binding ConfigManager.SnippetUseCache}"/>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
+
+                <components:SettingsOptionControl
+                    Description="Currently memory usage by snippets cache."
+                    IconKind="Memory"
+                    Title="Cache memory usage">
+
+                    <components:SettingsOptionControl.Content>
+                        <StackPanel
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                Margin="0,0,16,0"
+                                VerticalAlignment="Center">
+                                <Run Text="{Binding SnippetCacheSize}"/>
+                                <Run Text="MB"/>
+                            </TextBlock>
+
+                            <cex:ButtonEx
+                                Content="Clear cache"
+                                IconKind="Broom"
+                                Click="ClearSnippetsCacheButtonEx_Click"/>
+
+                        </StackPanel>
+                    </components:SettingsOptionControl.Content>
+
+                </components:SettingsOptionControl>
 
                 <cex:ExpanderEx
                     HeaderHorizontalContentAlignment="Stretch"

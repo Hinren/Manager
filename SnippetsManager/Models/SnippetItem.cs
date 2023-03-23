@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace SnippetsManager.Models
 {
+    [Serializable]
     [XmlRoot("CodeSnippet", Namespace = "http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet")]
     public class SnippetItem : BaseViewModel, ICloneable
     {

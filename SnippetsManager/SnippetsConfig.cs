@@ -14,6 +14,7 @@ namespace SnippetsManager
         //  VARIABLES
 
         public List<SnippetCatalogItem> CatalogItems { get; set; }
+        public bool UseCache { get; set; }
 
 
         //  METHODS
@@ -23,10 +24,12 @@ namespace SnippetsManager
         //  --------------------------------------------------------------------------------
         /// <summary> SnippetConfig class constructor. </summary>
         /// <param name="catalogItems"> Catalog items. </param>
+        /// <param name="useCache"> Use cache memory. </param>
         [JsonConstructor]
-        public SnippetsConfig(List<SnippetCatalogItem> catalogItems = null)
+        public SnippetsConfig(List<SnippetCatalogItem> catalogItems = null, bool? useCache = null)
         {
             CatalogItems = catalogItems ?? new List<SnippetCatalogItem>();
+            UseCache = useCache ?? false;
         }
 
         #endregion CLASS METHODS

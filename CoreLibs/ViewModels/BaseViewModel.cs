@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 
 namespace CoreLibs.ViewModels
 {
+    [Serializable]
     public class BaseViewModel : INotifyPropertyChanged
     {
 
         //  EVENTS
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        [NonSerialized]
+        PropertyChangedEventHandler _propertyChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add { _propertyChanged += value; }
+            remove { _propertyChanged -= value; }
+        }
 
 
         //  METHODS
@@ -32,7 +40,7 @@ namespace CoreLibs.ViewModels
         /// <param name="propertyName"> Changed property name. </param>
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            PropertyChangedEventHandler handler = _propertyChanged;
 
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));

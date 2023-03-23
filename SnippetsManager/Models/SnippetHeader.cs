@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace SnippetsManager.Models
 {
+    [Serializable]
     public class SnippetHeader : BaseViewModel
     {
 
