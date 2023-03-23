@@ -211,7 +211,7 @@ namespace ProjectManager.Pages.Settings
         {
             SnippetCatalogItems = new ObservableCollection<SnippetCatalogItem>(ConfigManager.SnippetCatalogItems);
             SnippetCacheSize = SnippetsManager.SnippetsManager.HasCache
-                ? SnippetsManager.SnippetsManager.GetCacheSize() / 1024 : 0;
+                ? SnippetsManager.SnippetsManager.GetCacheSize() / 1024d : 0;
         }
 
         #endregion SETUP METHODS
