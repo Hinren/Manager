@@ -3,6 +3,7 @@ using ProjectManager.Data.Dashboard;
 using ProjectManager.Pages.Events;
 using ProjectManager.Pages.Settings;
 using ProjectManager.Pages.Snippets;
+using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,8 @@ namespace ProjectManager.Pages.Base
         private static readonly List<Type> RESTRICTED_RECENT_PAGES = new List<Type>()
         {
             typeof(DashboardPage),
-            typeof(SettingsPage)
+            typeof(SettingsPage),
+            typeof(SnippetsEditPage),
         };
 
         private static readonly Dictionary<string, Type> PAGES_NAMES_MAPPING = new Dictionary<string, Type>()
@@ -40,6 +42,7 @@ namespace ProjectManager.Pages.Base
             { nameof(SettingsInfoPage), typeof(SettingsInfoPage) },
             { nameof(SettingsPage), typeof(SettingsPage) },
             { nameof(SettingsSnippetsPage), typeof(SettingsSnippetsPage) },
+            { nameof(SnippetsEditPage), typeof(SnippetsEditPage) },
             { nameof(SnippetsPage), typeof(SnippetsPage) },
         };
 
@@ -143,7 +146,8 @@ namespace ProjectManager.Pages.Base
         {
             if (CanGoBack)
             {
-                var currPageIndex = _loadedPages.IndexOf(LoadedPage);
+                var currPage = LoadedPage;
+                var currPageIndex = _loadedPages.IndexOf(currPage);
                 var destPageIndex = Math.Max(0, currPageIndex - backCount);
 
                 //  Get previous page from list to load into content frame.
@@ -156,7 +160,7 @@ namespace ProjectManager.Pages.Base
                 contentFrame.Navigate(destPage);
 
                 //  Invoke external event.
-                var args = new PageLoadedEventArgs(destPage);
+                var args = new PageLoadedEventArgs(currPage, destPage);
                 OnPageBack?.Invoke(this, args);
 
                 OnPropertyChanged(nameof(CanGoBack));
@@ -173,6 +177,8 @@ namespace ProjectManager.Pages.Base
 
             if (pageToLoad != null)
             {
+                var currPage = LoadedPage;
+
                 //  Add page to history.
                 _loadedPages.Add(page);
 
@@ -180,7 +186,7 @@ namespace ProjectManager.Pages.Base
                 contentFrame.Navigate(pageToLoad);
 
                 //  Invoke external event.
-                var args = new PageLoadedEventArgs(page);
+                var args = new PageLoadedEventArgs(currPage, page);
                 OnPageLoaded?.Invoke(this, args);
 
                 //  Add page to recently used items.
@@ -318,6 +324,17 @@ namespace ProjectManager.Pages.Base
         public BasePage LoadSnippetsPage()
         {
             var page = new SnippetsPage(this);
+            LoadPage(page);
+            return page;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Load and show SnippetsEditPage. </summary>
+        /// <param name="snippetItem"> Snippet item to edit. </param>
+        /// <returns> Loaded page. </returns>
+        public BasePage LoadSnippetsEditPage(SnippetItem snippetItem)
+        {
+            var page = new SnippetsEditPage(this, snippetItem);
             LoadPage(page);
             return page;
         }

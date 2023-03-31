@@ -102,7 +102,7 @@ namespace ProjectManager.Windows
         /// <param name="e"> Page Loaded Event Arguments. </param>
         private void pagesManager_OnPageBack(object sender, Pages.Events.PageLoadedEventArgs e)
         {
-            LoadMenuFromPage(e.Page);
+            LoadMenuFromPage(e.LoadedPage);
         }
 
         //  --------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ namespace ProjectManager.Windows
         /// <param name="e"> Page Loaded Event Arguments. </param>
         private void pagesManager_OnPageLoaded(object sender, Pages.Events.PageLoadedEventArgs e)
         {
-            LoadMenuFromPage(e.Page);
+            LoadMenuFromPage(e.LoadedPage);
         }
 
         #endregion PAGES MANAGER METHODS

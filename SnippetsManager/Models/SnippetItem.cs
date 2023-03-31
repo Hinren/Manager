@@ -70,12 +70,36 @@ namespace SnippetsManager.Models
         #region CLONE METHODS
 
         //  --------------------------------------------------------------------------------
-        public object Clone()
+        /// <summary> Make object copy. </summary>
+        /// <returns> Object copy. </returns>
+        public override object Clone()
         {
-            throw new NotImplementedException();
+            return new SnippetItem()
+            {
+                FilePath = FilePath,
+                Header = (SnippetHeader) Header.Clone(),
+                Snippet = (SnippetContent) Snippet.Clone()
+            };
         }
 
         #endregion CLONE METHODS
+
+        #region UPDATE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update values with values from other object instance. </summary>
+        /// <param name="model"> BaseViewModel object instance. </param>
+        public override void UpdateValues(BaseViewModel model)
+        {
+            if (model is SnippetItem snippetItem)
+            {
+                FilePath = snippetItem.FilePath;
+                Header.UpdateValues(snippetItem.Header);
+                Snippet.UpdateValues(snippetItem.Snippet);
+            }
+        }
+
+        #endregion UPDATE METHODS
 
         #region VALIDATION METHODS
 

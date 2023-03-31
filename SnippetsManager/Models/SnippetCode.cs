@@ -53,5 +53,21 @@ namespace SnippetsManager.Models
 
         #endregion CLASS METHODS
 
+        #region CLONE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Make object copy. </summary>
+        /// <returns> Object copy. </returns>
+        public virtual object Clone()
+        {
+            return new SnippetCode()
+            {
+                Code = Code,
+                Language = Language
+            };
+        }
+
+        #endregion CLONE METHODS
+
     }
 }

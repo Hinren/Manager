@@ -1,4 +1,6 @@
-﻿using SnippetsManager.Models;
+﻿using ProjectManager.Components.Events;
+using ProjectManager.Components.Statics;
+using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static ProjectManager.Delegates;
 
 namespace ProjectManager.Components
 {
@@ -23,26 +26,34 @@ namespace ProjectManager.Components
         //  EVENTS
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<SnippetItem> OnAdvancedEditClick;
-        public event EventHandler<SnippetItem> OnCancelClick;
-        public event EventHandler<SnippetItem> OnSaveClick;
+        public event SnippetQuickViewActionEventHandler OnActionTaken;
 
 
         //  VARIABLES
 
         private SnippetItem _snippetItem;
-        private SnippetItem _snippetItemBackup;
+        private SnippetItem _oryginalSnippetItem;
 
 
-        //  METHODS
+        //  GETTERS & SETTERS
 
         public SnippetItem SnippetItem
         {
             get => _snippetItem;
-            set
+            private set
             {
                 _snippetItem = value;
                 OnPropertyChanged(nameof(SnippetItem));
+            }
+        }
+
+        public SnippetItem OryginalSnippetItem
+        {
+            get => _snippetItem;
+            private set
+            {
+                _snippetItem = value;
+                OnPropertyChanged(nameof(OryginalSnippetItem));
             }
         }
 
@@ -64,21 +75,39 @@ namespace ProjectManager.Components
         #region INTERACTION METHODS
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Set snippet item. </summary>
+        /// <param name="snippetItem"> Snipept item. </param>
+        public void SetSnippet(SnippetItem snippetItem)
+        {
+            OryginalSnippetItem = snippetItem;
+            SnippetItem = (SnippetItem) snippetItem.Clone();
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking advanced snippet item edit ButtonEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
         private void AdvancedEditButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            OnAdvancedEditClick?.Invoke(this, SnippetItem);
+            OnActionTaken?.Invoke(this, CreateActionTakenArgs(SnippetQuickViewAction.Edit));
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking cancel ButtonEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
         private void CancelButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            OnCancelClick?.Invoke(this, SnippetItem);
+            OnActionTaken?.Invoke(this, CreateActionTakenArgs(SnippetQuickViewAction.Cancel));
         }
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking save snippet item edit ButtonEx. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Routed Event Arguments. </param>
         private void SaveButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            OnSaveClick?.Invoke(this, SnippetItem);
+            OnActionTaken?.Invoke(this, CreateActionTakenArgs(SnippetQuickViewAction.Save));
         }
 
         #endregion INTERACTION METHODS
@@ -97,6 +126,19 @@ namespace ProjectManager.Components
         }
 
         #endregion NOTIFY PROPERTIES CHANGED INTERFACE METHODS
+
+        #region UTILITY METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Create Snippet quick view action event arguments for ActionTaken event. </summary>
+        /// <param name="action"> Snippet quick view action. </param>
+        /// <returns> Snippet quick view action event arguments. </returns>
+        private SnippetQuickViewActionEventArgs CreateActionTakenArgs(SnippetQuickViewAction action)
+        {
+            return new SnippetQuickViewActionEventArgs(action, OryginalSnippetItem, SnippetItem);
+        }
+
+        #endregion UTILITY METHODS
 
     }
 }

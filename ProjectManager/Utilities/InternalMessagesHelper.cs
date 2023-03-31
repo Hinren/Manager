@@ -1,4 +1,5 @@
-﻿using chkam05.Tools.ControlsEx.InternalMessages;
+﻿using chkam05.Tools.ControlsEx.Events;
+using chkam05.Tools.ControlsEx.InternalMessages;
 using ProjectManager.Data.Configuration;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace ProjectManager.Utilities
         //  METHODS
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Apply visual styles for base files selector InternalMessageEx. </summary>
+        /// <param name="internalMessage"> Base files selector InternalMessageEx. </param>
         public static void ApplyVisualStyle(BaseFilesSelectorInternalMessageEx internalMessage)
         {
             var configManager = ConfigManager.Instance;
@@ -49,6 +52,36 @@ namespace ProjectManager.Utilities
             internalMessage.TextBoxSelectedBorderBrush = configManager.AppearanceAccentSelectedBrush;
             internalMessage.TextBoxSelectedForeground = configManager.AppearanceAccentForegroundBrush;
             internalMessage.TextBoxSelectedTextBackground = configManager.AppearanceAccentForegroundBrush;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Apply visual styles for base InternalMessageEx. </summary>
+        /// <param name="internalMessage"> Base InternalMessageEx. </param>
+        public static void ApplyVisualStyle(BaseInternalMessageEx<InternalMessageCloseEventArgs> internalMessage)
+        {
+            var configManager = ConfigManager.Instance;
+
+            internalMessage.Background = configManager.AppearanceThemeBackgroundBrush;
+            internalMessage.BorderBrush = configManager.AppearanceThemeShadeBackgroundBrush;
+            internalMessage.BottomBackground = configManager.AppearanceThemeShadeBackgroundBrush;
+            internalMessage.BottomBorderBrush = configManager.AppearanceAccentColorBrush;
+            internalMessage.BottomPadding = new Thickness(8);
+            internalMessage.ButtonBackground = configManager.AppearanceAccentColorBrush;
+            internalMessage.ButtonBorderBrush = configManager.AppearanceAccentColorBrush;
+            internalMessage.ButtonForeground = configManager.AppearanceAccentForegroundBrush;
+            internalMessage.ButtonMouseOverBackground = configManager.AppearanceAccentMouseOverBrush;
+            internalMessage.ButtonMouseOverBorderBrush = configManager.AppearanceAccentMouseOverBrush;
+            internalMessage.ButtonMouseOverForeground = configManager.AppearanceAccentForegroundBrush;
+            internalMessage.ButtonPressedBackground = configManager.AppearanceAccentPressedBrush;
+            internalMessage.ButtonPressedBorderBrush = configManager.AppearanceAccentPressedBrush;
+            internalMessage.ButtonPressedForeground = configManager.AppearanceAccentForegroundBrush;
+            internalMessage.ButtonPressedForeground = configManager.AppearanceAccentForegroundBrush;
+            internalMessage.Foreground = configManager.AppearanceThemeForegroundBrush;
+            internalMessage.HeaderBackground = configManager.AppearanceThemeShadeBackgroundBrush;
+            internalMessage.HeaderBorderBrush = configManager.AppearanceAccentColorBrush;
+            internalMessage.HeaderPadding = new Thickness(8);
+            internalMessage.Padding = new Thickness(0);
+            internalMessage.UseCustomSectionBreaksBorderBrush = true;
         }
 
     }

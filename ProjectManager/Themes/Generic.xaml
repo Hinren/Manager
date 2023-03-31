@@ -39,6 +39,8 @@
     <Style BasedOn="{StaticResource ScrollViewerExStyle}" TargetType="{x:Type cex:ScrollViewerEx}"/>
     <Style BasedOn="{StaticResource TextBoxExStyle}" TargetType="{x:Type cex:TextBoxEx}"/>
     <Style BasedOn="{StaticResource UpDownTextBoxExStyle}" TargetType="{x:Type cex:UpDownTextBoxEx}"/>
+    <Style BasedOn="{StaticResource UpDownDoubleTextBoxExStyle}" TargetType="{x:Type cex:UpDownDoubleTextBoxEx}"/>
+    <Style BasedOn="{StaticResource UpDownLongTextBoxExStyle}" TargetType="{x:Type cex:UpDownLongTextBoxEx}"/>
     
     <!-- COMPONENTS -->
 

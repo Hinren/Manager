@@ -99,6 +99,14 @@
                             Style="{StaticResource SettingsButtonExStyle}"/>
 
                         <cex:ButtonEx
+                            Content="Edit"
+                            Command="{Binding DataContext.EditCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="Edit"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                        <cex:ButtonEx
                             Content="Delete"
                             Command="{Binding DataContext.RemoveCommand,
                                 RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
@@ -140,9 +148,7 @@
             x:Name="snippetQuickView"
             HorizontalAlignment="Right"
             Margin="8,8,16,8"
-            OnAdvancedEditClick="snippetQuickView_OnAdvancedEditClick"
-            OnCancelClick="snippetQuickView_OnCancelClick"
-            OnSaveClick="snippetQuickView_OnSaveClick"/>
+            OnActionTaken="snippetQuickView_OnActionTaken"/>
 
     </Grid>
 

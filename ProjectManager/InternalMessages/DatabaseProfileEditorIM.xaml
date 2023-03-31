@@ -61,10 +61,14 @@
                 <Setter Property="MinWidth" Value="192"/>
             </Style>
 
-            <Style BasedOn="{StaticResource UpDownTextBoxExStyle}" TargetType="{x:Type cex:UpDownTextBoxEx}">
+            <Style BasedOn="{StaticResource UpDownDoubleTextBoxExStyle}" TargetType="{x:Type cex:UpDownDoubleTextBoxEx}">
                 <Setter Property="MinWidth" Value="64"/>
             </Style>
-            
+
+            <Style BasedOn="{StaticResource UpDownLongTextBoxExStyle}" TargetType="{x:Type cex:UpDownLongTextBoxEx}">
+                <Setter Property="MinWidth" Value="64"/>
+            </Style>
+
             <!-- DATA TEMPLATES -->
 
             <DataTemplate x:Key="DatabaseProviderDataTemplate">
@@ -195,7 +199,7 @@
                     Description="Waiting time for connecting to the database.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:UpDownTextBoxEx
+                        <cex:UpDownLongTextBoxEx
                             MinValue="0"
                             Text="{Binding DatabaseProfile.ConnectTimeout, Converter={StaticResource IntToStringConverter}}"/>
                     </components:SettingsOptionControl.Content>
@@ -306,7 +310,7 @@
                     Description="Specifies the port number on which the database server listens for network connections.">
 
                     <components:SettingsOptionControl.Content>
-                        <cex:UpDownTextBoxEx
+                        <cex:UpDownLongTextBoxEx
                             MaxValue="65535"
                             MinValue="0"
                             Text="{Binding DatabaseProfile.Port, Converter={StaticResource IntToStringConverter}}"/>

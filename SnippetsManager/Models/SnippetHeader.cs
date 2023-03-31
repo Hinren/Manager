@@ -99,5 +99,61 @@ namespace SnippetsManager.Models
 
         #endregion CLASS METHODS
 
+        #region CLONE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Make object copy. </summary>
+        /// <returns> Object copy. </returns>
+        public override object Clone()
+        {
+            return new SnippetHeader()
+            {
+                Author = Author,
+                Description = Description,
+
+                Keywords = Keywords != null
+                    ? new List<string>(Keywords)
+                    : new List<string>(),
+
+                Shortcut = Shortcut,
+
+                SnippetTypes = SnippetTypes != null
+                    ? new List<string>(SnippetTypes)
+                    : new List<string>(),
+
+                Title = Title
+            };
+        }
+
+        #endregion CLONE METHODS
+
+        #region UPDATE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update values with values from other object instance. </summary>
+        /// <param name="model"> BaseViewModel object instance. </param>
+        public override void UpdateValues(BaseViewModel model)
+        {
+            if (model is SnippetHeader snippetHeader)
+            {
+                Author = snippetHeader.Author;
+                Description = snippetHeader.Description;
+
+                Keywords = snippetHeader.Keywords != null
+                    ? new List<string>(snippetHeader.Keywords)
+                    : new List<string>();
+
+                Shortcut = snippetHeader.Shortcut;
+
+                SnippetTypes = snippetHeader.SnippetTypes != null
+                    ? new List<string>(snippetHeader.SnippetTypes)
+                    : new List<string>();
+
+                Title = snippetHeader.Title;
+            }
+        }
+
+        #endregion UPDATE METHODS
+
     }
 }

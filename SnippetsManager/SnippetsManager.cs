@@ -184,8 +184,8 @@ namespace SnippetsManager
             });
 
             //  Update snippets in other catalogs.
-            foreach (var catalogItem in CatalogItems)
-                _cache.OnAddCatalogItem(catalogItem);
+            //foreach (var catalogItem in CatalogItems)
+            //    _cache.OnAddCatalogItem(catalogItem);
         }
 
         #endregion CACHE METHODS
@@ -290,13 +290,80 @@ namespace SnippetsManager
 
         #endregion NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 
-        #region SNIPPETS MANAGEMENT METHODS
+        #region UTILITY METHODS
 
         //  --------------------------------------------------------------------------------
+        /// <summary> Get duplicated shortcuts. </summary>
+        /// <returns> Dictionary of duplicated shortcuts as key, and it's count as value. </returns>
+        public Dictionary<string, int>? GetDuplicatedShortcuts()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
 
-        #endregion SNIPPETS MANAGEMENT METHODS
+            foreach (var snippet in SnippetItems)
+            {
+                if (!result.ContainsKey(snippet.Header.Shortcut))
+                    result.Add(snippet.Header.Shortcut, 0);
 
-        #region UTILITY METHODS
+                result[snippet.Header.Shortcut] += 1;
+            }
+
+            return result.Any(kvp => kvp.Value > 1)
+                ? result.Where(kvp => kvp.Value > 1).ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                : null;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get duplicated titles. </summary>
+        /// <returns> Dictionary of duplicated titles, with path as key, and title key, value duplication count as value. </returns>
+        public Dictionary<string, Dictionary<string, int>>? GetDuplicatedTitles()
+        {
+            Dictionary<string, Dictionary<string, int>> result = new Dictionary<string, Dictionary<string, int>>();
+            string filePath = null;
+
+            Dictionary<string, int> pathResult = new Dictionary<string, int>();
+
+            foreach (var snippet in SnippetItems.OrderBy(s => s.FilePath))
+            {
+                if (filePath == null)
+                    filePath = snippet.FilePath;
+
+                if (filePath != snippet.FilePath)
+                {
+                    if (pathResult.Any(kvp => kvp.Value > 1))
+                        result.Add(filePath, pathResult.Where(kvp => kvp.Value > 1)
+                            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+
+                    filePath = snippet.FilePath;
+                    pathResult = new Dictionary<string, int>();
+                }
+
+                if (!pathResult.ContainsKey(snippet.Header.Title))
+                    pathResult.Add(snippet.Header.Title, 0);
+
+                pathResult[snippet.Header.Title] += 1;
+            }
+
+            return result.Any() ? result : null;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Check if there is any snippet with particular shortcut. </summary>
+        /// <param name="shortcut"> Shortcut. </param>
+        /// <returns> True - snippet with particular shortcut exist; False - otherwise. </returns>
+        public bool HasSnippetWithShortcut(string shortcut)
+        {
+            return SnippetItems.Any(s => s.Header.Shortcut == shortcut);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Check if there is any snippet with particular title in particular catalog. </summary>
+        /// <param name="title"> Title. </param>
+        /// <param name="filePath"> Snippets catalog. </param>
+        /// <returns> True - snippet with particular title in particular catalog exist; False - otherwise. </returns>
+        public bool HasSnippetWithTitle(string title, string filePath)
+        {
+            return SnippetItems.Any(s => s.Header.Title == title && s.FilePath == filePath);
+        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoking an action on items in list. </summary>

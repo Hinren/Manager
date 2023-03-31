@@ -21,5 +21,29 @@ namespace SnippetsManager.Models
 
         #endregion CLASS METHODS
 
+        #region CLONE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Make object copy. </summary>
+        /// <returns> Object copy. </returns>
+        public override object Clone()
+        {
+            return new SnippetDeclaration();
+        }
+
+        #endregion CLONE METHODS
+
+        #region UPDATE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update values with values from other object instance. </summary>
+        /// <param name="model"> BaseViewModel object instance. </param>
+        public override void UpdateValues(BaseViewModel model)
+        {
+            //
+        }
+
+        #endregion UPDATE METHODS
+
     }
 }
