@@ -30,12 +30,19 @@
 
   <ItemGroup>
     <PackageReference Include="chkam05.Tools.ControlsEx" Version="2.4.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.5.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Common\DomainModel.csproj" />
     <ProjectReference Include="..\SnippetsManager\SnippetsManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="InternalMessages\Snippets\" />
   </ItemGroup>
 
 </Project>

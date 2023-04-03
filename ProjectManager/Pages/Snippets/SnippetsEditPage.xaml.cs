@@ -1,23 +1,15 @@
-﻿using ProjectManager.Commands;
-using ProjectManager.Components;
+﻿using chkam05.Tools.ControlsEx.Utilities;
 using ProjectManager.Data.Configuration;
 using ProjectManager.Pages.Base;
-using ProjectManager.Pages.Events;
+using ProjectManager.Utilities;
 using SnippetsManager.Models;
-using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Metadata;
+using System.Runtime.Serialization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace ProjectManager.Pages.Snippets
 {
@@ -77,24 +69,65 @@ namespace ProjectManager.Pages.Snippets
 
         #endregion CLASS METHODS
 
+        #region CONTROLS MANAGEMENT METHODS
+
+        //  --------------------------------------------------------------------------------
+        private void HideAllControls()
+        {
+            if (snippetItemDeclarationsControl.ControlShowed)
+                snippetItemDeclarationsControl.HideControl();
+
+            if (snippetItemImportsControl.ControlShowed)
+                snippetItemImportsControl.HideControl();
+
+            if (snippetItemPropertiesControl.ControlShowed)
+                snippetItemPropertiesControl.HideControl();
+        }
+
+        #endregion CONTROLS MANAGEMENT METHODS
+
         #region INTERACTION METHODS
 
         //  --------------------------------------------------------------------------------
         private void DeclarationsButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            if (!snippetItemDeclarationsControl.ControlShowed)
+            {
+                HideAllControls();
+                snippetItemDeclarationsControl.ShowControl(SnippetItem);
+            }
+            else
+            {
+                snippetItemDeclarationsControl.HideControl();
+            }
         }
 
         //  --------------------------------------------------------------------------------
         private void ImportsButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            if (!snippetItemImportsControl.ControlShowed)
+            {
+                HideAllControls();
+                snippetItemImportsControl.ShowControl(SnippetItem);
+            }
+            else
+            {
+                snippetItemImportsControl.HideControl();
+            }
         }
 
         //  --------------------------------------------------------------------------------
         private void PropertiesButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            if (!snippetItemPropertiesControl.ControlShowed)
+            {
+                HideAllControls();
+                snippetItemPropertiesControl.ShowControl(SnippetItem);
+            }
+            else
+            {
+                snippetItemPropertiesControl.HideControl();
+            }
         }
 
         //  --------------------------------------------------------------------------------
@@ -125,7 +158,8 @@ namespace ProjectManager.Pages.Snippets
         /// <param name="e"> Routed Event Arguments. </param>
         private void BasePage_Loaded(object sender, RoutedEventArgs e)
         {
-            //
+            codeRichTextBox.EasyTextManager = new EasyRichTextManager();
+            CodeFormatter.LoadCSharpCode(SnippetItem.Snippet.Code.Code, codeRichTextBox);
         }
 
         #endregion PAGE METHODS

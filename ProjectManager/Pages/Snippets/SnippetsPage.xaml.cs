@@ -40,7 +40,6 @@ namespace ProjectManager.Pages.Snippets
         //  VARIABLES
 
         private bool _isLoaded = false;
-        private Thickness _snippetQuickViewMargin = new Thickness(8, 8, 16, 8);
         private bool _snippetQuickViewRestarted = false;
         private bool _snippetQuickViewShowed = false;
 
@@ -50,19 +49,6 @@ namespace ProjectManager.Pages.Snippets
         public ICommand EditCommand { get; set; }
         public ICommand ShowFileCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
-
-
-        //  GETTERS & SETTERS
-
-        public Thickness SnippetQuickViewMargin
-        {
-            get => _snippetQuickViewMargin;
-            set
-            {
-                _snippetQuickViewMargin = value;
-                OnPropertyChanged(nameof(SnippetQuickViewMargin));
-            }
-        }
 
 
         //  METHODS
@@ -87,56 +73,6 @@ namespace ProjectManager.Pages.Snippets
         }
 
         #endregion CLASS METHODS
-
-        #region ANIMATION METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Hide snippet quick view. </summary>
-        private void HideSnippetQuickView()
-        {
-            if (_snippetQuickViewShowed)
-            {
-                var width = snippetQuickView.ActualWidth + 8;
-
-                SnippetQuickViewMargin = new Thickness(8, 8, -width, 8);
-                Storyboard storyboard = Resources["ShowHideQuickViewStoryboard"] as Storyboard;
-                storyboard?.Begin();
-            }
-        }
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Show snippet quick view. </summary>
-        private void ShowSnippetQuickView()
-        {
-            if (!_snippetQuickViewShowed)
-            {
-                SnippetQuickViewMargin = new Thickness(8, 8, 16, 8);
-                Storyboard storyboard = Resources["ShowHideQuickViewStoryboard"] as Storyboard;
-                storyboard?.Begin();
-            }
-        }
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after finishing showing/hiding quick view animation. </summary>
-        /// <param name="sender"> Object that invoked method. </param>
-        /// <param name="e"> Event Arguments. </param>
-        private void Storyboard_Completed(object sender, EventArgs e)
-        {
-            if (!_snippetQuickViewRestarted)
-                _snippetQuickViewShowed = !_snippetQuickViewShowed;
-
-            if (_snippetQuickViewRestarted)
-                _snippetQuickViewRestarted = false;
-
-            if (_snippetQuickViewShowed && !CompareMargins(snippetQuickView.Margin, SnippetQuickViewMargin))
-            {
-                _snippetQuickViewRestarted = true;
-                Storyboard storyboard = Resources["ShowHideQuickViewStoryboard"] as Storyboard;
-                storyboard?.Begin();
-            }
-        }
-
-        #endregion ANIMATION METHODS
 
         #region COMMANDS METHODS
 
@@ -214,8 +150,8 @@ namespace ProjectManager.Pages.Snippets
 
                 if (snippetItem != null)
                 {
-                    snippetQuickView.SetSnippet(snippetItem);
-                    ShowSnippetQuickView();
+                    _pagesManager.OnPageBack += OnBackToPage;
+                    _pagesManager.LoadSnippetsEditPage(snippetItem);
                 }
 
                 listViewEx.SelectedItem = null;
@@ -232,12 +168,6 @@ namespace ProjectManager.Pages.Snippets
         /// <param name="e"> Routed Event Arguments. </param>
         private void BasePage_Loaded(object sender, RoutedEventArgs e)
         {
-            var width = snippetQuickView.ActualWidth + 8;
-            var margin = new Thickness(8, 8, -width, 8);
-
-            SnippetQuickViewMargin = margin;
-            snippetQuickView.Margin = margin;
-
             if (!_isLoaded)
             {
                 CheckSnippetTitleDuplications();
@@ -260,100 +190,6 @@ namespace ProjectManager.Pages.Snippets
         }
 
         #endregion PAGE METHODS
-
-        #region QUICK VIEW METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after action made in Snippet Quick View. </summary>
-        /// <param name="sender"> Object that invoked method. </param>
-        /// <param name="e"> Snippet Quick View Action Evnet Arguments. </param>
-        private void snippetQuickView_OnActionTaken(object sender, SnippetQuickViewActionEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case SnippetQuickViewAction.Cancel:
-                    HideSnippetQuickView();
-                    break;
-
-                case SnippetQuickViewAction.Save:
-                    OnSnippetQuickViewSaveAction(e);
-                    break;
-
-                case SnippetQuickViewAction.Edit:
-                    OnSnippetQuickViewEditAction(e);
-                    break;
-            }
-        }
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after triggering edit action in SnippetQuickView. </summary>
-        /// <param name="e"> Snippet Quick View Action Evnet Arguments. </param>
-        private void OnSnippetQuickViewEditAction(SnippetQuickViewActionEventArgs e)
-        {
-            _pagesManager.OnPageBack += OnBackToPage;
-            _pagesManager.LoadSnippetsEditPage(e.OryginalSnippetItem);
-            HideSnippetQuickView();
-        }
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after triggering save action in SnippetQuickView. </summary>
-        /// <param name="e"> Snippet Quick View Action Evnet Arguments. </param>
-        private void OnSnippetQuickViewSaveAction(SnippetQuickViewActionEventArgs e)
-        {
-            string filePath = e.ModifiedSnippetItem.FilePath;
-            string title = e.ModifiedSnippetItem.Header.Title;
-            string shortcut = e.ModifiedSnippetItem.Header.Shortcut;
-
-            //  Name can not be the same within one directory.
-            if (Manager.HasSnippetWithTitle(title, filePath))
-            {
-                var imContainer = GetIMContainer();
-                var im = InternalMessageEx.CreateErrorMessage(imContainer,
-                    "Name duplication",
-                    $"Snippets collection already contains snippet with \"{title}\" title in same directory.");
-
-                InternalMessagesHelper.ApplyVisualStyle(im);
-
-                imContainer.ShowMessage(im);
-                return;
-            }
-
-            //  Shortcut can not be the same within all directories.
-            else if (Manager.HasSnippetWithShortcut(shortcut))
-            {
-                var imContainer = GetIMContainer();
-                var im = InternalMessageEx.CreateErrorMessage(imContainer,
-                    "Shortcut duplication",
-                    $"Snippets collection already contains snippet with \"{shortcut}\" shortcut.");
-
-                InternalMessagesHelper.ApplyVisualStyle(im);
-
-                imContainer.ShowMessage(im);
-                return;
-            }
-
-            e.OryginalSnippetItem.UpdateValues(e.ModifiedSnippetItem);
-            HideSnippetQuickView();
-        }
-
-        #endregion QUICK VIEW METHODS
-
-        #region UTILITY METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Compare two margins. </summary>
-        /// <param name="m1"> Margin 1. </param>
-        /// <param name="m2"> Margin 2. </param>
-        /// <returns> True - margins are equal. False - otherwise. </returns>
-        private bool CompareMargins(Thickness m1, Thickness m2)
-        {
-            return Math.Round(m1.Left) == Math.Round(m2.Left)
-                && Math.Round(m1.Top) == Math.Round(m2.Top)
-                && Math.Round(m1.Right) == Math.Round(m2.Right)
-                && Math.Round(m1.Bottom) == Math.Round(m2.Bottom);
-        }
-
-        #endregion UTILITY METHODS
 
         #region VALIDATION METHODS
 

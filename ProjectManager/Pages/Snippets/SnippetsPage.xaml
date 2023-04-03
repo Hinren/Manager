@@ -28,23 +28,9 @@
 
             <RelativeSource x:Key="RelativeSelf" Mode="FindAncestor" AncestorType="{x:Type pages:BasePage}"/>
 
-            <!-- STORYBOARDS -->
-            
-            <Storyboard x:Key="ShowHideQuickViewStoryboard" Completed="Storyboard_Completed">
-                <ThicknessAnimationUsingKeyFrames
-                    BeginTime="00:00:0"
-                    Duration="00:00:0.25"
-                    Storyboard.TargetName="snippetQuickView"
-                    Storyboard.TargetProperty="Margin">
-                    <ThicknessAnimationUsingKeyFrames.KeyFrames>
-                        <LinearThicknessKeyFrame Value="{Binding Path=SnippetQuickViewMargin, Mode=TwoWay, RelativeSource={StaticResource RelativeSelf}}"/>
-                    </ThicknessAnimationUsingKeyFrames.KeyFrames>
-                </ThicknessAnimationUsingKeyFrames>
-            </Storyboard>
-
             <!-- STYLES -->
 
-            <Style x:Key="Internal_SettingsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+            <Style x:Key="Internal_SnippetsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
                 <Setter Property="Margin" Value="0,2"/>
             </Style>
 
@@ -124,31 +110,14 @@
 
     <Grid>
 
-        <cex:ScrollViewerEx
-            HorizontalScrollBarVisibility="Disabled"
-            Padding="8"
-            VerticalScrollBarVisibility="Auto">
-
-            <StackPanel
-                Orientation="Vertical">
-
-                <cex:ListViewEx
-                    ItemContainerStyle="{StaticResource Internal_SettingsListViewItemExStyle}"
-                    ItemsSource="{Binding Manager.SnippetItems}"
-                    ItemTemplate="{StaticResource SnippetItemDataTemplate}"
-                    Padding="0"
-                    Style="{StaticResource SettingsListViewExStyle}"
-                    MouseDoubleClick="SnippetItemsListViewEx_MouseDoubleClick"/>
-
-            </StackPanel>
-
-        </cex:ScrollViewerEx>
-
-        <components:SnippetQuickView
-            x:Name="snippetQuickView"
-            HorizontalAlignment="Right"
-            Margin="8,8,16,8"
-            OnActionTaken="snippetQuickView_OnActionTaken"/>
+        <cex:ListViewEx
+            ItemContainerStyle="{StaticResource Internal_SnippetsListViewItemExStyle}"
+            ItemsSource="{Binding Manager.SnippetItems}"
+            ItemTemplate="{StaticResource SnippetItemDataTemplate}"
+            Margin="8"
+            Padding="0"
+            Style="{StaticResource SettingsListViewExStyle}"
+            MouseDoubleClick="SnippetItemsListViewEx_MouseDoubleClick"/>
 
     </Grid>
 

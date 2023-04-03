@@ -10,6 +10,7 @@
     xmlns:local="clr-namespace:ProjectManager.Pages.Snippets"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    xmlns:snippetsCtrl="clr-namespace:ProjectManager.Components.Snippets"
     mc:Ignorable="d"
     
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -94,10 +95,23 @@
     <Grid>
 
         <cex:RichTextBoxEx
+            x:Name="codeRichTextBox"
             BorderBrush="{x:Null}"
             BorderThickness="0"
             CornerRadius="8,0,8,0"
             Padding="2,4"/>
+
+        <snippetsCtrl:SnippetItemPropertiesControl
+            x:Name="snippetItemPropertiesControl"
+            HorizontalAlignment="Right"/>
+
+        <snippetsCtrl:SnippetItemImportsControl
+            x:Name="snippetItemImportsControl"
+            HorizontalAlignment="Right"/>
+
+        <snippetsCtrl:SnippetItemDeclarationsControl
+            x:Name="snippetItemDeclarationsControl"
+            HorizontalAlignment="Right"/>
 
     </Grid>
     
