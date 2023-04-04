@@ -40,13 +40,10 @@ namespace ProjectManager.Pages.Snippets
         //  VARIABLES
 
         private bool _isLoaded = false;
-        private bool _snippetQuickViewRestarted = false;
-        private bool _snippetQuickViewShowed = false;
 
         public ConfigManager ConfigManager { get; private set; }
         public SnippetsManager.SnippetsManager Manager { get; private set; }
 
-        public ICommand EditCommand { get; set; }
         public ICommand ShowFileCommand { get; set; }
         public ICommand RemoveCommand { get; set; }
 
@@ -64,7 +61,6 @@ namespace ProjectManager.Pages.Snippets
             ConfigManager = ConfigManager.Instance;
             Manager = SnippetsManager.SnippetsManager.CreateInstance(ConfigManager.Configuration.SnippetConfig);
 
-            EditCommand = new RelayCommand(OnEditCommandExecute);
             ShowFileCommand = new RelayCommand(OnShowFileCommandExecute);
             RemoveCommand = new RelayCommand(OnRemoveCommandExecute);
 
@@ -75,18 +71,6 @@ namespace ProjectManager.Pages.Snippets
         #endregion CLASS METHODS
 
         #region COMMANDS METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after pressing Edit snippet item button. </summary>
-        /// <param name="item"> Snippet item as object. </param>
-        private void OnEditCommandExecute(object item)
-        {
-            if (item is SnippetItem snippetItem)
-            {
-                _pagesManager.OnPageBack += OnBackToPage;
-                _pagesManager.LoadSnippetsEditPage(snippetItem);
-            }
-        }
 
         //  --------------------------------------------------------------------------------
         /// <summary> Method invoked after pressing Open in explorer snippet item button. </summary>

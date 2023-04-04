@@ -9,6 +9,8 @@ using System.Windows.Media;
 using chkam05.Tools.ControlsEx;
 using System.Windows;
 using System.Linq;
+using System.Text;
+using System.Collections;
 
 namespace ProjectManager.Utilities
 {
@@ -23,16 +25,19 @@ namespace ProjectManager.Utilities
         /// <summary> Load and format CSharp code into RichTextBox. </summary>
         /// <param name="code"> CSharp code. </param>
         /// <param name="richTextBox"> RichTextBox. </param>
-        public static void LoadCSharpCode(string code, RichTextBoxEx richTextBox)
+        /// <param name="syntaxFormat"> Use syntax formatter. </param>
+        public static void LoadCSharpCode(string code, RichTextBoxEx richTextBox, bool syntaxFormat = false)
         {
+            string preformattedCode = ReplaceTabsWithSpaces(code);
             TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
 
-            textRange.Text = FormatCSharpCode(code);
+            textRange.Text = syntaxFormat ? FormatCSharpCode(preformattedCode) : preformattedCode;
 
             foreach (Paragraph paragraph in richTextBox.Document.Blocks)
             {
                 paragraph.Foreground = Brushes.Black;
-                paragraph.FontSize = 12d;
+                paragraph.FontSize = 14d;
+                paragraph.FontFamily = new FontFamily("Consolas");
                 paragraph.Margin = new Thickness(0);
                 paragraph.Padding = new Thickness(0);
             }
@@ -57,6 +62,25 @@ namespace ProjectManager.Utilities
         }
 
         #endregion CSharp
+
+        #region UTILITIES
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Replace tabs to spaces. </summary>
+        /// <param name="text"> Text. </param>
+        /// <param name="spaces"> Spaces count instead of tab. </param>
+        /// <returns> Text without tabs. </returns>
+        public static string ReplaceTabsWithSpaces(string text, int spaces = 4)
+        {
+            string strSpaces = string.Empty;
+
+            for (int s = 0; s < spaces; s++)
+                strSpaces += " ";
+
+            return text.Replace("\t", strSpaces);
+        }
+
+        #endregion UTILITIES
 
     }
 }

@@ -1,7 +1,9 @@
-﻿using ProjectManager.Data.Storyboards;
+﻿using ProjectManager.Commands;
+using ProjectManager.Data.Storyboards;
 using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -39,6 +41,9 @@ namespace ProjectManager.Components.Snippets
         private bool _storyboardRestarted = false;
 
         private SnippetItem _snippetItem = null;
+        private ObservableCollection<SnippetDeclaration> _snippetDeclarationsCollection;
+
+        public ICommand RemoveCommand { get; set; }
 
 
         //  GETTERS & SETTERS
@@ -55,6 +60,17 @@ namespace ProjectManager.Components.Snippets
             {
                 _snippetItem = value;
                 OnPropertyChanged(nameof(SnippetItem));
+            }
+        }
+
+        public ObservableCollection<SnippetDeclaration> SnippetDeclarations
+        {
+            get => _snippetDeclarationsCollection;
+            set
+            {
+                _snippetDeclarationsCollection = value;
+                _snippetDeclarationsCollection.CollectionChanged += (s, e) => { OnPropertyChanged(nameof(SnippetDeclarations)); };
+                OnPropertyChanged(nameof(SnippetDeclarations));
             }
         }
 
@@ -77,11 +93,53 @@ namespace ProjectManager.Components.Snippets
         /// <summary> SnippetItemDeclarationsControl class constructor. </summary>
         public SnippetItemDeclarationsControl()
         {
+            RemoveCommand = new RelayCommand(OnRemoveCommandExecute);
+
             //  Initialize interface.
             InitializeComponent();
         }
 
         #endregion CLASS METHODS
+
+        #region COMMANDS METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after pressing Remove snippet declaration item button. </summary>
+        /// <param name="item"> Snippet item as object. </param>
+        private void OnRemoveCommandExecute(object item)
+        {
+            if (item is SnippetDeclaration snippetDeclaration && SnippetDeclarations.Contains(snippetDeclaration))
+            {
+                SnippetDeclarations.Remove(snippetDeclaration);
+            }
+        }
+
+        #endregion COMMANDS METHODS
+
+        #region DATA MANAGEMENT METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Load snippet declarations. </summary>
+        /// <param name="snippetItem"> Snippet item. </param>
+        private void LoadDeclarations(SnippetItem snippetItem)
+        {
+            if (SnippetItem == null)
+            {
+                SnippetItem = snippetItem;
+
+                if (SnippetItem?.Snippet?.Imports != null)
+                    SnippetDeclarations = new ObservableCollection<SnippetDeclaration>(SnippetItem.Snippet.Declarations);
+            }
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update snippet declarations. </summary>
+        private void UpdateDeclarations()
+        {
+            SnippetItem.Snippet.Declarations = SnippetDeclarations.ToList();
+        }
+
+        #endregion DATA MANAGEMENT METHODS
 
         #region INTERACTION METHODS
 
@@ -91,6 +149,7 @@ namespace ProjectManager.Components.Snippets
         {
             if (_controlShowed)
             {
+                UpdateDeclarations();
                 var left = controlBorder.ActualWidth + HIDE_MARGIN_SHIFT;
                 var right = controlBorder.ActualWidth + HIDE_MARGIN_SHIFT;
                 StoryboardDataHandler.RunStoryboard(new Thickness(left, 8, -right, 8));
@@ -102,8 +161,7 @@ namespace ProjectManager.Components.Snippets
         /// <param name="snippetItem"> Snippet item. </param>
         public void ShowControl(SnippetItem snippetItem = null)
         {
-            if (SnippetItem == null)
-                SnippetItem = snippetItem;
+            LoadDeclarations(snippetItem);
 
             if (!_controlShowed && SnippetItem != null)
             {
