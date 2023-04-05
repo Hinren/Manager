@@ -99,7 +99,7 @@ namespace ProjectManager.Pages.Snippets
                 var message = $"Do you want to remove \"{snippetItem.Header.Title}\"?"
                     + Environment.NewLine + "It will also remove snippet file.";
 
-                var imContainer = GetIMContainer();
+                var imContainer = App.GetIMContainer();
                 var im = InternalMessageEx.CreateQuestionMessage(imContainer, title, message);
 
                 InternalMessagesHelper.ApplyVisualStyle(im);
@@ -199,7 +199,7 @@ namespace ProjectManager.Pages.Snippets
                     }
                 }
 
-                var imContainer = GetIMContainer();
+                var imContainer = App.GetIMContainer();
                 var im = InternalMessageEx.CreateErrorMessage(imContainer,
                     "Titles duplicates",
                     sb.ToString());
@@ -225,7 +225,7 @@ namespace ProjectManager.Pages.Snippets
                 foreach (var dup in duplicates)
                     sb.AppendLine($"[SHORTCUT]: \"{dup.Key}\" {dup.Value} times.");
 
-                var imContainer = GetIMContainer();
+                var imContainer = App.GetIMContainer();
                 var im = InternalMessageEx.CreateErrorMessage(imContainer,
                     "Shortcuts duplicates",
                     sb.ToString());

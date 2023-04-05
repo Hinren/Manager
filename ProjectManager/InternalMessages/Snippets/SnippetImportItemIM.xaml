@@ -1,9 +1,9 @@
 ﻿<cexIM:StandardInternalMessageEx
-    x:Class="ProjectManager.InternalMessages.StringInputIM"
+    x:Class="ProjectManager.InternalMessages.Snippets.SnippetImportItemIM"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
     xmlns:cexIM="clr-namespace:chkam05.Tools.ControlsEx.InternalMessages;assembly=chkam05.Tools.ControlsEx"
     xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
@@ -55,10 +55,6 @@
             Orientation="Vertical">
 
             <TextBlock
-                Margin="0,0,0,8"
-                Text="{Binding Description}"/>
-
-            <TextBlock
                 Foreground="Red"
                 Margin="0,0,0,8"
                 Text="{Binding Error}">
@@ -73,8 +69,12 @@
                 </TextBlock.Style>
             </TextBlock>
 
+            <TextBlock
+                Margin="0,0,0,8"
+                Text="Namespace:"/>
+
             <cex:TextBoxEx
-                Text="{Binding Text}"/>
+                Text="{Binding SnippetImport.Namespace}"/>
 
         </StackPanel>
 

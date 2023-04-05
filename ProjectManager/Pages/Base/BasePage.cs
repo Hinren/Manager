@@ -99,17 +99,5 @@ namespace ProjectManager.Pages.Base
 
         #endregion NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 
-        #region UTILITY METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Get internal messages ex container from main window. </summary>
-        /// <returns> Internal messages ex container. </returns>
-        protected InternalMessagesExContainer GetIMContainer()
-        {
-            return ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
-        }
-
-        #endregion UTILITY METHODS
-
     }
 }

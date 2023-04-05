@@ -65,7 +65,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void DatabaseProfilesFileOpenButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = GetIMContainer();
+            var imContainer = App.GetIMContainer();
             var im = FilesSelectorInternalMessageEx.CreateOpenFileInternalMessageEx(imContainer, "Open database profiles file.");
 
             im.AllowCreate = true;
@@ -96,7 +96,7 @@ namespace ProjectManager.Pages.Settings
 
                 if (!SetupDatabaseProfilesManager(filePath, out string errorMessage))
                 {
-                    var imContainer = GetIMContainer();
+                    var imContainer = App.GetIMContainer();
                     var im = InternalMessageEx.CreateErrorMessage(imContainer, "Loading file error", errorMessage);
 
                     imContainer.ShowMessage(im);
@@ -140,7 +140,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void CreateDatabaseContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = GetIMContainer();
+            var imContainer = App.GetIMContainer();
             var im = new DatabaseProfileEditorIM(imContainer, null);
 
             im.OnClose += OnProfileEditorClose;
@@ -153,7 +153,8 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void ImportDbFromConnectionStringContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = GetIMContainer();
+            //  Create internal message to insert ConnectionString.
+            var imContainer = App.GetIMContainer();
             var imStringInput = new StringInputIM(imContainer, "Import database profile config", "ConnectionString:",
                 iconKind: PackIconKind.DatabaseImport);
 
@@ -161,12 +162,14 @@ namespace ProjectManager.Pages.Settings
             {
                 if (e.Result == InternalMessageResult.Ok)
                 {
+                    //  Create internal message to edit profile.
                     var profile = DatabaseProfile.FromConnectionString(imStringInput.Text, out Dictionary<string, string> errors);
                     var imProfileEditor = new DatabaseProfileEditorIM(imContainer, profile);
 
                     imStringInput.OnClose += OnProfileEditorClose;
                     imContainer.ShowMessage(imStringInput);
 
+                    //  Create internal message to show ConnectionString errors.
                     if (errors.Any())
                     {
                         StringBuilder sbErrors = new StringBuilder();
@@ -193,7 +196,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="profile"> Database profile. </param>
         private void OnEditProfile(object sender, DatabaseProfile profile)
         {
-            var imContainer = GetIMContainer();
+            var imContainer = App.GetIMContainer();
             var im = new DatabaseProfileEditorIM(imContainer, profile);
 
             im.OnClose += OnProfileEditorClose;

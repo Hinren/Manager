@@ -305,7 +305,8 @@
                             ItemContainerStyle="{StaticResource Internal_SnippetPropertiesListViewItemExStyle}"
                             ItemsSource="{Binding SnippetKeywords}"
                             ItemTemplate="{StaticResource SnippetKeywordItemDataTemplate}"
-                            Style="{StaticResource SettingsListViewExStyle}"/>
+                            Style="{StaticResource SettingsListViewExStyle}"
+                            MouseDoubleClick="SnippetKeywordsListViewEx_MouseDoubleClick"/>
 
                     </cex:ExpanderEx>
 
@@ -362,7 +363,8 @@
                             ItemContainerStyle="{StaticResource Internal_SnippetPropertiesListViewItemExStyle}"
                             ItemsSource="{Binding SnippetTypes}"
                             ItemTemplate="{StaticResource SnippetTypeItemDataTemplate}"
-                            Style="{StaticResource SettingsListViewExStyle}"/>
+                            Style="{StaticResource SettingsListViewExStyle}"
+                            MouseDoubleClick="SnippetTypesListViewEx_MouseDoubleClick"/>
 
                     </cex:ExpanderEx>
 

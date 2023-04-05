@@ -1,6 +1,7 @@
 ﻿using chkam05.Tools.ControlsEx.Data;
 using chkam05.Tools.ControlsEx.InternalMessages;
 using MaterialDesignThemes.Wpf;
+using ProjectManager.Components;
 using ProjectManager.Data.Configuration;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,26 @@ namespace ProjectManager.InternalMessages
 
         //  VARIABLES
 
+        private bool _allowEmptyString = false;
+        private string _defaultText;
         private string _description;
         private string _error;
-        private string[] _forbiddenNames;
+        private string[] _forbiddenNames = new string[0];
+        private bool _forbiddenNamesIgnoreCase = true;
         private string _text;
 
 
         //  GETTERS & SETTERS
+
+        public bool AllowEmptyString
+        {
+            get => _allowEmptyString;
+            set
+            {
+                _allowEmptyString = value;
+                OnPropertyChanged(nameof(AllowEmptyString));
+            }
+        }
 
         public string Description
         {
@@ -50,6 +64,31 @@ namespace ProjectManager.InternalMessages
                 _error = value;
                 OnPropertyChanged(nameof(Error));
             }
+        }
+
+        public string[] ForbiddenNames
+        {
+            get => _forbiddenNames;
+            set
+            {
+                _forbiddenNames = value ?? new string[0];
+                OnPropertyChanged(nameof(ForbiddenNames));
+            }
+        }
+
+        public bool ForbiddenNamesIgnoreCase
+        {
+            get => _forbiddenNamesIgnoreCase;
+            set
+            {
+                _forbiddenNamesIgnoreCase = value;
+                OnPropertyChanged(nameof(ForbiddenNamesIgnoreCase));
+            }
+        }
+
+        public string OryginalValue
+        {
+            get => _defaultText;
         }
 
         public string Text
@@ -75,8 +114,7 @@ namespace ProjectManager.InternalMessages
         /// <param name="iconKind"> Internal Message icon kind. </param>
         /// <param name="defaultText"> Default input text. </param>
         public StringInputIM(InternalMessagesExContainer parentContainer, string title, string description,
-            string[] forbiddenNames = null, PackIconKind iconKind = PackIconKind.EditBoxOutline, 
-            string defaultText = "") : base(parentContainer)
+            PackIconKind iconKind = PackIconKind.EditBoxOutline, string defaultText = "") : base(parentContainer)
         {
             //  Initialize interface components.
             InitializeComponent();
@@ -93,7 +131,8 @@ namespace ProjectManager.InternalMessages
             IconKind = iconKind;
             Text = defaultText;
 
-            _forbiddenNames = forbiddenNames != null ? forbiddenNames : new string[0];
+            _defaultText = defaultText;
+            OnPropertyChanged(nameof(OryginalValue));
         }
 
         #endregion CLASS METHODS
@@ -107,10 +146,7 @@ namespace ProjectManager.InternalMessages
         protected override void OnOkClick(object sender, RoutedEventArgs e)
         {
             if (!ValidateEnteredString())
-            {
-                Error = $"\"{_text}\" is already used, or is forbidden.";
                 return;
-            }
 
             base.OnOkClick(sender, e);
         }
@@ -124,7 +160,19 @@ namespace ProjectManager.InternalMessages
         /// <returns> True - string is valid; False - otherwise. </returns>
         private bool ValidateEnteredString()
         {
-            return !_forbiddenNames.Any(n => n.ToLower() == _text.ToLower());
+            if (!AllowEmptyString && string.IsNullOrEmpty(Text))
+            {
+                Error = $"Value can not be empty.";
+                return false;
+            }
+
+            if (_forbiddenNames.Any(n => _forbiddenNamesIgnoreCase ? n.ToLower() == _text.ToLower() : n == _text))
+            {
+                Error = $"\"{Text}\" is already used, or is forbidden.";
+                return false;
+            }
+
+            return true;
         }
 
         #endregion VALIDATION METHODS

@@ -186,7 +186,8 @@
                 ItemsSource="{Binding SnippetImports}"
                 ItemTemplate="{StaticResource SnippetImportItemDataTemplate}"
                 Margin="4,2"
-                Style="{StaticResource SettingsListViewExStyle}"/>
+                Style="{StaticResource SettingsListViewExStyle}"
+                MouseDoubleClick="SnippetImportsListViewEx_MouseDoubleClick"/>
 
         </Grid>
 

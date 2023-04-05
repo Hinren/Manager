@@ -41,8 +41,4 @@
     <ProjectReference Include="..\SnippetsManager\SnippetsManager.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="InternalMessages\Snippets\" />
-  </ItemGroup>
-
 </Project>

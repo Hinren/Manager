@@ -16,6 +16,7 @@
         <Setter Property="SelectedBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="SelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="SelectedForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedTextBackground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
     </Style>
     
 </ResourceDictionary>

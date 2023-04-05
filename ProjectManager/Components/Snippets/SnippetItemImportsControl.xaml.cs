@@ -1,6 +1,13 @@
-﻿using chkam05.Tools.ControlsEx.InternalMessages;
+﻿using chkam05.Tools.ControlsEx;
+using chkam05.Tools.ControlsEx.Data;
+using chkam05.Tools.ControlsEx.Events;
+using chkam05.Tools.ControlsEx.InternalMessages;
+using Common.Models.Snippet;
+using MaterialDesignThemes.Wpf;
 using ProjectManager.Commands;
 using ProjectManager.Data.Storyboards;
+using ProjectManager.InternalMessages;
+using ProjectManager.InternalMessages.Snippets;
 using ProjectManager.Pages.Base;
 using ProjectManager.Utilities;
 using SnippetsManager.Models;
@@ -180,7 +187,41 @@ namespace ProjectManager.Components.Snippets
         /// <param name="e"> Routed Event Arguments. </param>
         private void AddImportButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            var imContainer = App.GetIMContainer();
+            var imSnippetImport = new SnippetImportItemIM(imContainer, "Add snippet import", PackIconKind.Add,
+                new SnippetImport(), SnippetImports.ToList());
+
+            imSnippetImport.OnClose += OnAddImportIMClose;
+            imContainer.ShowMessage(imSnippetImport);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after double clicking on snippet import item. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void SnippetImportsListViewEx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewEx listViewEx = sender as ListViewEx;
+
+            if (listViewEx != null && listViewEx.SelectedItem != null)
+            {
+                var snippetImport = (SnippetImport)listViewEx.SelectedItem;
+
+                if (snippetImport != null)
+                {
+                    var snippetImports = SnippetImports.ToList();
+                    snippetImports.Remove(snippetImport);
+
+                    var imContainer = App.GetIMContainer();
+                    var imSnippetImport = new SnippetImportItemIM(imContainer, "Add snippet import", PackIconKind.Add,
+                        snippetImport, snippetImports);
+
+                    imSnippetImport.OnClose += OnEditImportIMClose;
+                    imContainer.ShowMessage(imSnippetImport);
+                }
+
+                listViewEx.SelectedItem = null;
+            }
         }
 
         //  --------------------------------------------------------------------------------
@@ -215,6 +256,34 @@ namespace ProjectManager.Components.Snippets
         }
 
         #endregion INTERACTION METHODS
+
+        #region INTERNAL MESSAGES
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing add keyword internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnAddImportIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as SnippetImportItemIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                SnippetImports.Add(im.SnippetImport);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnEditImportIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as StringInputIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                OnPropertyChanged(nameof(SnippetImports));
+        }
+
+        #endregion INTERNAL MESSAGES
 
         #region NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 

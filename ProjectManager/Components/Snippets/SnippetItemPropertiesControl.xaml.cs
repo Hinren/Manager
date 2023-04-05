@@ -1,6 +1,13 @@
-﻿using ProjectManager.Commands;
+﻿using chkam05.Tools.ControlsEx;
+using chkam05.Tools.ControlsEx.Data;
+using chkam05.Tools.ControlsEx.Events;
+using CoreLibs.Extensions;
+using MaterialDesignThemes.Wpf;
+using ProjectManager.Commands;
 using ProjectManager.Data.Configuration;
 using ProjectManager.Data.Storyboards;
+using ProjectManager.InternalMessages;
+using ProjectManager.Pages.Base;
 using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
@@ -116,6 +123,32 @@ namespace ProjectManager.Components.Snippets
 
         #endregion CLASS METHODS
 
+        #region ANIMATION METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after finishing showing/hiding quick view animation. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Event Arguments. </param>
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+            if (!_storyboardRestarted)
+            {
+                _controlShowed = !_controlShowed;
+                OnPropertyChanged(nameof(ControlShowed));
+            }
+
+            if (_storyboardRestarted)
+                _storyboardRestarted = false;
+
+            if (_controlShowed && !CompareMargins(controlBorder.Margin, StoryboardDataHandler.Margin))
+            {
+                _storyboardRestarted = true;
+                StoryboardDataHandler.RunStoryboard();
+            }
+        }
+
+        #endregion ANIMATION METHODS
+
         #region COMMANDS METHODS
 
         //  --------------------------------------------------------------------------------
@@ -205,7 +238,48 @@ namespace ProjectManager.Components.Snippets
         /// <param name="e"> Routed Event Arguments. </param>
         private void AddSnippetKeywordButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            var imContainer = App.GetIMContainer();
+            var imStringInput = new StringInputIM(imContainer, "Add keyword", "Snippet keyword:", PackIconKind.TagAdd);
+
+            imStringInput.AllowEmptyString = false;
+            imStringInput.ForbiddenNames = SnippetKeywords.ToArray();
+            imStringInput.ForbiddenNamesIgnoreCase = true;
+
+            imStringInput.OnClose += OnAddKeywordIMClose;
+            imContainer.ShowMessage(imStringInput);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after double clicking on snippet keyword item. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void SnippetKeywordsListViewEx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewEx listViewEx = sender as ListViewEx;
+
+            if (listViewEx != null && listViewEx.SelectedItem != null)
+            {
+                var snippetKeyword = (string)listViewEx.SelectedItem;
+
+                if (!string.IsNullOrEmpty(snippetKeyword))
+                {
+                    var forbiddenNames = SnippetKeywords.ToList();
+                    forbiddenNames.RemoveAll(k => k.ToLower() == snippetKeyword.ToLower());
+
+                    var imContainer = App.GetIMContainer();
+                    var imStringInput = new StringInputIM(imContainer, "Edit keyword", "Snippet keyword:",
+                        PackIconKind.TagAdd, snippetKeyword);
+
+                    imStringInput.AllowEmptyString = false;
+                    imStringInput.ForbiddenNames = forbiddenNames.ToArray();
+                    imStringInput.ForbiddenNamesIgnoreCase = true;
+
+                    imStringInput.OnClose += OnEditKeywordIMClose;
+                    imContainer.ShowMessage(imStringInput);
+                }
+
+                listViewEx.SelectedItem = null;
+            }
         }
 
         //  --------------------------------------------------------------------------------
@@ -214,7 +288,48 @@ namespace ProjectManager.Components.Snippets
         /// <param name="e"> Routed Event Arguments. </param>
         private void AddSnippetTypeButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            var imContainer = App.GetIMContainer();
+            var imStringInput = new StringInputIM(imContainer, "Add type", "Snippet type:", PackIconKind.Add);
+
+            imStringInput.AllowEmptyString = false;
+            imStringInput.ForbiddenNames = SnippetTypes.ToArray();
+            imStringInput.ForbiddenNamesIgnoreCase = true;
+
+            imStringInput.OnClose += OnAddTypeIMClose;
+            imContainer.ShowMessage(imStringInput);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after double clicking on snippet type item. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void SnippetTypesListViewEx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewEx listViewEx = sender as ListViewEx;
+
+            if (listViewEx != null && listViewEx.SelectedItem != null)
+            {
+                var snippetType = (string)listViewEx.SelectedItem;
+
+                if (!string.IsNullOrEmpty(snippetType))
+                {
+                    var forbiddenNames = SnippetTypes.ToList();
+                    forbiddenNames.RemoveAll(k => k.ToLower() == snippetType.ToLower());
+
+                    var imContainer = App.GetIMContainer();
+                    var imStringInput = new StringInputIM(imContainer, "Edit type", "Snippet type:",
+                        PackIconKind.TagAdd, defaultText: snippetType);
+
+                    imStringInput.AllowEmptyString = false;
+                    imStringInput.ForbiddenNames = forbiddenNames.ToArray();
+                    imStringInput.ForbiddenNamesIgnoreCase = true;
+
+                    imStringInput.OnClose += OnEditTypeIMClose;
+                    imContainer.ShowMessage(imStringInput);
+                }
+
+                listViewEx.SelectedItem = null;
+            }
         }
 
         //  --------------------------------------------------------------------------------
@@ -226,29 +341,65 @@ namespace ProjectManager.Components.Snippets
             HideControl();
         }
 
+        #endregion INTERACTION METHODS
+
+        #region INTERNAL MESSAGES
+
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after finishing showing/hiding quick view animation. </summary>
+        /// <summary> Method invoked after closing add keyword internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
-        /// <param name="e"> Event Arguments. </param>
-        private void Storyboard_Completed(object sender, EventArgs e)
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnAddKeywordIMClose(object sender, InternalMessageCloseEventArgs e)
         {
-            if (!_storyboardRestarted)
-            {
-                _controlShowed = !_controlShowed;
-                OnPropertyChanged(nameof(ControlShowed));
-            }
+            var im = (sender as StringInputIM);
 
-            if (_storyboardRestarted)
-                _storyboardRestarted = false;
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                SnippetKeywords.Add(im.Text);
+        }
 
-            if (_controlShowed && !CompareMargins(controlBorder.Margin, StoryboardDataHandler.Margin))
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnEditKeywordIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as StringInputIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
             {
-                _storyboardRestarted = true;
-                StoryboardDataHandler.RunStoryboard();
+                SnippetKeywords.RemoveAll(k => k.ToLower() == im.OryginalValue.ToLower());
+                SnippetKeywords.Add(im.Text);
             }
         }
 
-        #endregion INTERACTION METHODS
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing add keyword internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnAddTypeIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as StringInputIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                SnippetTypes.Add(im.Text);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnEditTypeIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as StringInputIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+            {
+                SnippetTypes.RemoveAll(k => k.ToLower() == im.OryginalValue.ToLower());
+                SnippetTypes.Add(im.Text);
+            }
+        }
+
+        #endregion INTERNAL MESSAGES
 
         #region NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 

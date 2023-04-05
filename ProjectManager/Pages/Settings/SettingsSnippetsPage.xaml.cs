@@ -127,7 +127,7 @@ namespace ProjectManager.Pages.Settings
         /// <param name="e"> Routed Event Arguments. </param>
         private void AddCatalogButtonEx_Click(object sender, RoutedEventArgs e)
         {
-            var imContainer = GetIMContainer();
+            var imContainer = App.GetIMContainer();
             var im = FilesSelectorInternalMessageEx.CreateOpenFileInternalMessageEx(imContainer, "Add snippets catalog.");
 
             im.AllowCreate = true;
@@ -177,7 +177,7 @@ namespace ProjectManager.Pages.Settings
                 }
                 catch (Exception exc)
                 {
-                    var imContainer = GetIMContainer();
+                    var imContainer = App.GetIMContainer();
                     var im = InternalMessageEx.CreateErrorMessage(imContainer, "Adding catalog failed", exc.Message);
 
                     imContainer.ShowMessage(im);
