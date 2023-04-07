@@ -46,10 +46,13 @@ namespace SnippetsManager.Models
         /// <returns> Object copy. </returns>
         public override object Clone()
         {
-            return new SnippetImport()
+            var snippetImport = new SnippetImport()
             {
                 Namespace = Namespace
             };
+
+            snippetImport.IsModified = IsModified;
+            return snippetImport;
         }
 
         #endregion CLONE METHODS

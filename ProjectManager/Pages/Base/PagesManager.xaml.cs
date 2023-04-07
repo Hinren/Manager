@@ -147,11 +147,15 @@ namespace ProjectManager.Pages.Base
             if (CanGoBack)
             {
                 var currPage = LoadedPage;
+
                 var currPageIndex = _loadedPages.IndexOf(currPage);
                 var destPageIndex = Math.Max(0, currPageIndex - backCount);
 
                 //  Get previous page from list to load into content frame.
                 var destPage = _loadedPages[destPageIndex];
+
+                if (currPage != null && !currPage.OnGoBackFromPage(destPage))
+                    return;
 
                 //  Remove other pages loaded further.
                 _loadedPages.RemoveRange(destPageIndex + 1, PagesCount - (destPageIndex + 1));
@@ -178,6 +182,9 @@ namespace ProjectManager.Pages.Base
             if (pageToLoad != null)
             {
                 var currPage = LoadedPage;
+
+                if (currPage != null && !currPage.OnGoForwardFromPage(page))
+                    return;
 
                 //  Add page to history.
                 _loadedPages.Add(page);

@@ -357,6 +357,26 @@ namespace ProjectManager.Data.Configuration
             }
         }
 
+        public string SnippetFontFamilyName
+        {
+            get => _config.SnippetConfig.FontFamilyName;
+            set
+            {
+                _config.SnippetConfig.FontFamilyName = value;
+                OnPropertyChanged(nameof(SnippetFontFamilyName));
+            }
+        }
+
+        public double SnippetFontSize
+        {
+            get => _config.SnippetConfig.FontSize;
+            set
+            {
+                _config.SnippetConfig.FontSize = Math.Max(12d, value);
+                OnPropertyChanged(nameof(SnippetFontSize));
+            }
+        }
+
         public bool SnippetUseCache
         {
             get => _config.SnippetConfig.UseCache;

@@ -46,9 +46,43 @@ namespace SnippetsManager.Models
         public SnippetCatalogItem(string catalogPath = null)
         {
             CatalogPath = catalogPath;
+            IsModified = false;
         }
 
         #endregion CLASS METHODS
+
+        #region CLONE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Make object copy. </summary>
+        /// <returns> Object copy. </returns>
+        public override object Clone()
+        {
+            var catalogItem = new SnippetCatalogItem()
+            {
+                CatalogPath = CatalogPath,
+            };
+
+            catalogItem.IsModified = IsModified;
+            return catalogItem;
+        }
+
+        #endregion CLONE METHODS
+
+        #region UPDATE METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Update values with values from other object instance. </summary>
+        /// <param name="model"> BaseViewModel object instance. </param>
+        public override void UpdateValues(BaseViewModel model)
+        {
+            if (model is SnippetCatalogItem snippetCatalogItem)
+            {
+                CatalogPath = snippetCatalogItem.CatalogPath;
+            }
+        }
+
+        #endregion UPDATE METHODS
 
         #region VALIDATION METHODS
 

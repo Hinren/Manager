@@ -49,6 +49,7 @@ namespace SnippetsManager.Serializers
                 {
                     SnippetItem item = (SnippetItem)result;
                     item.FilePath = snippetFilePath;
+                    item.ClearIsModified();
                     return item;
                 }
             }

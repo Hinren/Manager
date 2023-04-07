@@ -188,7 +188,7 @@ namespace ProjectManager.Components.Snippets
         private void AddImportButtonEx_Click(object sender, RoutedEventArgs e)
         {
             var imContainer = App.GetIMContainer();
-            var imSnippetImport = new SnippetImportItemIM(imContainer, "Add snippet import", PackIconKind.Add,
+            var imSnippetImport = new SnippetImportItemIM(imContainer, "Add import", PackIconKind.Contain,
                 new SnippetImport(), SnippetImports.ToList());
 
             imSnippetImport.OnClose += OnAddImportIMClose;
@@ -213,7 +213,7 @@ namespace ProjectManager.Components.Snippets
                     snippetImports.Remove(snippetImport);
 
                     var imContainer = App.GetIMContainer();
-                    var imSnippetImport = new SnippetImportItemIM(imContainer, "Add snippet import", PackIconKind.Add,
+                    var imSnippetImport = new SnippetImportItemIM(imContainer, "Edit import", PackIconKind.Contain,
                         snippetImport, snippetImports);
 
                     imSnippetImport.OnClose += OnEditImportIMClose;
@@ -260,7 +260,7 @@ namespace ProjectManager.Components.Snippets
         #region INTERNAL MESSAGES
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing add keyword internal message. </summary>
+        /// <summary> Method invoked after closing add import item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnAddImportIMClose(object sender, InternalMessageCloseEventArgs e)
@@ -272,7 +272,7 @@ namespace ProjectManager.Components.Snippets
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <summary> Method invoked after closing edit import item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnEditImportIMClose(object sender, InternalMessageCloseEventArgs e)

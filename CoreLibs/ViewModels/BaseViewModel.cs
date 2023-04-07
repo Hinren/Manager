@@ -1,15 +1,18 @@
-﻿using CoreLibs.Utilities;
+﻿using CoreLibs.Interfaces;
+using CoreLibs.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CoreLibs.ViewModels
 {
     [Serializable]
-    public class BaseViewModel : INotifyPropertyChanged, ICloneable
+    public class BaseViewModel : INotifyPropertyChanged, ICloneable, IModifiedProperty
     {
 
         //  EVENTS
@@ -21,6 +24,26 @@ namespace CoreLibs.ViewModels
         {
             add { _propertyChanged += value; }
             remove { _propertyChanged -= value; }
+        }
+
+
+        //  VARIABLES
+
+        private bool _isModified = false;
+
+
+        //  GETTERS & SETTERS
+
+        [JsonIgnore]
+        [XmlIgnore]
+        public virtual bool IsModified
+        {
+            get => _isModified;
+            set
+            {
+                _isModified = value;
+                OnPropertyChanged(nameof(IsModified));
+            }
         }
 
 
@@ -54,6 +77,9 @@ namespace CoreLibs.ViewModels
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = _propertyChanged;
+
+            if (propertyName != nameof(IsModified))
+                IsModified = true;
 
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));

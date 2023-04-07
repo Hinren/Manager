@@ -14,6 +14,8 @@ namespace SnippetsManager
         //  VARIABLES
 
         public List<SnippetCatalogItem> CatalogItems { get; set; }
+        public string FontFamilyName { get; set; }
+        public double FontSize { get; set; }
         public bool UseCache { get; set; }
 
 
@@ -26,9 +28,14 @@ namespace SnippetsManager
         /// <param name="catalogItems"> Catalog items. </param>
         /// <param name="useCache"> Use cache memory. </param>
         [JsonConstructor]
-        public SnippetsConfig(List<SnippetCatalogItem> catalogItems = null, bool? useCache = null)
+        public SnippetsConfig(List<SnippetCatalogItem> catalogItems = null,
+            string? fontFamilyName = null,
+            double? fontSize = null,
+            bool? useCache = null)
         {
             CatalogItems = catalogItems ?? new List<SnippetCatalogItem>();
+            FontFamilyName = !string.IsNullOrEmpty(fontFamilyName) ? fontFamilyName : "Consolas";
+            FontSize = fontSize ?? 14d;
             UseCache = useCache ?? false;
         }
 

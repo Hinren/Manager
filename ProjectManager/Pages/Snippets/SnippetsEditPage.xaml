@@ -83,12 +83,6 @@
                 Padding="4"
                 Click="SaveButtonEx_Click"/>
 
-            <cex:ButtonEx
-                Content="Exit"
-                IconKind="ExitRun"
-                Padding="4"
-                Click="CancelButtonEx_Click"/>
-
         </StackPanel>
     </pages:BasePage.HeaderContent>
 

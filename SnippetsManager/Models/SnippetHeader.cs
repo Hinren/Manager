@@ -106,7 +106,7 @@ namespace SnippetsManager.Models
         /// <returns> Object copy. </returns>
         public override object Clone()
         {
-            return new SnippetHeader()
+            var snippetHeader = new SnippetHeader()
             {
                 Author = Author,
                 Description = Description,
@@ -123,6 +123,9 @@ namespace SnippetsManager.Models
 
                 Title = Title
             };
+
+            snippetHeader.IsModified = IsModified;
+            return snippetHeader;
         }
 
         #endregion CLONE METHODS

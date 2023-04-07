@@ -58,13 +58,16 @@ namespace SnippetsManager.Models
         //  --------------------------------------------------------------------------------
         /// <summary> Make object copy. </summary>
         /// <returns> Object copy. </returns>
-        public virtual object Clone()
+        public override object Clone()
         {
-            return new SnippetCode()
+            var snippetCode = new SnippetCode()
             {
                 Code = Code,
                 Language = Language
             };
+
+            snippetCode.IsModified = IsModified;
+            return snippetCode;
         }
 
         #endregion CLONE METHODS

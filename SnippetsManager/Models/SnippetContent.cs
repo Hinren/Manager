@@ -73,7 +73,7 @@ namespace SnippetsManager.Models
         /// <returns> Object copy. </returns>
         public override object Clone()
         {
-            return new SnippetContent()
+            var snippetContent = new SnippetContent()
             {
                 Code = (SnippetCode)Code.Clone(),
 
@@ -85,6 +85,9 @@ namespace SnippetsManager.Models
                     ? Imports.Select(i => (SnippetImport)i.Clone()).ToList()
                     : new List<SnippetImport>(),
             };
+
+            snippetContent.IsModified = IsModified;
+            return snippetContent;
         }
 
         #endregion CLONE METHODS

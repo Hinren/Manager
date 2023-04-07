@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="ProjectManager.Components.Snippets.SnippetItemDeclarationsControl"
+    x:Class="ProjectManager.Components.Snippets.SnippetItemSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -54,68 +54,13 @@
                 <Setter Property="MinWidth" Value="192"/>
             </Style>
 
-            <Style x:Key="Internal_SnippetsDeclarationsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
-                <Setter Property="Margin" Value="0,4"/>
+            <Style BasedOn="{StaticResource UpDownDoubleTextBoxExStyle}" TargetType="{x:Type cex:UpDownDoubleTextBoxEx}">
+                <Setter Property="MinWidth" Value="64"/>
             </Style>
 
             <!-- DATA TEMPLATES -->
 
-            <DataTemplate x:Key="SnippetDeclarationItemDataTemplate">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <materialDesign:PackIcon
-                        Grid.Column="0"
-                        Kind="CubeOutline"
-                        Height="18"
-                        Margin="0,0,8,0"
-                        VerticalAlignment="Center"
-                        Width="18"/>
-
-                    <StackPanel
-                        Grid.Column="1"
-                        Orientation="Vertical">
-
-                        <TextBlock
-                            FontSize="14"
-                            FontWeight="SemiBold"
-                            Text="{Binding ID}"
-                            VerticalAlignment="Center"/>
-
-                        <TextBlock
-                            Margin="0,4,0,0"
-                            Text="{Binding Default}"/>
-
-                        <TextBlock
-                            FontStyle="Italic"
-                            Margin="0,4,0,0"
-                            Text="{Binding ToolTip}"/>
-
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Column="3"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center">
-
-                        <cex:ButtonEx
-                            Command="{Binding DataContext.RemoveCommand,
-                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
-                            CommandParameter="{Binding}"
-                            IconKind="DeleteForever"
-                            Padding="2"
-                            Style="{StaticResource SettingsButtonExStyle}"/>
-
-                    </StackPanel>
-
-                </Grid>
-            </DataTemplate>
+            
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -155,14 +100,14 @@
 
                         <materialDesign:PackIcon
                             Height="28"
-                            Kind="CubeOutline"
+                            Kind="Gear"
                             Width="28"/>
 
                         <TextBlock
                             FontSize="14"
                             FontWeight="SemiBold"
                             Margin="8,0,0,0"
-                            Text="Declarations"
+                            Text="Settings"
                             VerticalAlignment="Center"/>
 
                     </StackPanel>
@@ -173,30 +118,9 @@
                         Orientation="Horizontal">
 
                         <cex:ButtonEx
-                            Content="Add declaration"
-                            IconKind="Add"
-                            Style="{StaticResource SettingsButtonExStyle}"
-                            PreviewMouseDown="AddDeclarationButtonEx_PreviewMouseDown">
-                            <cex:ButtonEx.ContextMenu>
-                                <cex:ContextMenuEx>
-
-                                    <cex:ContextMenuItemEx
-                                        Header="Literal"
-                                        IconKind="CubeOutline"
-                                        Click="AddDeclarationLiteralContextMenuItemEx_Click"/>
-
-                                </cex:ContextMenuEx>
-                            </cex:ButtonEx.ContextMenu>
-                        </cex:ButtonEx>
-
-                        <Border
-                            Background="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
-                            Margin="8,1"
-                            Width="1"/>
-
-                        <cex:ButtonEx
                             IconKind="Close"
                             Padding="2"
+                            Style="{StaticResource SettingsButtonExStyle}"
                             Click="CloseButtonEx_Click"/>
 
                     </StackPanel>
@@ -205,14 +129,44 @@
 
             </Border>
 
-            <cex:ListViewEx
+            <cex:ScrollViewerEx
                 Grid.Row="1"
-                ItemContainerStyle="{StaticResource Internal_SnippetsDeclarationsListViewItemExStyle}"
-                ItemsSource="{Binding SnippetDeclarations}"
-                ItemTemplate="{StaticResource SnippetDeclarationItemDataTemplate}"
-                Margin="4,2"
-                Style="{StaticResource SettingsListViewExStyle}"
-                MouseDoubleClick="SnippetDeclarationsListViewEx_MouseDoubleClick"/>
+                HorizontalScrollBarVisibility="Disabled"
+                Padding="8"
+                VerticalScrollBarVisibility="Auto">
+
+                <StackPanel
+                    Orientation="Vertical">
+
+                    <components:SettingsOptionControl
+                        Description="Snippet code editor font family."
+                        IconKind="FormatFont"
+                        Title="Font Family">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:ComboBoxEx
+                                ItemsSource="{Binding FontFamilyInfos}"
+                                SelectedItem="{Binding FontFamilyInfo}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                    <components:SettingsOptionControl
+                        Description="Snippet code editor font size."
+                        IconKind="FontSize"
+                        Title="Font Size">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:UpDownDoubleTextBoxEx
+                                MinValue="12"
+                                Value="{Binding SnippetFontSize, Source={StaticResource ConfigManager}}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                </StackPanel>
+
+            </cex:ScrollViewerEx>
 
         </Grid>
 

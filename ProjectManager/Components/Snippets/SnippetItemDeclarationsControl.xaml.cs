@@ -1,5 +1,9 @@
-﻿using ProjectManager.Commands;
+﻿using chkam05.Tools.ControlsEx.Data;
+using chkam05.Tools.ControlsEx.Events;
+using ProjectManager.Commands;
 using ProjectManager.Data.Storyboards;
+using ProjectManager.InternalMessages.Snippets;
+using ProjectManager.InternalMessages;
 using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +22,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using chkam05.Tools.ControlsEx;
+using MaterialDesignThemes.Wpf;
 
 namespace ProjectManager.Components.Snippets
 {
@@ -170,12 +176,65 @@ namespace ProjectManager.Components.Snippets
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after clicking add declaration button. </summary>
+        /// <summary> Method invoked after pressing mouse button in add declaration button. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void AddDeclarationButtonEx_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Middle)
+                return;
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                ButtonEx button = (ButtonEx)sender;
+                ContextMenuEx contextMenu = (ContextMenuEx)button.ContextMenu;
+                contextMenu.PlacementTarget = button;
+                contextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                contextMenu.IsOpen = true;
+            }
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after clicking add declaration literal button. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Routed Event Arguments. </param>
-        private void AddDeclarationButtonEx_Click(object sender, RoutedEventArgs e)
+        private void AddDeclarationLiteralContextMenuItemEx_Click(object sender, RoutedEventArgs e)
         {
-            //
+            var imContainer = App.GetIMContainer();
+            var imSnippetDeclaration = new SnippetDeclarationItemIM(imContainer, "Add literal", PackIconKind.CubeOutline,
+                new SnippetLiteral(), SnippetDeclarations.ToList());
+
+            imSnippetDeclaration.OnClose += OnAddDeclarationIMClose;
+            imContainer.ShowMessage(imSnippetDeclaration);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after double clicking on snippet declaration item. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Mouse Button Event Arguments. </param>
+        private void SnippetDeclarationsListViewEx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListViewEx listViewEx = sender as ListViewEx;
+
+            if (listViewEx != null && listViewEx.SelectedItem != null)
+            {
+                var snippetDeclaration = (SnippetDeclaration)listViewEx.SelectedItem;
+
+                if (snippetDeclaration != null)
+                {
+                    var snippetDeclarations = SnippetDeclarations.ToList();
+                    snippetDeclarations.Remove(snippetDeclaration);
+
+                    var imContainer = App.GetIMContainer();
+                    var imSnippetDeclaration = new SnippetDeclarationItemIM(imContainer, "Edit declaration", PackIconKind.CubeOutline,
+                        snippetDeclaration, snippetDeclarations);
+
+                    imSnippetDeclaration.OnClose += OnEditDeclarationIMClose;
+                    imContainer.ShowMessage(imSnippetDeclaration);
+                }
+
+                listViewEx.SelectedItem = null;
+            }
         }
 
         //  --------------------------------------------------------------------------------
@@ -210,6 +269,34 @@ namespace ProjectManager.Components.Snippets
         }
 
         #endregion INTERACTION METHODS
+
+        #region INTERNAL MESSAGES
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing add declaration item internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnAddDeclarationIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as SnippetDeclarationItemIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                SnippetDeclarations.Add(im.SnippetDeclaration);
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked after closing edit declaration item internal message. </summary>
+        /// <param name="sender"> Object that invoked method. </param>
+        /// <param name="e"> Internal Message Close Event Arguments. </param>
+        private void OnEditDeclarationIMClose(object sender, InternalMessageCloseEventArgs e)
+        {
+            var im = (sender as SnippetDeclarationItemIM);
+
+            if (e.Result == InternalMessageResult.Ok && im != null)
+                OnPropertyChanged(nameof(SnippetDeclaration));
+        }
+
+        #endregion INTERNAL MESSAGES
 
         #region NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 

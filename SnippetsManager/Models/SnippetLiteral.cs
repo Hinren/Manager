@@ -68,12 +68,15 @@ namespace SnippetsManager.Models
         /// <returns> Object copy. </returns>
         public override object Clone()
         {
-            return new SnippetLiteral()
+            var snippetLiteral = new SnippetLiteral()
             {
                 Default = Default,
                 ID = ID,
                 ToolTip = ToolTip,
             };
+
+            snippetLiteral.IsModified = IsModified;
+            return snippetLiteral;
         }
 
         #endregion CLONE METHODS

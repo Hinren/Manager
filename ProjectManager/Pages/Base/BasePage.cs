@@ -84,6 +84,28 @@ namespace ProjectManager.Pages.Base
 
         #endregion CLASS METHODS
 
+        #region INTERACTIONS WITH PAGES MANAGER METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked by PagesManager when GoBack is called. </summary>
+        /// <param name="previousPage"> Page to return to. </param>
+        /// <returns> True - allow to go back; False - otherwise. </returns>
+        public virtual bool OnGoBackFromPage(BasePage previousPage)
+        {
+            return true;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Method invoked by PagesManager when Load(another)Page is called. </summary>
+        /// <param name="pageToLoad"> Page to load. </param>
+        /// <returns> True - allow to load another page; False - otherwise. </returns>
+        public virtual bool OnGoForwardFromPage(BasePage pageToLoad)
+        {
+            return true;
+        }
+
+        #endregion INTERACTIONS WITH PAGES MANAGER METHODS
+
         #region NOTIFY PROPERTIES CHANGED INTERFACE METHODS
 
         //  --------------------------------------------------------------------------------

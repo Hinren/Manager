@@ -239,7 +239,7 @@ namespace ProjectManager.Components.Snippets
         private void AddSnippetKeywordButtonEx_Click(object sender, RoutedEventArgs e)
         {
             var imContainer = App.GetIMContainer();
-            var imStringInput = new StringInputIM(imContainer, "Add keyword", "Snippet keyword:", PackIconKind.TagAdd);
+            var imStringInput = new StringInputIM(imContainer, "Add keyword", "Snippet keyword:", PackIconKind.Tag);
 
             imStringInput.AllowEmptyString = false;
             imStringInput.ForbiddenNames = SnippetKeywords.ToArray();
@@ -268,7 +268,7 @@ namespace ProjectManager.Components.Snippets
 
                     var imContainer = App.GetIMContainer();
                     var imStringInput = new StringInputIM(imContainer, "Edit keyword", "Snippet keyword:",
-                        PackIconKind.TagAdd, snippetKeyword);
+                        PackIconKind.Tag, snippetKeyword);
 
                     imStringInput.AllowEmptyString = false;
                     imStringInput.ForbiddenNames = forbiddenNames.ToArray();
@@ -289,7 +289,7 @@ namespace ProjectManager.Components.Snippets
         private void AddSnippetTypeButtonEx_Click(object sender, RoutedEventArgs e)
         {
             var imContainer = App.GetIMContainer();
-            var imStringInput = new StringInputIM(imContainer, "Add type", "Snippet type:", PackIconKind.Add);
+            var imStringInput = new StringInputIM(imContainer, "Add type", "Snippet type:", PackIconKind.Group);
 
             imStringInput.AllowEmptyString = false;
             imStringInput.ForbiddenNames = SnippetTypes.ToArray();
@@ -318,7 +318,7 @@ namespace ProjectManager.Components.Snippets
 
                     var imContainer = App.GetIMContainer();
                     var imStringInput = new StringInputIM(imContainer, "Edit type", "Snippet type:",
-                        PackIconKind.TagAdd, defaultText: snippetType);
+                        PackIconKind.Group, defaultText: snippetType);
 
                     imStringInput.AllowEmptyString = false;
                     imStringInput.ForbiddenNames = forbiddenNames.ToArray();
@@ -346,7 +346,7 @@ namespace ProjectManager.Components.Snippets
         #region INTERNAL MESSAGES
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing add keyword internal message. </summary>
+        /// <summary> Method invoked after closing add keyword item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnAddKeywordIMClose(object sender, InternalMessageCloseEventArgs e)
@@ -358,7 +358,7 @@ namespace ProjectManager.Components.Snippets
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <summary> Method invoked after closing edit keyword item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnEditKeywordIMClose(object sender, InternalMessageCloseEventArgs e)
@@ -373,7 +373,7 @@ namespace ProjectManager.Components.Snippets
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing add keyword internal message. </summary>
+        /// <summary> Method invoked after closing add type item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnAddTypeIMClose(object sender, InternalMessageCloseEventArgs e)
@@ -385,7 +385,7 @@ namespace ProjectManager.Components.Snippets
         }
 
         //  --------------------------------------------------------------------------------
-        /// <summary> Method invoked after closing edit keyword internal message. </summary>
+        /// <summary> Method invoked after closing edit type item internal message. </summary>
         /// <param name="sender"> Object that invoked method. </param>
         /// <param name="e"> Internal Message Close Event Arguments. </param>
         private void OnEditTypeIMClose(object sender, InternalMessageCloseEventArgs e)

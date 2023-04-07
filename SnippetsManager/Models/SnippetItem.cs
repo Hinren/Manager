@@ -74,15 +74,59 @@ namespace SnippetsManager.Models
         /// <returns> Object copy. </returns>
         public override object Clone()
         {
-            return new SnippetItem()
+            var snippetItem = new SnippetItem()
             {
                 FilePath = FilePath,
-                Header = (SnippetHeader) Header.Clone(),
-                Snippet = (SnippetContent) Snippet.Clone()
+                Header = (SnippetHeader)Header.Clone(),
+                Snippet = (SnippetContent)Snippet.Clone()
             };
+
+            snippetItem.IsModified = IsModified;
+            return snippetItem;
         }
 
         #endregion CLONE METHODS
+
+        #region MODIFIED METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Clear IsModified properties. </summary>
+        public void ClearIsModified()
+        {
+            if (Header != null)
+                Header.IsModified = false;
+
+            if (Snippet != null)
+            {
+                if (Snippet.Declarations?.Any() == true)
+                    Snippet.Declarations.ForEach(d => d.IsModified = false);
+
+                if (Snippet.Imports?.Any() == true)
+                    Snippet.Imports.ForEach(d => d.IsModified = false);
+
+                if (Snippet.Code != null)
+                    Snippet.Code.IsModified = false;
+
+                Snippet.IsModified = false;
+            }
+
+            IsModified = false;
+        }
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get is modified value from current object and sub-objects. </summary>
+        /// <returns> True - object or sub-object has been modified; False - otherwise. </returns>
+        public bool GetIsModified()
+        {
+            return IsModified
+                || (Header != null && Header.IsModified)
+                || (Snippet != null &&
+                    (Snippet.Declarations?.Any(d => d.IsModified) == true
+                    || Snippet.Imports?.Any(i => i.IsModified) == true
+                    || Snippet.IsModified));
+        }
+
+        #endregion MODIFIED METHODS
 
         #region UPDATE METHODS
 

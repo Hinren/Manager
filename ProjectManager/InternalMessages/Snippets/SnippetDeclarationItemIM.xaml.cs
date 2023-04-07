@@ -16,18 +16,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ProjectManager.InternalMessages.Snippets
 {
-    public partial class SnippetImportItemIM : StandardInternalMessageEx
+    public partial class SnippetDeclarationItemIM : StandardInternalMessageEx
     {
 
         //  VARIABLES
 
         private string _error;
-        private SnippetImport _snippetImport;
-        private List<SnippetImport> _snippetImports;
+        private SnippetDeclaration _snippetDeclaration;
+        private List<SnippetDeclaration> _snippetDeclarations;
 
 
         //  GETTERS & SETTERS
@@ -42,13 +41,13 @@ namespace ProjectManager.InternalMessages.Snippets
             }
         }
 
-        public SnippetImport SnippetImport
+        public SnippetDeclaration SnippetDeclaration
         {
-            get => _snippetImport;
+            get => _snippetDeclaration;
             set
             {
-                _snippetImport = value;
-                OnPropertyChanged(nameof(SnippetImport));
+                _snippetDeclaration = value;
+                OnPropertyChanged(nameof(SnippetDeclaration));
             }
         }
 
@@ -58,15 +57,15 @@ namespace ProjectManager.InternalMessages.Snippets
         #region CLASS METHODS
 
         //  --------------------------------------------------------------------------------
-        /// <summary> SnippetImportItemIM class constructor. </summary>
+        /// <summary> SnippetDeclarationItemIM class constructor. </summary>
         /// <param name="parentContainer"> Parent InternalMessagesEx container. </param>
         /// <param name="title"> Internal Message title. </param>
         /// <param name="iconKind"> Internal Message icon kind. </param>
-        /// <param name="snippetImport"> Snippet import item. </param>
-        /// <param name="snippetImports"> List of loaded snippet imports. </param>
-        public SnippetImportItemIM(InternalMessagesExContainer parentContainer, string title,
-            PackIconKind iconKind = PackIconKind.EditBoxOutline, SnippetImport snippetImport = null,
-            List<SnippetImport> snippetImports = null) : base(parentContainer)
+        /// <param name="snippetDeclaration"> Snippet declaration item. </param>
+        /// <param name="snippetDeclarations"> List of loaded snippet declarations. </param>
+        public SnippetDeclarationItemIM(InternalMessagesExContainer parentContainer, string title,
+            PackIconKind iconKind = PackIconKind.EditBoxOutline, SnippetDeclaration snippetDeclaration = null,
+            List<SnippetDeclaration> snippetDeclarations = null) : base(parentContainer)
         {
             //  Initialize interface components.
             InitializeComponent();
@@ -81,8 +80,8 @@ namespace ProjectManager.InternalMessages.Snippets
             Title = title;
             IconKind = iconKind;
 
-            SnippetImport = snippetImport;
-            _snippetImports = snippetImports;
+            SnippetDeclaration = snippetDeclaration;
+            _snippetDeclarations = snippetDeclarations;
         }
 
         #endregion CLASS METHODS
@@ -110,16 +109,26 @@ namespace ProjectManager.InternalMessages.Snippets
         /// <returns> True - data are valid; False - otherwise. </returns>
         private bool ValidateModel()
         {
-            if (string.IsNullOrEmpty(SnippetImport.Namespace))
+            if (SnippetDeclaration is SnippetLiteral snippetLiteral)
             {
-                Error = "Namespace can not be empty.";
-                return false;
-            }
+                if (string.IsNullOrEmpty(snippetLiteral.ID))
+                {
+                    Error = "ID can not be empty.";
+                    return false;
+                }
 
-            if (_snippetImports?.Any(i => i.Namespace.ToLower() == SnippetImport.Namespace.ToLower()) == true)
-            {
-                Error = $"\"{SnippetImport.Namespace}\" namespace is already used in another import.";
-                return false;
+                if (string.IsNullOrEmpty(snippetLiteral.Default))
+                {
+                    Error = "Default value can not be empty.";
+                    return false;
+                }
+
+                if (_snippetDeclarations.Select(s => s as SnippetLiteral)
+                    .Where(l => l != null).Any(l => l.ID.ToLower() == snippetLiteral.ID.ToLower()))
+                {
+                    Error = $"\"{snippetLiteral.ID}\" ID is already used in another declaration.";
+                    return false;
+                }
             }
 
             return true;
