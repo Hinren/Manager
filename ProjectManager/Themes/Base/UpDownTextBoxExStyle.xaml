@@ -26,5 +26,47 @@
         <Setter Property="SelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="SelectedForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
     </Style>
-    
+
+    <Style x:Key="UpDownDoubleTextBoxExStyle" TargetType="{x:Type cex:UpDownDoubleTextBoxEx}">
+        <Setter Property="Background" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonBackground" Value="Transparent"/>
+        <Setter Property="ButtonBorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverBackground" Value="{Binding AppearanceThemeMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverBorderBrush" Value="{Binding AppearanceThemeMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedBackground" Value="{Binding AppearanceThemePressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedBorderBrush" Value="{Binding AppearanceThemePressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverBackground" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverBorderBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+    </Style>
+
+    <Style x:Key="UpDownLongTextBoxExStyle" TargetType="{x:Type cex:UpDownLongTextBoxEx}">
+        <Setter Property="Background" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="BorderBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonBackground" Value="Transparent"/>
+        <Setter Property="ButtonBorderBrush" Value="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverBackground" Value="{Binding AppearanceThemeMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverBorderBrush" Value="{Binding AppearanceThemeMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonMouseOverForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedBackground" Value="{Binding AppearanceThemePressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedBorderBrush" Value="{Binding AppearanceThemePressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="ButtonPressedForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="Foreground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverBackground" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverBorderBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="MouseOverForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+    </Style>
+
 </ResourceDictionary>

@@ -1,0 +1,379 @@
+﻿<UserControl
+    x:Class="ProjectManager.Components.Snippets.SnippetItemPropertiesControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:convUI="clr-namespace:ProjectManager.Converters.UI"
+    xmlns:local="clr-namespace:ProjectManager.Components.Snippets"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    
+    Background="{x:Null}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+    MinWidth="448"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="UserControl_Loaded">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+            <RelativeSource x:Key="RelativeSelf" Mode="FindAncestor" AncestorType="{x:Type UserControl}"/>
+
+            <!-- CONVERTERS -->
+
+            <convUI:SolidColorBrushOpacityConverter x:Key="SolidColorBrushOpacityConverter"/>
+
+            <!-- STORYBOARDS -->
+
+            <Storyboard x:Key="ShowHideControlStoryboard" Completed="Storyboard_Completed">
+                <ThicknessAnimationUsingKeyFrames
+                    BeginTime="00:00:0"
+                    Duration="00:00:0.25"
+                    Storyboard.TargetName="controlBorder"
+                    Storyboard.TargetProperty="Margin">
+                    <ThicknessAnimationUsingKeyFrames.KeyFrames>
+                        <LinearThicknessKeyFrame Value="{Binding Path=StoryboardDataHandler.Margin, Mode=TwoWay, RelativeSource={StaticResource RelativeSelf}}"/>
+                    </ThicknessAnimationUsingKeyFrames.KeyFrames>
+                </ThicknessAnimationUsingKeyFrames>
+            </Storyboard>
+
+            <!-- STYLES -->
+
+            <Style BasedOn="{StaticResource TextBoxExStyle}" TargetType="{x:Type cex:TextBoxEx}">
+                <Setter Property="MinWidth" Value="192"/>
+            </Style>
+
+            <Style x:Key="Internal_SnippetPropertiesListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="Margin" Value="0,4"/>
+            </Style>
+            
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="SnippetKeywordItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Grid.Column="0"
+                        Text="{Binding}"
+                        VerticalAlignment="Center"/>
+
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Command="{Binding DataContext.RemoveSnippetKeywordCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="DeleteForever"
+                            Padding="2"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SnippetTypeItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Grid.Column="0"
+                        Text="{Binding}"
+                        VerticalAlignment="Center"/>
+
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Command="{Binding DataContext.RemoveSnippetTypeCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="DeleteForever"
+                            Padding="2"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border
+        x:Name="controlBorder"
+        Background="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+        BorderBrush="{Binding AppearanceThemeShadeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+        BorderThickness="1"
+        CornerRadius="8">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border
+                BorderBrush="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"
+                BorderThickness="0,0,0,1"
+                Grid.Row="0"
+                CornerRadius="8,8,0,0"
+                Padding="8">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+
+                        <materialDesign:PackIcon
+                            Height="28"
+                            Kind="BallotOutline"
+                            Width="28"/>
+
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Margin="8,0,0,0"
+                            Text="Properties"
+                            VerticalAlignment="Center"/>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+
+                        <cex:ButtonEx
+                            IconKind="Close"
+                            Padding="2"
+                            Style="{StaticResource SettingsButtonExStyle}"
+                            Click="CloseButtonEx_Click"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+            <cex:ScrollViewerEx
+                Grid.Row="1"
+                HorizontalScrollBarVisibility="Disabled"
+                Padding="8"
+                VerticalScrollBarVisibility="Auto">
+
+                <StackPanel
+                    Orientation="Vertical">
+
+                    <components:SettingsOptionControl
+                        Description="Snippet title."
+                        IconKind="TextBox"
+                        Title="Title">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:TextBoxEx
+                                Text="{Binding SnippetItem.Header.Title}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                    <components:SettingsOptionControl
+                        Description="Snippet description."
+                        IconKind="TextBox"
+                        Title="Description">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:TextBoxEx
+                                Text="{Binding SnippetItem.Header.Description}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                    <components:SettingsOptionControl
+                        Description="Snippet author."
+                        IconKind="Person"
+                        Title="Author">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:TextBoxEx
+                                Text="{Binding SnippetItem.Header.Author}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                    <components:SettingsOptionControl
+                        Description="Shortcut used to call snippet in code."
+                        IconKind="LocationPath"
+                        Title="Shortcut">
+
+                        <components:SettingsOptionControl.Content>
+                            <cex:TextBoxEx
+                                Text="{Binding SnippetItem.Header.Shortcut}"/>
+                        </components:SettingsOptionControl.Content>
+
+                    </components:SettingsOptionControl>
+
+                    <cex:ExpanderEx
+                        HeaderHorizontalContentAlignment="Stretch"
+                        IconKind="Tag"
+                        IsExpanded="False"
+                        Margin="4"
+                        Padding="4,2">
+
+                        <cex:ExpanderEx.Header>
+                            <Grid
+                                Margin="0,4"
+                                MinHeight="44">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center">
+
+                                    <TextBlock
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        HorizontalAlignment="Left"
+                                        Text="Keywords"/>
+
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Margin="0,4,0,0"
+                                        Text="List of snippet keywords."
+                                        TextWrapping="WrapWithOverflow"/>
+
+                                </StackPanel>
+
+                                <cex:ButtonEx
+                                    Content="Add keyword"
+                                    Grid.Column="2"
+                                    IconKind="TagAdd"
+                                    VerticalAlignment="Center"
+                                    Click="AddSnippetKeywordButtonEx_Click"/>
+
+                            </Grid>
+                        </cex:ExpanderEx.Header>
+
+                        <cex:ListViewEx
+                            Grid.Row="1"
+                            ItemContainerStyle="{StaticResource Internal_SnippetPropertiesListViewItemExStyle}"
+                            ItemsSource="{Binding SnippetKeywords}"
+                            ItemTemplate="{StaticResource SnippetKeywordItemDataTemplate}"
+                            Style="{StaticResource SettingsListViewExStyle}"
+                            MouseDoubleClick="SnippetKeywordsListViewEx_MouseDoubleClick"/>
+
+                    </cex:ExpanderEx>
+
+                    <cex:ExpanderEx
+                        HeaderHorizontalContentAlignment="Stretch"
+                        IconKind="Group"
+                        IsExpanded="False"
+                        Margin="4"
+                        Padding="4,2">
+
+                        <cex:ExpanderEx.Header>
+                            <Grid
+                                Margin="0,4"
+                                MinHeight="44">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Left"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center">
+
+                                    <TextBlock
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        HorizontalAlignment="Left"
+                                        Text="Types"/>
+
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Margin="0,4,0,0"
+                                        Text="List of snippet types."
+                                        TextWrapping="WrapWithOverflow"/>
+
+                                </StackPanel>
+
+                                <cex:ButtonEx
+                                    Content="Add type"
+                                    Grid.Column="2"
+                                    IconKind="Add"
+                                    VerticalAlignment="Center"
+                                    Click="AddSnippetTypeButtonEx_Click"/>
+
+                            </Grid>
+                        </cex:ExpanderEx.Header>
+
+                        <cex:ListViewEx
+                            Grid.Row="1"
+                            ItemContainerStyle="{StaticResource Internal_SnippetPropertiesListViewItemExStyle}"
+                            ItemsSource="{Binding SnippetTypes}"
+                            ItemTemplate="{StaticResource SnippetTypeItemDataTemplate}"
+                            Style="{StaticResource SettingsListViewExStyle}"
+                            MouseDoubleClick="SnippetTypesListViewEx_MouseDoubleClick"/>
+
+                    </cex:ExpanderEx>
+
+                </StackPanel>
+
+            </cex:ScrollViewerEx>
+
+        </Grid>
+
+    </Border>
+    
+</UserControl>

@@ -48,6 +48,12 @@
                     Click="DatabasesSettingsOptionButtonControl_Click"/>
 
                 <components:SettingsOptionButtonControl
+                    IconKind="LabelVariantOutline"
+                    Title="Snippets"
+                    Description="Configure snippets management."
+                    Click="SnippetsSettingsOptionButtonControl_Click"/>
+
+                <components:SettingsOptionButtonControl
                     IconKind="InfoOutline"
                     Title="About"
                     Description="Informations about application."

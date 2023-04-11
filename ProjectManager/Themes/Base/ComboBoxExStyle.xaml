@@ -25,6 +25,7 @@
         <Setter Property="DropDownBackground" Value="{Binding AppearanceThemeBackgroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="DropDownBorderBrush" Value="{Binding AppearanceAccentColorBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="DropDownForeground" Value="{Binding AppearanceThemeForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="DropDownIconBrush" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="MouseOverBackground" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="MouseOverBorderBrush" Value="{Binding AppearanceAccentMouseOverBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="MouseOverForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>

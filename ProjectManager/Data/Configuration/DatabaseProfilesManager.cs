@@ -80,9 +80,6 @@ namespace ProjectManager.Data.Configuration
         /// <param name="profilesPath"> Profiles path. </param>
         public DatabaseProfilesManager(string profilesPath)
         {
-            if (!IsValidProfilesPath(profilesPath))
-                throw new FileNotFoundException($"The database profile file path directory could not be found.");
-
             ProfilesPath = profilesPath;
 
             CopyToClipboard = new RelayCommand(OnCopyToClipboardCommandExecute);
@@ -239,26 +236,6 @@ namespace ProjectManager.Data.Configuration
         }
 
         #endregion PROFILES MANAGEMENT METHODS
-
-        #region UTILITY METHODS
-
-        //  --------------------------------------------------------------------------------
-        /// <summary> Check if path to the file is valid. </summary>
-        /// <returns> True - is valid path; False - otherwise. </returns>
-        private bool IsValidProfilesPath(string path)
-        {
-            try
-            {
-                string directoryName = Path.GetDirectoryName(path);
-                return !string.IsNullOrEmpty(directoryName);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        #endregion UTILITY METHODS
 
     }
 }

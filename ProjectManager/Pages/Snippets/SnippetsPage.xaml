@@ -1,0 +1,116 @@
+﻿<pages:BasePage
+    x:Class="ProjectManager.Pages.Snippets.SnippetsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:cex="clr-namespace:chkam05.Tools.ControlsEx;assembly=chkam05.Tools.ControlsEx"
+    xmlns:cfg="clr-namespace:ProjectManager.Data.Configuration"
+    xmlns:components="clr-namespace:ProjectManager.Components"
+    xmlns:local="clr-namespace:ProjectManager.Pages.Snippets"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:pages="clr-namespace:ProjectManager.Pages.Base"
+    mc:Ignorable="d"
+    
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    d:DesignWidth="800"
+    IconKind="LabelVariantOutline"
+    Title="Snippets"
+    Loaded="BasePage_Loaded">
+
+    <pages:BasePage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ProjectManager;component/Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:Static x:Key="ConfigManager" Member="cfg:ConfigManager.Instance" />
+
+            <RelativeSource x:Key="RelativeSelf" Mode="FindAncestor" AncestorType="{x:Type pages:BasePage}"/>
+
+            <!-- STYLES -->
+
+            <Style x:Key="Internal_SnippetsListViewItemExStyle" BasedOn="{StaticResource SettingsListViewItemExStyle}" TargetType="{x:Type cex:ListViewItemEx}">
+                <Setter Property="Margin" Value="0,2"/>
+            </Style>
+
+            <!-- DATA TEMPLATES -->
+
+            <DataTemplate x:Key="SnippetItemDataTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon
+                        Grid.Column="0"
+                        Kind="FileCodeOutline"
+                        Height="28"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Center"
+                        Width="28"/>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Text="{Binding Header.Title}"/>
+
+                        <TextBlock
+                            Margin="0,4,0,0"
+                            Text="{Binding Header.Description}"
+                            TextWrapping="Wrap"/>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                        <cex:ButtonEx
+                            Content="Show in explorer"
+                            Command="{Binding DataContext.ShowFileCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="FileSearch"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                        <cex:ButtonEx
+                            Content="Delete"
+                            Command="{Binding DataContext.RemoveCommand,
+                                RelativeSource={RelativeSource AncestorType={x:Type cex:ListViewEx}}}"
+                            CommandParameter="{Binding}"
+                            IconKind="DeleteForever"
+                            Style="{StaticResource SettingsButtonExStyle}"/>
+
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </pages:BasePage.Resources>
+
+    <Grid>
+
+        <cex:ListViewEx
+            ItemContainerStyle="{StaticResource Internal_SnippetsListViewItemExStyle}"
+            ItemsSource="{Binding Manager.SnippetItems}"
+            ItemTemplate="{StaticResource SnippetItemDataTemplate}"
+            Margin="8"
+            Padding="0"
+            Style="{StaticResource SettingsListViewExStyle}"
+            MouseDoubleClick="SnippetItemsListViewEx_MouseDoubleClick"/>
+
+    </Grid>
+
+</pages:BasePage>

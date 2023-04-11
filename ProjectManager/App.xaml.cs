@@ -1,5 +1,7 @@
-﻿using ProjectManager.Data.Configuration;
+﻿using chkam05.Tools.ControlsEx.InternalMessages;
+using ProjectManager.Data.Configuration;
 using ProjectManager.Utilities;
+using ProjectManager.Windows;
 using System.Threading;
 using System.Windows;
 
@@ -62,6 +64,18 @@ namespace ProjectManager
         }
 
         #endregion APPLICATION METHODS
+
+        #region UTILITY METHODS
+
+        //  --------------------------------------------------------------------------------
+        /// <summary> Get internal messages ex container from main window. </summary>
+        /// <returns> Internal messages ex container. </returns>
+        public static InternalMessagesExContainer GetIMContainer()
+        {
+            return ((MainWindow)((App)Application.Current).MainWindow).InternalMessagesContainer;
+        }
+
+        #endregion UTILITY METHODS
 
     }
 }

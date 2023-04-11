@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ProjectManager.Windows
 {
@@ -54,6 +55,8 @@ namespace ProjectManager.Windows
         /// <summary> MainWindow class constructor. </summary>
         public MainWindow()
         {
+            Dispatcher x;
+
             //  Initialize modules.
             ConfigManager = ConfigManager.Instance;
 
@@ -99,7 +102,7 @@ namespace ProjectManager.Windows
         /// <param name="e"> Page Loaded Event Arguments. </param>
         private void pagesManager_OnPageBack(object sender, Pages.Events.PageLoadedEventArgs e)
         {
-            LoadMenuFromPage(e.Page);
+            LoadMenuFromPage(e.LoadedPage);
         }
 
         //  --------------------------------------------------------------------------------
@@ -108,7 +111,7 @@ namespace ProjectManager.Windows
         /// <param name="e"> Page Loaded Event Arguments. </param>
         private void pagesManager_OnPageLoaded(object sender, Pages.Events.PageLoadedEventArgs e)
         {
-            LoadMenuFromPage(e.Page);
+            LoadMenuFromPage(e.LoadedPage);
         }
 
         #endregion PAGES MANAGER METHODS

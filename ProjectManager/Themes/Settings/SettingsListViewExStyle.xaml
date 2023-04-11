@@ -20,6 +20,9 @@
         <Setter Property="SelectedBackground" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="SelectedBorderBrush" Value="{Binding AppearanceAccentSelectedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="SelectedForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedInactiveBackground" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedInactiveBorderBrush" Value="{Binding AppearanceAccentPressedBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
+        <Setter Property="SelectedInactiveForeground" Value="{Binding AppearanceAccentForegroundBrush, Source={StaticResource ConfigManager}, Mode=OneWay}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
     </Style>
 

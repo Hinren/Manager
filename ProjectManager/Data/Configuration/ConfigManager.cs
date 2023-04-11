@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using ProjectManager.Data.Configuration.Attributes;
 using ProjectManager.Data.Configuration.Static;
 using ProjectManager.Utilities;
+using SnippetsManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,6 +91,16 @@ namespace ProjectManager.Data.Configuration
                 _loaded = true;
                 UpdateConfigurationProperties();
                 UpdateAppearance();
+            }
+        }
+
+        public string InternalMessageInitialDirectory
+        {
+            get => _config.InternalMessageInitialDirectory;
+            set
+            {
+                _config.InternalMessageInitialDirectory = value;
+                OnPropertyChanged(nameof(InternalMessageInitialDirectory));
             }
         }
 
@@ -319,6 +330,64 @@ namespace ProjectManager.Data.Configuration
         }
 
         #endregion Dashboard
+
+        #region Database
+
+        public string DatabaseProfilesFilePath
+        {
+            get => _config.DatabaseConfig.DatabaseProfilesFilePath;
+            set
+            {
+                _config.DatabaseConfig.DatabaseProfilesFilePath = value;
+                OnPropertyChanged(nameof(DatabaseProfilesFilePath));
+            }
+        }
+
+        #endregion Database
+
+        #region Snippets
+
+        public List<SnippetCatalogItem> SnippetCatalogItems
+        {
+            get => _config.SnippetConfig.CatalogItems;
+            set
+            {
+                _config.SnippetConfig.CatalogItems = value;
+                OnPropertyChanged(nameof(SnippetCatalogItems));
+            }
+        }
+
+        public string SnippetFontFamilyName
+        {
+            get => _config.SnippetConfig.FontFamilyName;
+            set
+            {
+                _config.SnippetConfig.FontFamilyName = value;
+                OnPropertyChanged(nameof(SnippetFontFamilyName));
+            }
+        }
+
+        public double SnippetFontSize
+        {
+            get => _config.SnippetConfig.FontSize;
+            set
+            {
+                _config.SnippetConfig.FontSize = Math.Max(12d, value);
+                OnPropertyChanged(nameof(SnippetFontSize));
+            }
+        }
+
+        public bool SnippetUseCache
+        {
+            get => _config.SnippetConfig.UseCache;
+            set
+            {
+                _config.SnippetConfig.UseCache = value;
+                OnPropertyChanged(nameof(SnippetUseCache));
+            }
+        }
+
+        #endregion Snippets
 
 
         //  METHODS

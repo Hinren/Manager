@@ -12,7 +12,8 @@ namespace ProjectManager.Pages.Events
 
         //  VARIABLES
 
-        public BasePage Page { get; private set; }
+        public BasePage UnloadedPage { get; private set; }
+        public BasePage LoadedPage { get; private set; }
 
 
         //  METHODS
@@ -21,10 +22,12 @@ namespace ProjectManager.Pages.Events
 
         //  --------------------------------------------------------------------------------
         /// <summary> PageLoadedEventArgs class constructor. </summary>
-        /// <param name="page"> Loaded page. </param>
-        public PageLoadedEventArgs(BasePage page)
+        /// <param name="unloadedPage"> Unloaded page. </param>
+        /// <param name="loadedPage"> Loaded page. </param>
+        public PageLoadedEventArgs(BasePage unloadedPage, BasePage loadedPage)
         {
-            Page = page;
+            UnloadedPage = unloadedPage;
+            LoadedPage = loadedPage;
         }
 
         #endregion CLASS METHODS

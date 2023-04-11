@@ -55,8 +55,23 @@
             Orientation="Vertical">
 
             <TextBlock
-                Margin="0,0,0,4"
+                Margin="0,0,0,8"
                 Text="{Binding Description}"/>
+
+            <TextBlock
+                Foreground="Red"
+                Margin="0,0,0,8"
+                Text="{Binding Error}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Error}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <cex:TextBoxEx
                 Text="{Binding Text}"/>
